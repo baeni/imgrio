@@ -1,0 +1,76 @@
+﻿@page "/u/sign-in"
+@using Dele.Blazor.Backend.Services;
+@using Firebase.Auth;
+@inject FirebaseAuthHandler FirebaseAuthHandler
+@inject IHttpContextAccessor HttpContextAccessor
+@inject NavigationManager NavigationManager
+
+<PageTitle>Sign In</PageTitle>
+
+<h3>Anmelden</h3>
+
+<form @onsubmit="Submit">
+    <div class="mb-4">
+        <input class="form-control" id="inputEmail" type="email" placeholder="Email Adresse" aria-describedby="emailHelp" />
+        <small id="emailHelp" class="form-text text-muted">Wir teilen deine Email Adresse niemals mit Dritten.</small>
+    </div>
+
+    <div class="mb-4">
+        <input class="form-control" id="inputPassword" type="password" placeholder="Passwort" />
+    </div>
+
+    <div class="mb-4">
+        <a @onclick="SendForgotPasswordMail" href="javascript:;">Passwort vergessen?</a>
+    </div>
+
+    @if (Warning != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @Warning
+        </div>
+    }
+
+    <button class="btn btn-primary btn-block mb-4" type="submit">Anmelden</button>
+</form>
+
+@code {
+    private string Warning { get; set; } = null!;
+
+    private string Email { get; set; } = null!;
+    private string Password { get; set; } = null!;
+
+    private async Task Submit()
+    {
+        FirebaseAuthLink auth;
+
+        try
+        {
+            auth = await FirebaseAuthHandler.FirebaseAuthProvider.SignInWithEmailAndPasswordAsync(Email, Password);
+            var token = auth.FirebaseToken;
+
+            if (token == null)
+            {
+                return;
+            }
+
+            HttpContextAccessor.HttpContext.Session.SetString("_UserToken", token);
+        }
+        catch (FirebaseAuthException)
+        {
+            Warning = "Es konnte kein passender Account gefunden werden. Bitte versuche es erneut.";
+            Password = null!;
+        }
+    }
+
+    private async Task SendForgotPasswordMail()
+    {
+        try
+        {
+            await FirebaseAuthHandler.FirebaseAuthProvider.SendPasswordResetEmailAsync(Email);
+        }
+        catch (HttpRequestException)
+        {
+            Warning = "Bitte gib deine Email Adresse an, damit wir dir einen Link zum Zurücksetzen deines Passworts senden können.";
+        }
+    }
+}
