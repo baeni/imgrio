@@ -1,0 +1,26 @@
+﻿@using Fordele.Blazor.Backend.Interfaces;
+@using Fordele.Blazor.Backend.Services;
+
+<a class="card border-secondary bg-dark shadow-sm mb-4 text-reset text-decoration-none" href="/v/@UploadedFile.Id">
+    <div class="ratio ratio-16x9 text-center bg-gradient">
+        <h4 class="d-flex align-items-center justify-content-center text-muted">@UploadedFile.Extension.ToUpper()</h4>
+        @if (UploadedFile.Extension == "png"
+            || UploadedFile.Extension == "jpg"
+            || UploadedFile.Extension == "jpeg")
+        {
+            <img class="card-img-top" src="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" style="object-fit: cover;" />
+        }
+    </div>
+
+    <div class="card-footer text-center text-muted">
+        Last modified @UploadedFile.ModifiedAt.ToString("dd.MM.yyyy")
+    </div>
+</a>
+
+@code {
+    [Inject]
+    public UploadedFileService UploadedFileService { get; set; } = null!;
+
+    [Parameter]
+    public IUploadedFile UploadedFile { get; set; } = null!;
+}
