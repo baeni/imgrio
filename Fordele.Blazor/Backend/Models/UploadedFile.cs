@@ -19,5 +19,13 @@ namespace Fordele.Blazor.Backend.Models
         public DateTime CreatedAt { get; }
 
         public DateTime ModifiedAt { get; }
+
+        public string FancyCreatedOrModified => ModifiedAt.Date == CreatedAt.Date
+                                                    ? CreatedAt.Date == DateTime.UtcNow.Date
+                                                        ? "Heute hochgeladen"
+                                                        : $"Hochgeladen am {CreatedAt.ToString("dd.MM.yyyy")}"
+                                                    : CreatedAt.Date == DateTime.UtcNow.Date
+                                                        ? "Heute zuletzt verändert"
+                                                        : $"Zuletzt verändert am {CreatedAt.ToString("dd.MM.yyyy")}";
     }
 }
