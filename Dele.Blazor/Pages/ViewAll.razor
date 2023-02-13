@@ -7,7 +7,7 @@
 <h1>Alle Ansehen</h1>
 
 <div class="row">
-    @foreach (var uploadedFile in UploadedFiles)
+    @foreach (var uploadedFile in UploadedFiles.OrderByDescending(uploadedFile => uploadedFile.ModifiedAt))
     {
         <div class="col-3" id="uploadedFileCard">
             <UploadedFileCard UploadedFile="@uploadedFile" />
