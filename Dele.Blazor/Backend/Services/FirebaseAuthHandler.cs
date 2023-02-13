@@ -1,6 +1,6 @@
 ﻿using Firebase.Auth;
 
-namespace Dele.Blazor.Backend.Services
+namespace Fordele.Blazor.Backend.Services
 {
     public class FirebaseAuthHandler
     {
