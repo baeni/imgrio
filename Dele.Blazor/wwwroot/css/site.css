@@ -2,10 +2,19 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #000000
+}
+
+.max-vh-85 {
+    max-height: 85vh;
 }
 
 h1:focus {
     outline: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
 }
 
 .btn {
