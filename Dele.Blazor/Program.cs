@@ -1,8 +1,8 @@
-using Dele.Blazor.Backend.Services;
+using Fordele.Blazor.Backend.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Dele.Blazor
+namespace Fordele.Blazor
 {
     public class Program
     {
@@ -26,6 +26,7 @@ namespace Dele.Blazor
                 options.LogoutPath = "/u/sign-out";
             });
             builder.Services.AddTransient<FirebaseAuthHandler>();
+            builder.Services.AddTransient<UploadedFileService>();
 
             var app = builder.Build();
 
