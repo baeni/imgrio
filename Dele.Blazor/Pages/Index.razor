@@ -1,9 +1,13 @@
 ﻿@page "/"
+@using Fordele.Blazor.Backend.Services;
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+Es werden aktuell <a href="/view-all">@UploadedFileService.GetUploadedFiles().Count() Dateien</a> verteilt.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    [Inject]
+    public UploadedFileService UploadedFileService { get; set; } = null!;
+}
