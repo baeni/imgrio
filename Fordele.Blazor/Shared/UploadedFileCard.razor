@@ -1,9 +1,9 @@
 ﻿@using Fordele.Blazor.Backend.Interfaces;
 @using Fordele.Blazor.Backend.Services;
 
-<a class="card border-secondary bg-dark shadow-sm mb-4 text-reset text-decoration-none" href="/v/@UploadedFile.Id">
-    <div class="ratio ratio-16x9 text-center bg-gradient">
-        <h4 class="d-flex align-items-center justify-content-center text-muted">@UploadedFile.Extension.ToUpper()</h4>
+<a class="card border border-dark border-3 bg-darker mb-4 text-reset text-decoration-none" href="/v/@UploadedFile.Id">
+    <div class="ratio ratio-16x9 text-center">
+        <h2 class="d-flex align-items-center justify-content-center text-muted">@UploadedFile.Extension.ToUpper()</h2>
         @if (UploadedFile.Extension == "png"
             || UploadedFile.Extension == "jpg"
             || UploadedFile.Extension == "jpeg")
@@ -12,8 +12,8 @@
         }
     </div>
 
-    <div class="card-footer text-center text-muted">
-        Last modified @UploadedFile.ModifiedAt.ToString("dd.MM.yyyy")
+    <div class="card-body text-center text-muted">
+        @UploadedFile.FancyCreatedOrModified
     </div>
 </a>
 
