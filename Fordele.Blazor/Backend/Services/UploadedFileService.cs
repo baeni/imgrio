@@ -35,5 +35,17 @@ namespace Fordele.Blazor.Backend.Services
 
             return uploadedFiles;
         }
+
+        public IEnumerable<IUploadedFile> GetUploadedImages()
+        {
+            return GetUploadedFiles().Where(uploadedFile =>
+                uploadedFile.Extension == "png" || uploadedFile.Extension == "jpg" || uploadedFile.Extension == "jpeg");
+        }
+
+        public IEnumerable<IUploadedFile> GetUploadedDocuments()
+        {
+            return GetUploadedFiles().Where(uploadedFile =>
+                uploadedFile.Extension == "txt" || uploadedFile.Extension == "zip");
+        }
     }
 }
