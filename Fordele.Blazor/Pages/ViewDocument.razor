@@ -1,0 +1,29 @@
+﻿@page "/v/document/{id:guid}"
+@using Fordele.Blazor.Backend.Interfaces;
+@using Fordele.Blazor.Backend.Models;
+@using Fordele.Blazor.Backend.Services;
+
+<PageTitle>Dokument</PageTitle>
+
+<div class="text-center">
+    <p>@File.ReadAllText(Path.Combine(UploadedFileService.DataPath, $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}"))</p>
+
+    <a class="btn btn-primary" href="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" download>Herunterladen</a>
+</div>
+
+@code {
+    [Inject]
+    public UploadedFileService UploadedFileService { get; set; } = null!;
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private IUploadedFile UploadedFile { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        UploadedFile = UploadedFileService.GetUploadedFiles().First(x => x.Id == Id);
+
+        base.OnInitialized();
+    }
+}

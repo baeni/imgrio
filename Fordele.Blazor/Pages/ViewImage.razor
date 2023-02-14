@@ -1,0 +1,27 @@
+﻿@page "/v/image/{id:guid}"
+@using Fordele.Blazor.Backend.Interfaces;
+@using Fordele.Blazor.Backend.Models;
+@using Fordele.Blazor.Backend.Services;
+
+<PageTitle>Bild</PageTitle>
+
+<div class="text-center">
+    <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" style="object-fit: cover;" />
+</div>
+
+@code {
+    [Inject]
+    public UploadedFileService UploadedFileService { get; set; } = null!;
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private IUploadedFile UploadedFile { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        UploadedFile = UploadedFileService.GetUploadedFiles().First(x => x.Id == Id);
+
+        base.OnInitialized();
+    }
+}
