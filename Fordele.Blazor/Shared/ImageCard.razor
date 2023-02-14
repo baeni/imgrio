@@ -1,0 +1,18 @@
+﻿@using Fordele.Blazor.Backend.Interfaces;
+@using Fordele.Blazor.Backend.Services;
+
+<a class="card border border-secondary bg-dark mb-4 text-reset text-decoration-none" href="/v/image/@UploadedImage.Id">
+    <div class="ratio ratio-4x3 text-center">
+        <h2 class="d-flex align-items-center justify-content-center text-muted">@UploadedImage.Extension.ToUpper()</h2>
+        <img class="card-img-top" src="@Path.Combine("data", $"{UploadedImage.Id}.{UploadedImage.Extension}")" style="object-fit: cover;" />
+    </div>
+
+    <div class="card-body text-center text-muted">
+        @UploadedImage.FancyCreatedOrModified
+    </div>
+</a>
+
+@code {
+    [Parameter]
+    public IUploadedFile UploadedImage { get; set; } = null!;
+}

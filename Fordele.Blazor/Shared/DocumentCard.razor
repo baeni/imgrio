@@ -1,0 +1,30 @@
+﻿@using Fordele.Blazor.Backend.Interfaces;
+@using Fordele.Blazor.Backend.Services;
+
+<a class="card border border-secondary bg-dark mb-4 text-reset text-decoration-none" href="/v/document/@UploadedDocument.Id">
+    <div class="ratio ratio-21x9 text-center">
+        <h2 class="d-flex align-items-center justify-content-center text-muted">@UploadedDocument.Extension.ToUpper()</h2>
+    </div>
+
+    <div class="card-body text-center text-muted">
+        @UploadedDocument.FancyCreatedOrModified
+    </div>
+</a>
+
+@*<a class="card border border-dark border-4 bg-darker mb-4 text-reset text-decoration-none" href="/v/document/@UploadedDocument.Id">
+    <div class="ratio ratio-16x9 text-center">
+        <h2 class="d-flex align-items-center justify-content-center text-muted">@UploadedDocument.Extension.ToUpper()</h2>
+    </div>
+
+    <div class="card-body text-center text-muted">
+        @UploadedDocument.FancyCreatedOrModified
+    </div>
+</a>*@
+
+@code {
+    [Inject]
+    public UploadedFileService UploadedFileService { get; set; } = null!;
+
+    [Parameter]
+    public IUploadedFile UploadedDocument { get; set; } = null!;
+}
