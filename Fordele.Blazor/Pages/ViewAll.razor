@@ -7,7 +7,7 @@
 <h1>Alle Ansehen</h1>
 
 <div class="row">
-    @foreach (var uploadedFile in UploadedFiles.OrderByDescending(uploadedFile => uploadedFile.ModifiedAt))
+    @foreach (var uploadedFile in UploadedFiles)
     {
         <div class="col-3" id="uploadedFileCard">
             <UploadedFileCard UploadedFile="@uploadedFile" />
@@ -26,7 +26,7 @@
 
     protected override void OnInitialized()
     {
-        UploadedFiles = UploadedFileService.GetUploadedFiles();
+        UploadedFiles = UploadedFileService.GetUploadedFiles().OrderByDescending(uploadedFile => uploadedFile.ModifiedAt);
 
         base.OnInitialized();
     }
