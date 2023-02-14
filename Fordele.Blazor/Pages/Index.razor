@@ -3,9 +3,21 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="text-center">
+    <h1>Hej!</h1>
 
-Es werden aktuell <a href="/view-all">@UploadedFileService.GetUploadedFiles().Count() Dateien</a> verteilt.
+    <p>
+        Fordele verteilt aktuell @UploadedFileService.GetUploadedFiles().Count() verschiedene Dateien.
+        <br />
+        Darunter <a class="link-primary" href="/v/images">@UploadedFileService.GetUploadedImages().Count() Bilder</a> und <a class="link-primary" href="/v/documents">@UploadedFileService.GetUploadedDocuments().Count() Dokumente</a>.
+    </p>
+
+    <p>
+        <a class="link-secondary" href="/u/sign-in">Melde dich an</a>, um alle Dateien auflisten zu können.
+        <br />
+        Solltest du keinen Account besitzen, kannst du lediglich auf Dateien zugreifen, die dir per Link geteilt wurden.
+    </p>
+</div>
 
 @code {
     [Inject]
