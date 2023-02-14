@@ -7,12 +7,24 @@
 <h1>Alle Bilder</h1>
 
 <div class="row">
-    @foreach (var uploadedFile in UploadedImages)
-    {
-        <div class="col-3" id="uploadedFileCard">
-            <ImageCard UploadedImage="@uploadedFile" />
-        </div>
-    }
+    <div class="col">
+        @for (int i = 0; i < UploadedImages.Count(); i += 3)
+        {
+            <ImageCard UploadedImage="@UploadedImages[i]" />
+        }
+    </div>
+    <div class="col">
+        @for (int i = 1; i < UploadedImages.Count(); i += 3)
+        {
+            <ImageCard UploadedImage="@UploadedImages[i]" />
+        }
+    </div>
+    <div class="col">
+        @for (int i = 2; i < UploadedImages.Count(); i += 3)
+        {
+            <ImageCard UploadedImage="@UploadedImages[i]" />
+        }
+    </div>
 </div>
 
 @code {
@@ -22,12 +34,12 @@
     [Parameter]
     public Guid Id { get; set; }
 
-    private IEnumerable<IUploadedFile> UploadedImages { get; set; } = null!;
+    private IUploadedFile[] UploadedImages { get; set; } = null!;
 
     protected override void OnInitialized()
     {
         UploadedImages = UploadedFileService.GetUploadedImages()
-            .OrderByDescending(uploadedImage => uploadedImage.ModifiedAt);
+            .OrderByDescending(uploadedImage => uploadedImage.ModifiedAt).ToArray();
 
         base.OnInitialized();
     }
