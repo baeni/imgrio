@@ -5,10 +5,6 @@ html, body {
     background-color: #0a0a0a
 }
 
-.bg-darker {
-    background-color: #0a0a0a;
-}
-
 .max-vh-85 {
     max-height: 85vh;
 }
