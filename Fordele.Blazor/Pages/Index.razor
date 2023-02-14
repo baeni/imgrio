@@ -3,23 +3,12 @@
 
 <PageTitle>Index</PageTitle>
 
-<div class="row">
-    <div class="col">
-        <img class="d-flex align-items-center justify-content-center mw-100" src="@Path.Combine("assets", "illustration.png")" style="object-fit: cover;" />
-    </div>
+<div class="position-relative">
+    <img class="d-flex align-items-center justify-content-center" src="@Path.Combine("assets", "illustration.png")" style="object-fit: cover;" />
 
-    <div class="col">
-        <h1>Hej!</h1>
-        <p class="fs-4">
-            Fordele verteilt aktuell @UploadedFileService.GetUploadedFiles().Count() verschiedene Dateien.
-            <br />
-            Darunter <a class="link-primary" href="/v/images">@UploadedFileService.GetUploadedImages().Count() Bilder</a> und <a class="link-primary" href="/v/documents">@UploadedFileService.GetUploadedDocuments().Count() Dokumente</a>.
-            <br />
-            <br />
-            <a class="link-secondary" href="/u/sign-in">Melde dich an</a>, um alle Dateien auflisten zu können.
-            <br />
-            Solltest du keinen Account besitzen, kannst du lediglich auf Dateien zugreifen, die dir per Link geteilt wurden.
-        </p>
+    <div class="position-absolute">
+        <p class="h1" style="color: #899bc0; font-size: 45rem;">@UploadedFileService.GetUploadedFiles().Count()</p>
+        <p class="fs-1" style="color: #899bc0;">Dateien werden aktuell mit Fordele geteilt!</p>
     </div>
 </div>
 
