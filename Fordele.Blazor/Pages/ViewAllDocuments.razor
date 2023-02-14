@@ -26,9 +26,8 @@
 
     protected override void OnInitialized()
     {
-        UploadedDocuments = UploadedFileService.GetUploadedFiles()
-                                .Where(uploadedFile => uploadedFile.Extension == "txt" || uploadedFile.Extension == "zip")
-                                .OrderByDescending(uploadedFile => uploadedFile.ModifiedAt);
+        UploadedDocuments = UploadedFileService.GetUploadedDocuments()
+            .OrderByDescending(uploadedDocument => uploadedDocument.ModifiedAt);
 
         base.OnInitialized();
     }

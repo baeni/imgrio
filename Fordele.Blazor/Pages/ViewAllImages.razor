@@ -26,9 +26,8 @@
 
     protected override void OnInitialized()
     {
-        UploadedImages = UploadedFileService.GetUploadedFiles()
-                            .Where(uploadedFile => uploadedFile.Extension == "png" || uploadedFile.Extension == "jpg" || uploadedFile.Extension == "jpeg")
-                            .OrderByDescending(uploadedFile => uploadedFile.ModifiedAt);
+        UploadedImages = UploadedFileService.GetUploadedImages()
+            .OrderByDescending(uploadedImage => uploadedImage.ModifiedAt);
 
         base.OnInitialized();
     }
