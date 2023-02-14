@@ -1,0 +1,35 @@
+﻿@page "/v/images"
+@using Fordele.Blazor.Backend.Interfaces;
+@using Fordele.Blazor.Backend.Services;
+
+<PageTitle>Bilder</PageTitle>
+
+<h1>Alle Bilder</h1>
+
+<div class="row">
+    @foreach (var uploadedFile in UploadedImages)
+    {
+        <div class="col-3" id="uploadedFileCard">
+            <ImageCard UploadedImage="@uploadedFile" />
+        </div>
+    }
+</div>
+
+@code {
+    [Inject]
+    public UploadedFileService UploadedFileService { get; set; } = null!;
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private IEnumerable<IUploadedFile> UploadedImages { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        UploadedImages = UploadedFileService.GetUploadedFiles()
+                            .Where(uploadedFile => uploadedFile.Extension == "png" || uploadedFile.Extension == "jpg" || uploadedFile.Extension == "jpeg")
+                            .OrderByDescending(uploadedFile => uploadedFile.ModifiedAt);
+
+        base.OnInitialized();
+    }
+}
