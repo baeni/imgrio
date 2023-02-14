@@ -6,7 +6,18 @@
 <PageTitle>Ansehen</PageTitle>
 
 <div class="text-center">
-    <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" style="object-fit: cover;" />
+    @if (UploadedFile.Extension == "png"   
+        || UploadedFile.Extension == "jpg"
+        || UploadedFile.Extension == "jpeg")
+    {
+        <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" style="object-fit: cover;" />
+    }
+    else if (UploadedFile.Extension == "txt")
+    {
+        <p>@File.ReadAllText(Path.Combine(UploadedFileService.DataPath, $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}"))</p>
+
+        <a class="btn btn-primary" href="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" download>Herunterladen</a>
+    }
 </div>
 
 @code {
