@@ -1,14 +1,16 @@
 ﻿.navbar {
-    backdrop-filter: blur(50px);
+    background-color: rgba(243, 248, 252, .8);
+    backdrop-filter: blur(35px);
+    -webkit-backdrop-filter: blur(35px);
 }
 
 .navbar-brand {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 600;
 }
 
 .nav-item {
-    font-size: 0.75rem;
+    font-size: 1.1rem;
     margin: 0 5px;
 }
 
@@ -22,12 +24,10 @@
     }
 
         .nav-item ::deep a.active {
-            background-color: #3a3b3d;
             color: white;
         }
 
         .nav-item ::deep a:hover {
-            background-color: #2e2e2f;
             color: white;
         }
 
