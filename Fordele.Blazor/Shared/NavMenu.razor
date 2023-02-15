@@ -23,6 +23,28 @@
                     </NavLink>
                 </li>
             </ul>
+            <ul class="navbar-nav">
+                @if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        Willkommen, @HttpContextAccessor.HttpContext.User.Identity.Name!
+                    </li>
+
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="/u/sign-out">
+                            Abmelden
+                        </NavLink>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="/u/sign-in">
+                            Anmelden
+                        </NavLink>
+                    </li>
+                }
+            </ul>
         </div>
     </div>
 </nav>
@@ -32,44 +54,11 @@
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
     private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
-
-@*<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Fordele</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    [Inject]
+    public IHttpContextAccessor HttpContextAccessor { get; set; }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
 }
-*@
