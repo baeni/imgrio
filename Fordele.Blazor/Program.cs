@@ -1,6 +1,10 @@
+using Firebase.Auth;
+using Fordele.Blazor.Backend.Models;
 using Fordele.Blazor.Backend.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Identity;
 
 namespace Fordele.Blazor
 {
@@ -13,18 +17,16 @@ namespace Fordele.Blazor
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.Name = "Fordele.Auth";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                    options.SlidingExpiration = true;
+                    options.LoginPath = "/u/sign-in";
+                    options.LogoutPath = "/u/sign-out";
+                });
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-            builder.Services.AddAuthentication().AddCookie(options =>
-            {
-                options.LoginPath = "/u/sign-in";
-                options.LogoutPath = "/u/sign-out";
-            });
             builder.Services.AddTransient<FirebaseAuthHandler>();
             builder.Services.AddTransient<UploadedFileService>();
 
@@ -43,7 +45,7 @@ namespace Fordele.Blazor
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseSession();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapBlazorHub();
