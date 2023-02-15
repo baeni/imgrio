@@ -4,10 +4,11 @@ namespace Fordele.Blazor.Backend.Models
 {
     public class UploadedFile : IUploadedFile
     {
-        public UploadedFile(Guid id, string extension, DateTime createdAt, DateTime modifiedAt)
+        public UploadedFile(Guid id, string extension, double size, DateTime createdAt, DateTime modifiedAt)
         {
             Id = id;
             Extension = extension;
+            Size = size;
             CreatedAt = createdAt;
             ModifiedAt = modifiedAt;
         }
@@ -15,6 +16,8 @@ namespace Fordele.Blazor.Backend.Models
         public Guid Id { get; }
 
         public string Extension { get; }
+
+        public double Size { get; }
 
         public DateTime CreatedAt { get; }
 
