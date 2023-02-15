@@ -1,4 +1,6 @@
-﻿<nav class="navbar navbar-expand-md navbar-light mb-4 sticky-top">
+﻿@using System.Security.Claims;
+
+<nav class="navbar navbar-expand-md navbar-light mb-4 sticky-top">
     <div class="container">
         <a class="navbar-brand" href="">Fordele</a>
         <button class="navbar-toggler @NavButtonCssClass" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -24,10 +26,10 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                @if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                @if (AuthUser.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
-                        Willkommen, @HttpContextAccessor.HttpContext.User.Identity.Name!
+                        Willkommen, @AuthUser.Identity.Name!
                     </li>
 
                     <li class="nav-item">
@@ -55,7 +57,17 @@
     private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
 
     [Inject]
-    public IHttpContextAccessor HttpContextAccessor { get; set; }
+    public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+
+    public ClaimsPrincipal AuthUser { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var AuthState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        AuthUser = AuthState.User;
+
+        await base.OnInitializedAsync();
+    }
 
     private void ToggleNavMenu()
     {
