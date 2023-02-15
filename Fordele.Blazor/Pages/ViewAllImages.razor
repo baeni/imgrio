@@ -32,9 +32,6 @@
     [Inject]
     public UploadedFileService UploadedFileService { get; set; } = null!;
 
-    [Parameter]
-    public Guid Id { get; set; }
-
     private IUploadedFile[] UploadedImages { get; set; } = null!;
 
     protected override void OnInitialized()

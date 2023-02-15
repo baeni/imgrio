@@ -20,9 +20,6 @@
     [Inject]
     public UploadedFileService UploadedFileService { get; set; } = null!;
 
-    [Parameter]
-    public Guid Id { get; set; }
-
     private IEnumerable<IUploadedFile> UploadedDocuments { get; set; } = null!;
 
     protected override void OnInitialized()
