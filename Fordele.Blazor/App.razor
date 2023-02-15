@@ -2,16 +2,16 @@
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
             <NotAuthorized>
-                <PageTitle>Not authorized</PageTitle>
-                <p role="alert">You're not authorized to reach this page.</p>
+                <PageTitle>Keine Berechtigung</PageTitle>
+                <p role="alert">Du bist nicht dazu berechtigt, diese Seite anzusehen.</p>
             </NotAuthorized>
         </AuthorizeRouteView>
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
     <NotFound>
-        <PageTitle>Not found</PageTitle>
+        <PageTitle>404</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
+            <p role="alert">Huch, hier gibt's nichts zu sehen...</p>
         </LayoutView>
     </NotFound>
 </Router>
