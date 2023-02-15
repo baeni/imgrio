@@ -2,8 +2,6 @@
 @using Fordele.Blazor.Backend.Services;
 @using Firebase.Auth;
 @using System.Web;
-@inject FirebaseAuthHandler FirebaseAuthHandler
-@inject NavigationManager NavigationManager
 
 <PageTitle>Sign In</PageTitle>
 
@@ -40,7 +38,7 @@
     private string Password { get; set; } = null!;
 
     [Inject]
-    public IHttpContextAccessor HttpContextAccessor { get; set; } = null!;
+    public FirebaseAuthHandler FirebaseAuthHandler { get; set; } = null!;
 
     private async Task SendForgotPasswordMail()
     {
