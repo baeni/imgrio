@@ -1,22 +1,22 @@
 ﻿@page "/u/sign-in"
 @using Fordele.Blazor.Backend.Services;
 @using Firebase.Auth;
+@using System.Web;
 @inject FirebaseAuthHandler FirebaseAuthHandler
-@inject IHttpContextAccessor HttpContextAccessor
 @inject NavigationManager NavigationManager
 
 <PageTitle>Sign In</PageTitle>
 
 <h3>Anmelden</h3>
 
-<form @onsubmit="Submit">
+<form>
     <div class="mb-4">
-        <input class="form-control" id="inputEmail" type="email" placeholder="Email Adresse" aria-describedby="emailHelp" />
+        <input class="form-control" type="email" placeholder="Email Adresse" aria-describedby="emailHelp" @bind="Email" />
         <small id="emailHelp" class="form-text text-muted">Wir teilen deine Email Adresse niemals mit Dritten.</small>
     </div>
 
     <div class="mb-4">
-        <input class="form-control" id="inputPassword" type="password" placeholder="Passwort" />
+        <input class="form-control" type="password" placeholder="Passwort" @bind="Password" />
     </div>
 
     <div class="mb-4">
@@ -30,7 +30,7 @@
         </div>
     }
 
-    <button class="btn btn-primary btn-block mb-4" type="submit">Anmelden</button>
+    <a class="btn btn-primary btn-block mb-4" href="/u/sign-in-redirect?email=@HttpUtility.UrlEncode(Email)&password=@HttpUtility.UrlEncode(Password)">Anmelden</a>
 </form>
 
 @code {
@@ -39,28 +39,8 @@
     private string Email { get; set; } = null!;
     private string Password { get; set; } = null!;
 
-    private async Task Submit()
-    {
-        FirebaseAuthLink auth;
-
-        try
-        {
-            auth = await FirebaseAuthHandler.FirebaseAuthProvider.SignInWithEmailAndPasswordAsync(Email, Password);
-            var token = auth.FirebaseToken;
-
-            if (token == null)
-            {
-                return;
-            }
-
-            HttpContextAccessor.HttpContext.Session.SetString("_UserToken", token);
-        }
-        catch (FirebaseAuthException)
-        {
-            Warning = "Es konnte kein passender Account gefunden werden. Bitte versuche es erneut.";
-            Password = null!;
-        }
-    }
+    [Inject]
+    public IHttpContextAccessor HttpContextAccessor { get; set; } = null!;
 
     private async Task SendForgotPasswordMail()
     {
