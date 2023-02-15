@@ -21,15 +21,16 @@ namespace Fordele.Blazor.Backend.Services
 
             foreach (var filePath in Directory.GetFiles(DataPath))
             {
-                var fileName = Path.GetFileName(filePath);
-                var split = fileName.Split('.');
+                var fileInfo = new FileInfo(filePath);
+                var split = fileInfo.Name.Split('.');
 
                 var id = Guid.Parse(split[0]);
                 var extension = split[1];
-                var createdAt = File.GetCreationTimeUtc(filePath);
-                var modifiedAt = File.GetLastWriteTimeUtc(filePath);
+                var size = Math.Round(fileInfo.Length / 1000000d, 2);
+                var createdAt = fileInfo.CreationTime;
+                var modifiedAt = fileInfo.LastWriteTime;
 
-                var uploadedFile = new UploadedFile(id, extension, createdAt, modifiedAt);
+                var uploadedFile = new UploadedFile(id, extension, size, createdAt, modifiedAt);
                 uploadedFiles.Add(uploadedFile);
             }
 
@@ -45,7 +46,7 @@ namespace Fordele.Blazor.Backend.Services
         public IEnumerable<IUploadedFile> GetUploadedDocuments()
         {
             return GetUploadedFiles().Where(uploadedFile =>
-                uploadedFile.Extension == "txt" || uploadedFile.Extension == "zip");
+                uploadedFile.Extension == "txt" || uploadedFile.Extension == "zip" || uploadedFile.Extension == "jar");
         }
     }
 }
