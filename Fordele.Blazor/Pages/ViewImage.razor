@@ -3,10 +3,18 @@
 @using Fordele.Blazor.Backend.Models;
 @using Fordele.Blazor.Backend.Services;
 
+<HeadContent>
+    <meta property="og:image" content="https://fordele.azurewebsites.net/@Path.Combine("data", $"{UploadedFile.Id}.{UploadedFile.Extension}")">
+    <meta name="twitter:image:src" content="https://fordele.azurewebsites.net/@Path.Combine("data", $"{UploadedFile.Id}.{UploadedFile.Extension}")">
+    <meta name="twitter:card" content="summary_large_image">
+</HeadContent>
+
 <PageTitle>Bild</PageTitle>
 
 <div class="text-center">
-    <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" style="object-fit: cover;" />
+    <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", $"{UploadedFile.Id}.{UploadedFile.Extension}")" style="object-fit: cover;" />
+
+    <p class="fs-5 text-muted">@UploadedFile.Size MB</p>
 </div>
 
 @code {
