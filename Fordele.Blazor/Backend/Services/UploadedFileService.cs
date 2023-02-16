@@ -26,7 +26,7 @@ namespace Fordele.Blazor.Backend.Services
 
                 var id = Guid.Parse(split[0]);
                 var extension = split[1];
-                var size = Math.Round(fileInfo.Length / 1000000d, 2);
+                var size = fileInfo.Length;
                 var createdAt = fileInfo.CreationTime;
                 var modifiedAt = fileInfo.LastWriteTime;
 
