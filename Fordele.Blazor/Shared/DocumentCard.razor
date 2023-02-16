@@ -1,5 +1,6 @@
 ﻿@using Fordele.Blazor.Backend.Interfaces;
 @using Fordele.Blazor.Backend.Services;
+@using Fordele.Blazor.Backend.Utils;
 
 <a class="card shadow-sm mb-4 text-reset text-decoration-none" href="/v/document/@UploadedDocument.Id">
     <div class="ratio ratio-21x9 text-center">
@@ -7,7 +8,7 @@
     </div>
 
     <div class="card-footer text-center text-muted">
-        <small>@UploadedDocument.FancyCreatedOrModified</small>
+        <small>@UploadedDocument.ToFancyCreatedOrModifiedString()</small>
     </div>
 </a>
 
