@@ -11,7 +11,5 @@
         DateTime CreatedAt { get; }
 
         DateTime ModifiedAt { get; }
-
-        string FancyCreatedOrModified { get; }
     }
 }
