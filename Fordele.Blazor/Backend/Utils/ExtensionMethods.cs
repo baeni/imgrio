@@ -10,10 +10,10 @@ namespace Fordele.Blazor.Backend.Utils
 
             return size switch
             {
-                >= 1000000000 => $"{size / 1000000000} GB",
-                >= 1000000 => $"{size / 1000000} MB",
-                >= 1000 => $"{size / 1000} KB",
-                _ => $"{size} B",
+                >= 1000000000 => $"{Math.Round(size / 1000000000, 2)} GB",
+                >= 1000000 => $"{Math.Round(size / 1000000, 2)} MB",
+                >= 1000 => $"{Math.Round(size / 1000, 2)} KB",
+                _ => $"{Math.Round(size, 2)} B",
             };
         }
 
