@@ -2,6 +2,7 @@
 @using Fordele.Blazor.Backend.Interfaces;
 @using Fordele.Blazor.Backend.Models;
 @using Fordele.Blazor.Backend.Services;
+@using Fordele.Blazor.Backend.Utils;
 
 <HeadContent>
     <meta property="og:image" content="https://fordele.azurewebsites.net/@Path.Combine("data", $"{UploadedFile.Id}.{UploadedFile.Extension}")">
@@ -14,7 +15,7 @@
 <div class="text-center">
     <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", $"{UploadedFile.Id}.{UploadedFile.Extension}")" style="object-fit: cover;" />
 
-    <p class="fs-5 text-muted">@UploadedFile.Size MB</p>
+    <p class="fs-5 text-muted">@UploadedFile.ToFormattedSizeString()</p>
 </div>
 
 @code {
