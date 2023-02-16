@@ -3,7 +3,7 @@
 @using Firebase.Auth;
 @using System.Web;
 
-<PageTitle>Sign In</PageTitle>
+<PageTitle>Anmelden</PageTitle>
 
 <h3>Anmelden</h3>
 
@@ -21,10 +21,10 @@
         <a @onclick="SendForgotPasswordMail" href="javascript:;">Passwort vergessen?</a>
     </div>
 
-    @if (Warning != null)
+    @if (Alert != null)
     {
         <div class="alert alert-danger" role="alert">
-            @Warning
+            @Alert
         </div>
     }
 
@@ -32,7 +32,7 @@
 </form>
 
 @code {
-    private string Warning { get; set; } = null!;
+    private string Alert { get; set; } = null!;
 
     private string Email { get; set; } = null!;
     private string Password { get; set; } = null!;
@@ -42,13 +42,20 @@
 
     private async Task SendForgotPasswordMail()
     {
+        if (string.IsNullOrEmpty(Email))
+        {
+            Alert = "Bitte gib deine Email Adresse an, damit wir dir einen Link zum Zurücksetzen deines Passworts senden können.";
+            return;
+        }
+
         try
         {
             await FirebaseAuthHandler.FirebaseAuthProvider.SendPasswordResetEmailAsync(Email);
+            Alert = "Wir haben dir einen Link zum Zurücksetzen deines Passworts gesendet.";
         }
         catch (HttpRequestException)
         {
-            Warning = "Bitte gib deine Email Adresse an, damit wir dir einen Link zum Zurücksetzen deines Passworts senden können.";
+            Alert = $"Uns ist kein Account mit dieser der Email Adresse {Email} bekannt.";
         }
     }
 }
