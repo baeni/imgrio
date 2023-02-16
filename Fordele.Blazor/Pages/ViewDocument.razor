@@ -2,15 +2,16 @@
 @using Fordele.Blazor.Backend.Interfaces;
 @using Fordele.Blazor.Backend.Models;
 @using Fordele.Blazor.Backend.Services;
+@using Fordele.Blazor.Backend.Utils;
 
 <HeadContent>
     <meta name="title" content="@UploadedFile.Extension"/>
     <meta property="og:title" content="@UploadedFile.Extension"/>
     <meta name="twitter:title" content="@UploadedFile.Extension"/>
 
-    <meta name="description" content="@UploadedFile.FancyCreatedOrModified">
-    <meta property="og:description" content="@UploadedFile.FancyCreatedOrModified"/>
-    <meta name="twitter:description" content="@UploadedFile.FancyCreatedOrModified"/>
+    <meta name="description" content="@UploadedFile.ToFancyCreatedOrModifiedString()">
+    <meta property="og:description" content="@UploadedFile.ToFancyCreatedOrModifiedString()"/>
+    <meta name="twitter:description" content="@UploadedFile.ToFancyCreatedOrModifiedString()"/>
 </HeadContent>
 
 <PageTitle>Dokument</PageTitle>
@@ -21,7 +22,7 @@
         <p>@File.ReadAllText(Path.Combine(UploadedFileService.DataPath, $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}"))</p>
     }
 
-    <p class="fs-5 text-muted">@UploadedFile.Size MB</p>
+    <p class="fs-5 text-muted">@UploadedFile.ToFormattedSizeString()</p>
 
     <a class="btn btn-primary" href="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" download>Herunterladen</a>
 </div>
