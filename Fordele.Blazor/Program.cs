@@ -1,10 +1,5 @@
-using Firebase.Auth;
-using Fordele.Blazor.Backend.Models;
 using Fordele.Blazor.Backend.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Identity;
 
 namespace Fordele.Blazor
 {
