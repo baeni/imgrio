@@ -15,38 +15,48 @@ namespace Fordele.Blazor.Backend.Services
 
         public string DataPath { get; }
 
-        public IEnumerable<IUploadedFile> GetUploadedFiles()
+        public IEnumerable<UploadedImage> GetUploadedImages()
         {
-            var uploadedFiles = new List<IUploadedFile>();
+            var uploadedImages = new List<UploadedImage>();
 
-            foreach (var filePath in Directory.GetFiles(DataPath))
+            foreach (var imagePath in Directory.GetFiles(Path.Combine(DataPath, "images")))
             {
-                var fileInfo = new FileInfo(filePath);
-                var split = fileInfo.Name.Split('.');
+                var info = new FileInfo(imagePath);
+                var split = info.Name.Split('.');
 
                 var id = Guid.Parse(split[0]);
                 var extension = split[1];
-                var size = fileInfo.Length;
-                var createdAt = fileInfo.CreationTime;
-                var modifiedAt = fileInfo.LastWriteTime;
+                var size = info.Length;
+                var createdAt = info.CreationTime;
+                var modifiedAt = info.LastWriteTime;
 
-                var uploadedFile = new UploadedFile(id, extension, size, createdAt, modifiedAt);
-                uploadedFiles.Add(uploadedFile);
+                uploadedImages.Add(
+                    new UploadedImage(id, extension, size, createdAt, modifiedAt));
             }
 
-            return uploadedFiles;
+            return uploadedImages;
         }
 
-        public IEnumerable<IUploadedFile> GetUploadedImages()
+        public IEnumerable<UploadedDocument> GetUploadedDocuments()
         {
-            return GetUploadedFiles().Where(uploadedFile =>
-                uploadedFile.Extension == "png" || uploadedFile.Extension == "jpg" || uploadedFile.Extension == "jpeg");
-        }
+            var uploadedDocuments = new List<UploadedDocument>();
 
-        public IEnumerable<IUploadedFile> GetUploadedDocuments()
-        {
-            return GetUploadedFiles().Where(uploadedFile =>
-                uploadedFile.Extension == "txt" || uploadedFile.Extension == "zip" || uploadedFile.Extension == "jar");
+            foreach (var documentPath in Directory.GetFiles(Path.Combine(DataPath, "documents")))
+            {
+                var info = new FileInfo(documentPath);
+                var split = info.Name.Split('.');
+
+                var id = Guid.Parse(split[0]);
+                var extension = split[1];
+                var size = info.Length;
+                var createdAt = info.CreationTime;
+                var modifiedAt = info.LastWriteTime;
+
+                uploadedDocuments.Add(
+                    new UploadedDocument(id, extension, size, createdAt, modifiedAt));
+            }
+
+            return uploadedDocuments;
         }
     }
 }
