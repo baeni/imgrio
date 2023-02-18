@@ -17,24 +17,15 @@ namespace Fordele.Blazor.Backend.Utils
             };
         }
 
-        public static string ToFancyCreatedOrModifiedString(this IUploadedFile uploadedFile)
+        public static string ToFancyCreatedString(this IUploadedFile uploadedFile)
         {
             string? str;
 
             var createdDate = uploadedFile.CreatedAt.Date;
-            var modifiedDate = uploadedFile.ModifiedAt.Date;
             var nowDate = DateTime.UtcNow.Date;
 
-            if (modifiedDate == createdDate)
-            {
-                if (createdDate == nowDate) { str = "Heute hochgeladen"; }
-                else { str = $"Hochgeladen am {createdDate.ToString("dd.MM.yyyy")}"; }
-            }
-            else
-            {
-                if (modifiedDate == nowDate) { str = "Heute zuletzt verändert"; }
-                else { str = $"Zuletzt verändert am {modifiedDate.ToString("dd.MM.yyyy")}"; }
-            }
+            if (createdDate == nowDate) { str = "Heute hochgeladen"; }
+            else { str = $"Hochgeladen am {createdDate.ToString("dd.MM.yyyy")}"; }
 
             return str;
         }
