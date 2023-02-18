@@ -16,7 +16,7 @@ else
     <PageTitle>Bild</PageTitle>
 
     <div class="text-center">
-        <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", "images", $"{UploadedImage.Id}.{UploadedImage.Extension}")" style="object-fit: cover;" />
+        <img class="max-vh-85 mw-100 rounded shadow-lg" id="image" src="@Path.Combine("data", "images", $"{UploadedImage.Id}.{UploadedImage.Extension}")" style="object-fit: cover;" />
 
         <p class="fs-5 text-muted">@UploadedImage.ToFormattedSizeString()</p>
     </div>
