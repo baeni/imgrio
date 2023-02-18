@@ -1,22 +1,26 @@
-﻿@page "/v/image/{id:guid}"
+﻿@page "/i/{id:guid}"
 @using Fordele.Blazor.Backend.Interfaces;
 @using Fordele.Blazor.Backend.Models;
 @using Fordele.Blazor.Backend.Services;
 @using Fordele.Blazor.Backend.Utils;
 
-<HeadContent>
-    <meta property="og:image" content="https://fordele.azurewebsites.net/@Path.Combine("data", $"{UploadedFile.Id}.{UploadedFile.Extension}")">
-    <meta name="twitter:image:src" content="https://fordele.azurewebsites.net/@Path.Combine("data", $"{UploadedFile.Id}.{UploadedFile.Extension}")">
-    <meta name="twitter:card" content="summary_large_image">
-</HeadContent>
+@if (UploadedImage == null) { <NotFound /> }
+else
+{
+    <HeadContent>
+        <meta property="og:image" content="https://fordele.azurewebsites.net/@Path.Combine("data", "images", $"{UploadedImage.Id}.{UploadedImage.Extension}")">
+        <meta name="twitter:image:src" content="https://fordele.azurewebsites.net/@Path.Combine("data", "images", $"{UploadedImage.Id}.{UploadedImage.Extension}")">
+        <meta name="twitter:card" content="summary_large_image">
+    </HeadContent>
 
-<PageTitle>Bild</PageTitle>
+    <PageTitle>Bild</PageTitle>
 
-<div class="text-center">
-    <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", $"{UploadedFile.Id}.{UploadedFile.Extension}")" style="object-fit: cover;" />
+    <div class="text-center">
+        <img class="max-vh-85 mw-100 rounded shadow-lg" src="@Path.Combine("data", "images", $"{UploadedImage.Id}.{UploadedImage.Extension}")" style="object-fit: cover;" />
 
-    <p class="fs-5 text-muted">@UploadedFile.ToFormattedSizeString()</p>
-</div>
+        <p class="fs-5 text-muted">@UploadedImage.ToFormattedSizeString()</p>
+    </div>
+}
 
 @code {
     [Inject]
@@ -25,11 +29,11 @@
     [Parameter]
     public Guid Id { get; set; }
 
-    private IUploadedFile UploadedFile { get; set; } = null!;
+    private UploadedImage? UploadedImage { get; set; } = null!;
 
     protected override void OnInitialized()
     {
-        UploadedFile = UploadedFileService.GetUploadedFiles().First(x => x.Id == Id);
+        UploadedImage = UploadedFileService.GetUploadedImages().FirstOrDefault(x => x.Id == Id);
 
         base.OnInitialized();
     }

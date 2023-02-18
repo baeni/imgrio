@@ -1,31 +1,35 @@
-﻿@page "/v/document/{id:guid}"
+﻿@page "/d/{id:guid}"
 @using Fordele.Blazor.Backend.Interfaces;
 @using Fordele.Blazor.Backend.Models;
 @using Fordele.Blazor.Backend.Services;
 @using Fordele.Blazor.Backend.Utils;
 
-<HeadContent>
-    <meta name="title" content="@UploadedFile.Extension"/>
-    <meta property="og:title" content="@UploadedFile.Extension"/>
-    <meta name="twitter:title" content="@UploadedFile.Extension"/>
+@if (UploadedDocument == null) { <NotFound/> }
+else
+{
+    <HeadContent>
+        <meta name="title" content="@UploadedDocument.Extension" />
+        <meta property="og:title" content="@UploadedDocument.Extension" />
+        <meta name="twitter:title" content="@UploadedDocument.Extension" />
 
-    <meta name="description" content="@UploadedFile.ToFancyCreatedOrModifiedString()">
-    <meta property="og:description" content="@UploadedFile.ToFancyCreatedOrModifiedString()"/>
-    <meta name="twitter:description" content="@UploadedFile.ToFancyCreatedOrModifiedString()"/>
-</HeadContent>
+        <meta name="description" content="@UploadedDocument.ToFancyCreatedString()">
+        <meta property="og:description" content="@UploadedDocument.ToFancyCreatedString()" />
+        <meta name="twitter:description" content="@UploadedDocument.ToFancyCreatedString()" />
+    </HeadContent>
 
-<PageTitle>Dokument</PageTitle>
+    <PageTitle>Dokument</PageTitle>
 
-<div class="text-center">
-    @if (UploadedFile.Extension == "txt")
-    {
-        <p>@File.ReadAllText(Path.Combine(UploadedFileService.DataPath, $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}"))</p>
-    }
+    <div class="text-center">
+        @if (UploadedDocument.Extension == "txt")
+        {
+            <p>@File.ReadAllText(Path.Combine(UploadedFileService.DataPath, "documents", $"{UploadedDocument.Id.ToString()}.{UploadedDocument.Extension}"))</p>
+        }
 
-    <p class="fs-5 text-muted">@UploadedFile.ToFormattedSizeString()</p>
+        <p class="fs-5 text-muted">@UploadedDocument.ToFormattedSizeString()</p>
 
-    <a class="btn btn-primary" href="@Path.Combine("data", $"{UploadedFile.Id.ToString()}.{UploadedFile.Extension}")" download>Herunterladen</a>
-</div>
+        <a class="btn btn-primary" href="@Path.Combine("data", "documents", $"{UploadedDocument.Id.ToString()}.{UploadedDocument.Extension}")" download>Herunterladen</a>
+    </div>
+}
 
 @code {
     [Inject]
@@ -34,11 +38,11 @@
     [Parameter]
     public Guid Id { get; set; }
 
-    private IUploadedFile UploadedFile { get; set; } = null!;
+    private UploadedDocument? UploadedDocument { get; set; } = null!;
 
     protected override void OnInitialized()
     {
-        UploadedFile = UploadedFileService.GetUploadedFiles().First(x => x.Id == Id);
+        UploadedDocument = UploadedFileService.GetUploadedDocuments().FirstOrDefault(x => x.Id == Id);
 
         base.OnInitialized();
     }
