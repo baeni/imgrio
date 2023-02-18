@@ -1,5 +1,5 @@
-﻿@page "/v/documents"
-@using Fordele.Blazor.Backend.Interfaces;
+﻿@page "/documents"
+@using Fordele.Blazor.Backend.Models;
 @using Fordele.Blazor.Backend.Services;
 @attribute [Authorize]
 
@@ -20,12 +20,12 @@
     [Inject]
     public UploadedFileService UploadedFileService { get; set; } = null!;
 
-    private IEnumerable<IUploadedFile> UploadedDocuments { get; set; } = null!;
+    private IEnumerable<UploadedDocument> UploadedDocuments { get; set; } = null!;
 
     protected override void OnInitialized()
     {
         UploadedDocuments = UploadedFileService.GetUploadedDocuments()
-            .OrderByDescending(uploadedDocument => uploadedDocument.ModifiedAt);
+            .OrderByDescending(uploadedDocument => uploadedDocument.CreatedAt);
 
         base.OnInitialized();
     }

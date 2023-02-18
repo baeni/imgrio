@@ -1,5 +1,5 @@
-﻿@page "/v/images"
-@using Fordele.Blazor.Backend.Interfaces;
+﻿@page "/images"
+@using Fordele.Blazor.Backend.Models;
 @using Fordele.Blazor.Backend.Services;
 @attribute [Authorize]
 
@@ -32,12 +32,12 @@
     [Inject]
     public UploadedFileService UploadedFileService { get; set; } = null!;
 
-    private IUploadedFile[] UploadedImages { get; set; } = null!;
+    private UploadedImage[] UploadedImages { get; set; } = null!;
 
     protected override void OnInitialized()
     {
         UploadedImages = UploadedFileService.GetUploadedImages()
-            .OrderByDescending(uploadedImage => uploadedImage.ModifiedAt).ToArray();
+            .OrderByDescending(uploadedImage => uploadedImage.CreatedAt).ToArray();
 
         base.OnInitialized();
     }
