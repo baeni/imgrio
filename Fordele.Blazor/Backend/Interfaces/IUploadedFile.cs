@@ -9,7 +9,5 @@
         double Size { get; }
 
         DateTime CreatedAt { get; }
-
-        DateTime ModifiedAt { get; }
     }
 }
