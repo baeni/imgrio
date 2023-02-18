@@ -1,11 +1,11 @@
-﻿@using Fordele.Blazor.Backend.Interfaces;
+﻿@using Fordele.Blazor.Backend.Models;
 @using Fordele.Blazor.Backend.Services;
 
-<a href="/v/image/@UploadedImage.Id">
-    <img class="w-100 mb-4 rounded-3 shadow-sm" src="@Path.Combine("data", $"{UploadedImage.Id}.{UploadedImage.Extension}")" style="object-fit: cover;" />
+<a href="/i/@UploadedImage.Id">
+    <img class="w-100 mb-4 rounded-3 shadow-sm" src="@Path.Combine("data", "images", $"{UploadedImage.Id}.{UploadedImage.Extension}")" style="object-fit: cover;" />
 </a>
 
 @code {
     [Parameter]
-    public IUploadedFile UploadedImage { get; set; } = null!;
+    public UploadedImage UploadedImage { get; set; } = null!;
 }
