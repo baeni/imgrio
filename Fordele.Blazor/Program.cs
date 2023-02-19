@@ -1,4 +1,5 @@
 using Fordele.Blazor.Backend.Services;
+using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Fordele.Blazor
@@ -23,7 +24,8 @@ namespace Fordele.Blazor
                 });
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<FirebaseAuthHandler>();
-            builder.Services.AddTransient<UploadedFileService>();
+            builder.Services.AddTransient(x => FirestoreDb.Create("fordele"));
+            builder.Services.AddTransient<UserFileService>();
 
             var app = builder.Build();
 
