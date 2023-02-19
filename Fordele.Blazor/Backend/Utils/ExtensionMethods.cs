@@ -4,7 +4,7 @@ namespace Fordele.Blazor.Backend.Utils
 {
     public static class ExtensionMethods
     {
-        public static string ToFormattedSizeString(this IUploadedFile uploadedFile)
+        public static string ToFormattedSizeString(this IUserFile uploadedFile)
         {
             var size = uploadedFile.Size;
 
@@ -15,19 +15,6 @@ namespace Fordele.Blazor.Backend.Utils
                 >= 1000 => $"{Math.Round(size / 1000, 2)} KB",
                 _ => $"{Math.Round(size, 2)} B",
             };
-        }
-
-        public static string ToFancyCreatedString(this IUploadedFile uploadedFile)
-        {
-            string? str;
-
-            var createdDate = uploadedFile.CreatedAt.Date;
-            var nowDate = DateTime.UtcNow.Date;
-
-            if (createdDate == nowDate) { str = "Heute hochgeladen"; }
-            else { str = $"Hochgeladen am {createdDate.ToString("dd.MM.yyyy")}"; }
-
-            return str;
         }
     }
 }
