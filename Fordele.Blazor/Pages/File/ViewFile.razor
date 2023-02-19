@@ -1,0 +1,62 @@
+﻿@page "/f/{id:guid}"
+@using Fordele.Blazor.Backend.Interfaces;
+@using Fordele.Blazor.Backend.Models;
+@using Fordele.Blazor.Backend.Services;
+@using Fordele.Blazor.Backend.Utils;
+@using Google.Cloud.Firestore.V1;
+@using Google.Cloud.Firestore;
+
+@if (UserFile == null)
+{
+    <h1>Datei konnte nicht geladen werden</h1>
+    <p>Gründe dafür können sein: Die Datei existiert nicht; Die Datei ist fehlerhaft</p>
+}
+else
+{
+    <HeadContent>
+        <meta name="title" content="@UserFile.Extension" />
+        <meta property="og:title" content="@UserFile.Extension" />
+        <meta name="twitter:title" content="@UserFile.Extension" />
+
+        <meta name="description" content="@UserFile.ToFancyCreatedString()">
+        <meta property="og:description" content="@UserFile.ToFancyCreatedString()" />
+        <meta name="twitter:description" content="@UserFile.ToFancyCreatedString()" />
+    </HeadContent>
+
+    <PageTitle>Datei ansehen</PageTitle>
+
+    <div class="text-center">
+        <h1>@UserFile.Title</h1>
+
+        @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
+        {
+            <img class="w-100 rounded shadow-lg" id="image" src="@UserFile.FileUrl" style="object-fit: cover;" />
+        }
+
+        <div class="row justify-content-center">
+            <p class="col-auto fs-5 text-muted">Dateityp: @UserFile.Extension.ToUpper()</p>
+            <p class="col-auto fs-5 text-muted">Dateigröße: @UserFile.ToFormattedSizeString()</p>
+            <p class="col-auto fs-5 text-muted">Hochgeladen am: @UserFile.UploadedAt.ToString("dd.MM.yyyy")</p>
+        </div>
+
+        <a class="btn btn-primary" href="@UserFile.FileUrl" download>Herunterladen</a>
+    </div>
+}
+
+@code {
+    [Inject]
+    public UserFileService UserFileService { get; set; } = null!;
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private UserFile UserFile { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userFiles = await UserFileService.GetUserFiles();
+        UserFile = userFiles.Where(userFile => userFile.Id == Id).First();
+
+        base.OnInitializedAsync();
+    }
+}
