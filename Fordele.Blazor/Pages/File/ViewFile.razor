@@ -18,9 +18,9 @@ else
         <meta property="og:title" content="@UserFile.Extension" />
         <meta name="twitter:title" content="@UserFile.Extension" />
 
-        <meta name="description" content="@UserFile.ToFancyCreatedString()">
-        <meta property="og:description" content="@UserFile.ToFancyCreatedString()" />
-        <meta name="twitter:description" content="@UserFile.ToFancyCreatedString()" />
+        <meta name="description" content="@fancyUploadedAt">
+        <meta property="og:description" content="@fancyUploadedAt" />
+        <meta name="twitter:description" content="@fancyUploadedAt" />
     </HeadContent>
 
     <PageTitle>Datei ansehen</PageTitle>
@@ -30,13 +30,13 @@ else
 
         @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
         {
-            <img class="w-100 rounded shadow-lg" id="image" src="@UserFile.FileUrl" style="object-fit: cover;" />
+            <img class="mw-100 max-vh-85 rounded shadow-lg" id="image" src="@UserFile.FileUrl" style="object-fit: cover;" />
         }
 
         <div class="row justify-content-center">
-            <p class="col-auto fs-5 text-muted">Dateityp: @UserFile.Extension.ToUpper()</p>
-            <p class="col-auto fs-5 text-muted">Dateigröße: @UserFile.ToFormattedSizeString()</p>
-            <p class="col-auto fs-5 text-muted">Hochgeladen am: @UserFile.UploadedAt.ToString("dd.MM.yyyy")</p>
+            <p class="col-auto fs-5 text-muted">@fancyFileType</p>
+            <p class="col-auto fs-5 text-muted">@fancyFileSize</p>
+            <p class="col-auto fs-5 text-muted">@fancyUploadedAt</p>
         </div>
 
         <a class="btn btn-primary" href="@UserFile.FileUrl" download>Herunterladen</a>
@@ -50,6 +50,10 @@ else
     [Parameter]
     public Guid Id { get; set; }
 
+    private string fancyFileType = null!;
+    private string fancyFileSize = null!;
+    private string fancyUploadedAt = null!;
+
     private UserFile UserFile { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
@@ -57,6 +61,10 @@ else
         var userFiles = await UserFileService.GetUserFiles();
         UserFile = userFiles.Where(userFile => userFile.Id == Id).First();
 
-        base.OnInitializedAsync();
+        fancyFileType = $"Dateityp: {UserFile.Extension.ToUpper()}";
+        fancyFileSize = $"Dateigröße: {UserFile.ToFormattedSizeString()}";
+        fancyUploadedAt = $"Hochgeladen am: {UserFile.UploadedAt.ToString("dd.MM.yyyy")}";
+
+        await base.OnInitializedAsync();
     }
 }
