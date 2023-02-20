@@ -7,7 +7,7 @@
                 aria-controls="navbarCollapse" aria-label="Toggle navigation" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse @NavBarCssClass text-center" id="navbarCollapse" @onclick="ToggleNavMenu">
+        <div class="collapse navbar-collapse @NavBarCssClass text-center" id="navbarCollapse">
             <!--Navigation section-->
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
@@ -16,12 +16,12 @@
                     </NavLink>
                 </li>
                 <li class="nav-item">
-                    <NavLink class="nav-link" href="/f/upload" Match="NavLinkMatch.All">
+                    <NavLink class="nav-link" href="/f/upload" Match="NavLinkMatch.Prefix">
                         Datei hochladen
                     </NavLink>
                 </li>
                 <li class="nav-item">
-                    <NavLink class="nav-link" href="/sharex" Match="NavLinkMatch.All">
+                    <NavLink class="nav-link" href="/sharex" Match="NavLinkMatch.Prefix">
                         ShareX
                     </NavLink>
                 </li>
@@ -32,17 +32,25 @@
                 @if (AuthUser.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
-                        <NavLink class="nav-link" href="/u/dashboard" Match="NavLinkMatch.All">
-                            Dashboard
-                        </NavLink>
+                        <div class="dropdown">
+                            <button class="btn btn-dark" @onclick="ToggleDropdown">
+                                <strong>@AuthUser.Identity.Name</strong>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow @DropdownCssClass" @onclick="ToggleDropdown">
+                                <li><a class="dropdown-item" href="/u/files">Meine Dateien</a></li>
+                                <li><a class="dropdown-item" href="/u/account">Mein Account</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/u/sign-out">Abmelden</a></li>
+                            </ul>
+                        </div>
                     </li>
                 }
                 else
                 {
                     <li class="nav-item">
-                        <NavLink class="nav-link" href="/u/sign-in" Match="NavLinkMatch.All">
-                            Anmelden
-                        </NavLink>
+                        <a class="btn btn-dark" href="/u/sign-in">
+                            <strong>Anmelden</strong>
+                        </a>
                     </li>
                 }
             </ul>
@@ -58,7 +66,10 @@
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
     private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
 
-    public ClaimsPrincipal AuthUser { get; set; } = null!;
+    private bool collapseDropdown = true;
+    private string? DropdownCssClass => collapseDropdown ? null : "show";
+
+    private ClaimsPrincipal AuthUser { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,5 +82,10 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ToggleDropdown()
+    {
+        collapseDropdown = !collapseDropdown;
     }
 }
