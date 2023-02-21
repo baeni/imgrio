@@ -5,7 +5,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Firebase.Auth;
 using Fordele.Blazor.Backend.Services;
-using Microsoft.AspNetCore.Components;
 
 namespace Fordele.Blazor.Pages.User
 {
@@ -26,11 +25,9 @@ namespace Fordele.Blazor.Pages.User
         {
             ReturnUrl = Url.Content("~/");
 
-            FirebaseAuthLink auth;
-
             try
             {
-                auth = await _firebaseAuthHandler.FirebaseAuthProvider.SignInWithEmailAndPasswordAsync(email, password);
+                var auth = await _firebaseAuthHandler.FirebaseAuthProvider.SignInWithEmailAndPasswordAsync(email, password);
                 var token = auth.FirebaseToken;
 
                 if (token == null)
@@ -77,9 +74,9 @@ namespace Fordele.Blazor.Pages.User
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
             }
-            catch (FirebaseAuthException e)
+            catch (FirebaseAuthException)
             {
-
+                return LocalRedirect("/u/sign-in");
             }
 
             return LocalRedirect("/u/files");
