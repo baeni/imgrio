@@ -13,6 +13,7 @@ namespace Fordele.Blazor
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
+            builder.Services.AddControllers();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -45,6 +46,7 @@ namespace Fordele.Blazor
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.MapControllers();
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
 
