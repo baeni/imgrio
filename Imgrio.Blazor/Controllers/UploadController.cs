@@ -9,13 +9,15 @@ namespace Imgrio.Blazor.Controllers
     [Route("api/v1/upload")]
     public class UserFileController : ControllerBase
     {
-        private readonly UserFileService _userFileService;
         private readonly FirebaseAuthHandler _firebaseAuthHandler;
+        private readonly UserFileService _userFileService;
+        private readonly FirestoreDb _firestoreDb;
 
-        public UserFileController(UserFileService userFileService, FirebaseAuthHandler firebaseAuthHandler)
+        public UserFileController(FirebaseAuthHandler firebaseAuthHandler, UserFileService userFileService, FirestoreDb firestoreDb)
         {
             _userFileService = userFileService;
             _firebaseAuthHandler = firebaseAuthHandler;
+            _firestoreDb = firestoreDb;
         }
 
         [HttpPost]
@@ -65,9 +67,7 @@ namespace Imgrio.Blazor.Controllers
             }
 
             // Save file information to firestore
-            var db = FirestoreDb.Create("fordele");
-
-            var docRef = db.Collection("files").Document(id);
+            var docRef = _firestoreDb.Collection("files").Document(id);
             var fields = new Dictionary<string, object>
             {
                 { "title", title },
@@ -78,7 +78,7 @@ namespace Imgrio.Blazor.Controllers
             };
             await docRef.SetAsync(fields);
 
-            return Ok($"https://fildele.azurewebsites.net/f/{id}");
+            return Ok($"https://imgrio.azurewebsites.net/f/{id}");
         }
 
         public class UserFileRequest
