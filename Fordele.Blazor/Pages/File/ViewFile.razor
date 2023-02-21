@@ -13,15 +13,26 @@
 }
 else
 {
-    <HeadContent>
-        <meta name="title" content="@UserFile.Extension" />
-        <meta property="og:title" content="@UserFile.Extension" />
-        <meta name="twitter:title" content="@UserFile.Extension" />
+    @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
+    {
+        <HeadContent>
+            <meta property="og:image" content="https://fildele.azurewebsites.net/@Path.Combine("data", $"{UserFile.Id}.{UserFile.Extension}")">
+            <meta name="twitter:image:src" content="https://fildele.azurewebsites.net/@Path.Combine("data", $"{UserFile.Id}.{UserFile.Extension}")">
+            <meta name="twitter:card" content="summary_large_image">
+        </HeadContent>
+    }
+    else
+    {
+        <HeadContent>
+            <meta name="title" content="@UserFile.Extension" />
+            <meta property="og:title" content="@UserFile.Extension" />
+            <meta name="twitter:title" content="@UserFile.Extension" />
 
-        <meta name="description" content="@fancyUploadedAt">
-        <meta property="og:description" content="@fancyUploadedAt" />
-        <meta name="twitter:description" content="@fancyUploadedAt" />
-    </HeadContent>
+            <meta name="description" content="@fancyUploadedAt">
+            <meta property="og:description" content="@fancyUploadedAt" />
+            <meta name="twitter:description" content="@fancyUploadedAt" />
+        </HeadContent>
+    }
 
     <PageTitle>Datei ansehen</PageTitle>
 
@@ -30,7 +41,7 @@ else
 
         @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
         {
-            <img class="mw-100 max-vh-85 rounded shadow-lg" id="image" src="@UserFile.FileUrl" style="object-fit: cover;" />
+            <img class="mw-100 max-vh-85 rounded shadow-lg mb-4" id="image" src="@UserFile.FileUrl" style="object-fit: cover;" />
         }
 
         <div class="row justify-content-center">
