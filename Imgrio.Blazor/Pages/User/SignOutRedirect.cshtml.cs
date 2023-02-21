@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Fordele.Blazor.Pages.User
+namespace Imgrio.Blazor.Pages.User
 {
     public class SignOutRedirectModel : PageModel
     {

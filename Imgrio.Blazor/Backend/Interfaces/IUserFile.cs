@@ -1,4 +1,4 @@
-﻿namespace Fordele.Blazor.Backend.Interfaces
+﻿namespace Imgrio.Blazor.Backend.Interfaces
 {
     public interface IUserFile
     {

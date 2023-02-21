@@ -1,9 +1,9 @@
 ﻿using Firebase.Auth;
-using Fordele.Blazor.Backend.Services;
+using Imgrio.Blazor.Backend.Services;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fordele.Blazor.Controllers
+namespace Imgrio.Blazor.Controllers
 {
     [ApiController]
     [Route("api/v1/upload")]

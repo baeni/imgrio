@@ -1,6 +1,6 @@
-﻿using Fordele.Blazor.Backend.Interfaces;
+﻿using Imgrio.Blazor.Backend.Interfaces;
 
-namespace Fordele.Blazor.Backend.Utils
+namespace Imgrio.Blazor.Backend.Utils
 {
     public static class ExtensionMethods
     {

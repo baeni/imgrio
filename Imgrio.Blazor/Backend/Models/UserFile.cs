@@ -1,6 +1,6 @@
-﻿using Fordele.Blazor.Backend.Interfaces;
+﻿using Imgrio.Blazor.Backend.Interfaces;
 
-namespace Fordele.Blazor.Backend.Models
+namespace Imgrio.Blazor.Backend.Models
 {
     public class UserFile : IUserFile
     {

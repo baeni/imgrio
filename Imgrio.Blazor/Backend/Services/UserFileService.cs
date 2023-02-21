@@ -1,7 +1,7 @@
-﻿using Fordele.Blazor.Backend.Models;
+﻿using Imgrio.Blazor.Backend.Models;
 using Google.Cloud.Firestore;
 
-namespace Fordele.Blazor.Backend.Services
+namespace Imgrio.Blazor.Backend.Services
 {
     public class UserFileService
     {

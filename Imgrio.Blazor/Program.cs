@@ -1,8 +1,8 @@
-using Fordele.Blazor.Backend.Services;
+using Imgrio.Blazor.Backend.Services;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace Fordele.Blazor
+namespace Imgrio.Blazor
 {
     public class Program
     {
@@ -25,7 +25,7 @@ namespace Fordele.Blazor
                 });
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<FirebaseAuthHandler>();
-            builder.Services.AddTransient(x => FirestoreDb.Create("fordele"));
+            builder.Services.AddTransient(x => FirestoreDb.Create("imgrio"));
             builder.Services.AddTransient<UserFileService>();
 
             var app = builder.Build();

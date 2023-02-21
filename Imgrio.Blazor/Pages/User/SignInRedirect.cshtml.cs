@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Firebase.Auth;
-using Fordele.Blazor.Backend.Services;
+using Imgrio.Blazor.Backend.Services;
 
-namespace Fordele.Blazor.Pages.User
+namespace Imgrio.Blazor.Pages.User
 {
     public class SignInRedirectModel : PageModel
     {
