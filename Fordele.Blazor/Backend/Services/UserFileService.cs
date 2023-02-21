@@ -21,15 +21,15 @@ namespace Fordele.Blazor.Backend.Services
         {
             var userFiles = new List<UserFile>();
 
-            var collectionSnapshot = await _firestoreDb.Collection("uploads").GetSnapshotAsync();
+            var collectionSnapshot = await _firestoreDb.Collection("files").GetSnapshotAsync();
 
             foreach(var documentSnapshot in collectionSnapshot.Documents)
             {
-                var title = documentSnapshot.GetValue<string>("Title");
-                var extension = documentSnapshot.GetValue<string>("Extension");
-                var size = documentSnapshot.GetValue<double>("Size");
-                var uploadedAt = documentSnapshot.GetValue<DateTime>("UploadedAt");
-                var uploadedBy = documentSnapshot.GetValue<string>("UploadedBy");
+                var title = documentSnapshot.GetValue<string>("title");
+                var extension = documentSnapshot.GetValue<string>("extension");
+                var size = documentSnapshot.GetValue<double>("size");
+                var uploadedAt = documentSnapshot.GetValue<DateTime>("uploadedAt");
+                var uploadedBy = documentSnapshot.GetValue<string>("uploadedBy");
 
                 userFiles.Add(new UserFile(Guid.Parse(documentSnapshot.Id), title, extension, size, uploadedAt, uploadedBy));
             }
