@@ -18,7 +18,7 @@ namespace Fordele.Blazor
                 .AddCookie(options =>
                 {
                     options.Cookie.Name = "Fordele.Auth";
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                    options.ExpireTimeSpan = TimeSpan.FromDays(7);
                     options.SlidingExpiration = true;
                     options.LoginPath = "/u/sign-in";
                     options.LogoutPath = "/u/sign-out";
