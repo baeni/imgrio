@@ -20,7 +20,7 @@ namespace Fordele.Blazor.Backend.Models
 
         public string FileName => $"{Id}.{Extension}";
 
-        public string FileUrl => Path.Combine("https://localhost:7223", "data", $"{Id}.{Extension}");
+        public string FileUrl => Path.Combine("data", $"{Id}.{Extension}");
 
         public string Title { get; }
 
