@@ -1,0 +1,114 @@
+﻿@page "/sharex"
+
+<h1>ShareX</h1>
+
+<div class="mb-5">
+    <h3>Einleitung</h3>
+    <p>ShareX ist eine beliebte Open-Source Screenshot Verwaltungs Software für Microsoft Windows. Hier erfährst du, wie du ShareX mit Fordele konfigurierst.</p>
+</div>
+
+<div class="mb-5">
+    <h3>Installation</h3>
+    <p>Zu Beginn solltest du erstmal ShareX installieren. Klicke dafür <a href="https://getsharex.com/" target="_blank">hier</a> und anschließend einfach auf "Download", um die aktuellste Version herunterzuladen.</p>
+    <p>Beim Setup kannst du einfach immer auf "Weiter" klicken, bis die Installation von ShareX abgeschlossen ist.</p>
+</div>
+
+<div class="mb-5">
+    <h3>Konfiguration</h3>
+    <p>Als nächstes konfigurieren wir alles so, dass ShareX mit Fordele funktioniert. Navigiere dafür zur folgenden Einstellung:</p>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Ziele</li>
+            <li class="breadcrumb-item">Benutzerdefinierte Uploader-Einstellungen...</li>
+        </ol>
+    </nav>
+
+    <p>Treffe dann alle Einstellungen wiefolgt:</p>
+
+    <div class="mb-4">
+        <label for="destionationType">Destination Type</label>
+        <input class="form-control text-muted font-monospace" id="destionationType" value="Bilduploader, Textuploader, Dateiuploader" readonly>
+    </div>
+
+    <div class="mb-4">
+        <label for="method">Method</label>
+        <input class="form-control text-muted font-monospace" id="method" value="POST" aria-describedby="methodHelper" readonly>
+    </div>
+
+    <div class="mb-4">
+        <label for="requestUrl">Destination Type</label>
+        <input class="form-control text-muted font-monospace" id="requestUrl" value="https://fildele.azurewebsites.net/api/v1/Upload" readonly>
+    </div>
+
+    <div class="mb-4">
+        <label for="body">Body</label>
+        <input class="form-control text-muted font-monospace" id="body" value="Form data (multipart/form-data)" readonly>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Name</span>
+            </div>
+            <input class="form-control text-muted font-monospace" value="Email" aria-describedby="basic-addon1" readonly>
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Value</span>
+            </div>
+            <input class="form-control text-muted font-monospace" value="deine@email.de" aria-describedby="basic-addon1" readonly>
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Name</span>
+            </div>
+            <input class="form-control text-muted font-monospace" value="Password" aria-describedby="basic-addon1" readonly>
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Value</span>
+            </div>
+            <input class="form-control text-muted font-monospace" value="De!nPassw0rt" aria-describedby="basic-addon1" readonly>
+        </div>
+        <small id="emailHelp" class="form-text text-muted">Du hast noch keine Zugangsdaten? Klicke <a href="#!">hier</a>, um dir einen Account zu erstellen.</small>
+    </div>
+
+    <div class="mb-4">
+        <label for="fileFormName">File form name</label>
+        <input class="form-control text-muted font-monospace" id="fileFormName" value="file" readonly>
+    </div>
+
+    <div class="mb-4">
+        <label for="url">URL</label>
+        <input class="form-control text-muted font-monospace" id="url" value="{response}" readonly>
+    </div>
+
+    <p>Zu guter letzt aktivieren wir unsere Konfiguration.</p>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Ziele</li>
+            <li class="breadcrumb-item">Bilduploader</li>
+            <li class="breadcrumb-item">Eigener Bilduploader</li>
+        </ol>
+    </nav>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Ziele</li>
+            <li class="breadcrumb-item">Textuploader</li>
+            <li class="breadcrumb-item">Eigener Textuploader</li>
+        </ol>
+    </nav>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Ziele</li>
+            <li class="breadcrumb-item">Dateiuploader</li>
+            <li class="breadcrumb-item">Eigener Dateiuploader</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="mb-5">
+    <h3>Überblick</h3>
+    <p>Anschließen sollten deine Einstellungen ungefähr so aussehen:</p>
+</div>
+
+@code {
+
+}
