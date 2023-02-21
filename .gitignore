@@ -351,3 +351,6 @@ MigrationBackup/
 
 # data folder
 /Fordele.Blazor/wwwroot/data/
+
+# google app credentials
+google-app-credentials.json
