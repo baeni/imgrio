@@ -350,7 +350,7 @@ MigrationBackup/
 .ionide/
 
 # data folder
-/imgrio.Blazor/wwwroot/data/
+/Imgrio.Blazor/wwwroot/data/
 
 # google app credentials
 google-app-credentials.json
