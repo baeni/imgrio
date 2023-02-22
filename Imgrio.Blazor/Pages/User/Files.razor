@@ -19,11 +19,12 @@
                 <div class="card">
                     <div class="card-body row">
                         <div class="col">
-                            <a class="card-title h5 text-reset" href="/f/@userFile.Id">@userFile.Title</a>
+                            <h5 class="card-title">@userFile.Title</h5>
                             <p class="card-text">@userFile.UploadedAt.ToRelativeDateString()</p>
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-close" aria-label="Delete"></button>
+                            <a class="card-link" href="/f/@userFile.Id">Ansehen</a>
+                            <button class="btn btn-link">Löschen</button>
                         </div>
                     </div>
                 </div>
