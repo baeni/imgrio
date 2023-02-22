@@ -17,7 +17,7 @@ namespace Imgrio.Blazor
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.Cookie.Name = "Fordele.Auth";
+                    options.Cookie.Name = "imgrio.Auth";
                     options.ExpireTimeSpan = TimeSpan.FromDays(7);
                     options.SlidingExpiration = true;
                     options.LoginPath = "/u/sign-in";
