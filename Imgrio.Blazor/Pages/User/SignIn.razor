@@ -2,6 +2,7 @@
 @using Imgrio.Blazor.Backend.Services;
 @using Firebase.Auth;
 @using System.Web;
+@using System.Security.Claims;
 
 <PageTitle>Anmelden</PageTitle>
 
@@ -37,12 +38,32 @@
 
 @code {
     [Inject]
+    public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; } = null!;
+
+    [Inject]
     public FirebaseAuthHandler FirebaseAuthHandler { get; set; } = null!;
+
+    private ClaimsPrincipal AuthUser { get; set; } = null!;
 
     private string Alert { get; set; } = null!;
 
     private string Email { get; set; } = null!;
     private string Password { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        AuthUser = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
+
+        if (AuthUser.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/u/files");
+        }
+    }
 
     private async Task SendForgotPasswordMail()
     {
