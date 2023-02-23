@@ -2,8 +2,7 @@
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
             <NotAuthorized>
-                <PageTitle>Keine Berechtigung</PageTitle>
-                <p role="alert">Du bist nicht dazu berechtigt, diese Seite anzusehen.</p>
+                <NotAuthorized/>
             </NotAuthorized>
         </AuthorizeRouteView>
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
