@@ -73,9 +73,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        AuthUser = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
-
         await base.OnInitializedAsync();
+
+        AuthUser = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
     }
 
     private void ToggleNavMenu()
