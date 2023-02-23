@@ -38,7 +38,8 @@ namespace Imgrio.Blazor.Pages.User
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, auth.User.LocalId),
-                    new Claim(ClaimTypes.Name, auth.User.Email),
+                    new Claim(ClaimTypes.Name, auth.User.Email.Split('@')[0]),
+                    new Claim(ClaimTypes.Email, auth.User.Email),
                     new Claim(ClaimTypes.Role, "User"),
                 };
 
