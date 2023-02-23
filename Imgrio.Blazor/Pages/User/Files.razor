@@ -16,26 +16,26 @@ else
 {
     @foreach (var group in GroupedUserFiles)
     {
-        <h3>@group.Key.ToString("dd.MM.yyyy")</h3>
+        <p class="h5 text-muted mb-3">@group.Key.ToString("dd.MM.yyyy")</p>
 
-        <div class="row g-2">
-        @foreach (var userFile in group.ToList())
-        {
-            <div class="col-sm-12 col-lg-6">
-                <div class="card">
-                    <div class="card-body row">
-                        <div class="col">
-                            <h5 class="card-title">@userFile.Title</h5>
-                            <p class="card-text">@userFile.UploadedAt.ToRelativeDateString()</p>
-                        </div>
-                        <div class="col-auto">
-                            <a class="card-link" href="/f/@userFile.Id">Ansehen</a>
-                            <button class="btn btn-link">Löschen</button>
+        <div class="row g-2 mb-5">
+            @foreach (var userFile in group.ToList())
+            {
+                <div class="col-sm-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-body row">
+                            <div class="col">
+                                <p class="card-title fw-bold">@userFile.Title</p>
+                                <small class="text-muted">@userFile.UploadedAt.ToRelativeDateString()</small>
+                            </div>
+                            <div class="col-auto">
+                                <a class="card-link" href="/f/@userFile.Id">Ansehen</a>
+                                <a class="card-link" href="/f/@userFile.Id">Löschen</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
         </div>
     }
 }
