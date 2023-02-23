@@ -8,8 +8,7 @@
 
 @if (UserFile == null)
 {
-    <h1>Datei konnte nicht geladen werden</h1>
-    <p>Gründe dafür können sein: Die Datei existiert nicht; Die Datei ist fehlerhaft</p>
+    <p class="text-muted">Ich habe überall gesucht, aber die angeforderte Datei ist mir dabei nicht zu begegnet...</p>
 }
 else
 {
@@ -69,13 +68,13 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var userFiles = await UserFileService.GetUserFiles();
-        UserFile = userFiles.Where(userFile => userFile.Id == Id).First();
+        await base.OnInitializedAsync();
+
+        UserFile = (await UserFileService.GetUserFiles()).First(userFile => userFile.Id == Id);
 
         fancyFileType = $"Dateityp: {UserFile.Extension.ToUpper()}";
         fancyFileSize = $"Dateigröße: {UserFile.ToFormattedSizeString()}";
         fancyUploadedAt = $"Hochgeladen am: {UserFile.UploadedAt.ToString("dd.MM.yyyy")}";
 
-        await base.OnInitializedAsync();
     }
 }
