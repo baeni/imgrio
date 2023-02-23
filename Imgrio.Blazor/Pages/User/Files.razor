@@ -8,11 +8,17 @@
 
 <h1>Meine Dateien</h1>
 
-@foreach (var group in GroupedUserFiles)
+@if (GroupedUserFiles.Count() <= 0)
 {
-    <h3>@group.Key.ToString("dd.MM.yyyy")</h3>
+    <p class="text-muted">Du scheinst noch keine Dateien hochgeladen zu haben. Wenn du das ändern möchtest, kannst du das <a href="/f/upload">hier</a> oder via <a href="/sharex">ShareX</a> tun!</p>
+}
+else
+{
+    @foreach (var group in GroupedUserFiles)
+    {
+        <h3>@group.Key.ToString("dd.MM.yyyy")</h3>
 
-    <div class="row g-2">
+        <div class="row g-2">
         @foreach (var userFile in group.ToList())
         {
             <div class="col-sm-12 col-lg-6">
@@ -30,7 +36,8 @@
                 </div>
             </div>
         }
-    </div>
+        </div>
+    }
 }
 
 @code {
