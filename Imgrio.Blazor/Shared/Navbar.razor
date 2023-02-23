@@ -35,6 +35,7 @@
                         <div class="dropdown">
                             <button class="btn btn-dark" @onclick="ToggleDropdown">
                                 <strong>@AuthUser.Identity.Name</strong>
+                                <i class="fa-sharp fa-solid fa-caret-down"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow @DropdownCssClass" @onclick="ToggleDropdown">
                                 <li><a class="dropdown-item" href="/u/files">Meine Dateien</a></li>
