@@ -5,10 +5,26 @@ html {
     overflow-y: scroll;
 }
 
+/*.light {
+    --primary-color: #000000;
+    --secondary-color: #181818;
+    --background-primary: #ffffff;
+    --background-secondary: #f2f2f2;
+    --text-color: #000000;
+}*/
+
+/*.dark {
+    --primary-color: #ffffff;
+    --secondary-color: f2f2f2;
+    --background-primary: #000000;
+    --background-secondary: #181818;
+    --text-color: #ffffff;
+}*/
+
 html, body {
     font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .max-vh-85 {
@@ -26,16 +42,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 
 a, .btn-link {
     color: #0071c1;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: var(--primary-color);
-    border-color: #1861ac;
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -82,17 +88,3 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
-
-.light {
-    --primary-color: #1d3557;
-    --secondary-color: #457b9d;
-    --background-color: #f3f8fc;
-    --text-color: #000000;
-}
-
-.dark {
-    --primary-color: #1d3557;
-    --secondary-color: #457b9d;
-    --background-color: #181818;
-    --text-color: #ffffff;
-}
