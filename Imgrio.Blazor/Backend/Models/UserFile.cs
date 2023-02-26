@@ -20,7 +20,7 @@ namespace Imgrio.Blazor.Backend.Models
 
         public string FileName => $"{Id}.{Extension}";
 
-        public string FileUrl => Path.Combine("data", $"{Id}.{Extension}");
+        public string FileUrl => "https://imgrio.azurewebsites.net/" + Path.Combine("data", $"{Id}.{Extension}");
 
         public string Title { get; }
 
