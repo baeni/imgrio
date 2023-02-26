@@ -35,13 +35,32 @@ else
 
     <PageTitle>Datei ansehen</PageTitle>
 
-    <div class="text-center">
-        <h1>@UserFile.Title</h1>
-
+    <div class="text-center my-5">
         @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
         {
             <img class="mw-100 max-vh-85 rounded shadow-lg mb-4" src="@UserFile.FileUrl" style="object-fit: cover;" />
         }
+        else {
+            <h1>@UserFile.Extension.ToUpper()</h1>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-lg-6">
+            <h1>@UserFile.Title</h1>
+            <p class="fs-5 text-muted">@fancyUploadedAt</p>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <a class="btn btn-primary" href="@UserFile.FileUrl" download>Herunterladen</a>
+        </div>
+    </div>
+
+
+
+
+    @*<div class="text-center">
+        <h1>@UserFile.Title</h1>
+        <p class="fs-5 text-muted">@fancyUploadedAt</p>
 
         <div class="row justify-content-center">
             <p class="col-auto fs-5 text-muted">@fancyFileType</p>
@@ -50,7 +69,7 @@ else
         </div>
 
         <a class="btn btn-primary" href="@UserFile.FileUrl" download>Herunterladen</a>
-    </div>
+    </div>*@
 }
 
 @code {
@@ -74,7 +93,7 @@ else
 
         fancyFileType = $"Dateityp: {UserFile.Extension.ToUpper()}";
         fancyFileSize = $"Dateigröße: {UserFile.ToFormattedSizeString()}";
-        fancyUploadedAt = $"Hochgeladen am: {UserFile.UploadedAt.ToString("dd.MM.yyyy")}";
+        fancyUploadedAt = $"Hochgeladen am {UserFile.UploadedAt.ToString("dd.MM.yyyy")}";
 
     }
 }
