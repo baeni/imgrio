@@ -35,12 +35,10 @@
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             @AuthUser.Identity.Name
                         </button>
-                        <ul class="dropdown-menu my-0 mt-2 @DropdownCssClass" aria-labelledby="about-us" x-placement="bottom-start">
-                            <h6 class="dropdown-header">Was möchtest du tun?</h6>
+                        <ul class="dropdown-menu @DropdownCssClass my-0" aria-labelledby="about-us" x-placement="bottom-start">
                             <li><a class="dropdown-item" href="/u/files">Meine Dateien</a></li>
                             <li><a class="dropdown-item" href="/u/account">Mein Account</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/u/sign-out">Abmelden</a></li>
+                            <li><a class="dropdown-item text-danger" href="/u/sign-out">Abmelden</a></li>
                         </ul>
                     </div>
                 }
