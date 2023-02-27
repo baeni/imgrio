@@ -8,33 +8,29 @@
 
 <h1>Anmelden</h1>
 
-<div class="row position-relative">
-    <form class="col position-absolute w-50">
-        <div class="mb-4">
-            <input class="form-control" type="email" placeholder="Email Adresse" aria-describedby="emailHelp" @bind="Email" />
-            <small id="emailHelp" class="form-text text-muted">Wir teilen deine Email Adresse niemals mit Dritten.</small>
+<form class="w-50">
+    <div class="mb-4">
+        <input class="form-control" type="email" placeholder="Email Adresse" aria-describedby="emailHelp" @bind="Email" />
+        <small id="emailHelp" class="form-text text-muted">Wir teilen deine Email Adresse niemals mit Dritten.</small>
+    </div>
+
+    <div class="mb-4">
+        <input class="form-control" type="password" placeholder="Passwort" @bind="Password" />
+    </div>
+
+    <div class="mb-4">
+        <a @onclick="SendForgotPasswordMail" href="javascript:;">Passwort vergessen?</a>
+    </div>
+
+    @if (Alert != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @Alert
         </div>
+    }
 
-        <div class="mb-4">
-            <input class="form-control" type="password" placeholder="Passwort" @bind="Password" />
-        </div>
-
-        <div class="mb-4">
-            <a @onclick="SendForgotPasswordMail" href="javascript:;">Passwort vergessen?</a>
-        </div>
-
-        @if (Alert != null)
-        {
-            <div class="alert alert-danger" role="alert">
-                @Alert
-            </div>
-        }
-
-        <a class="btn btn-primary" href="/u/sign-in-redirect?email=@HttpUtility.UrlEncode(Email)&password=@HttpUtility.UrlEncode(Password)">Anmelden</a>
-    </form>
-
-    <img class="col d-flex align-items-center justify-content-center max-vh-85 w-100" src="@Path.Combine("assets", "illustration-sign-in.png")" style="object-fit: cover;" />
-</div>
+    <a class="btn btn-primary" href="/u/sign-in-redirect?email=@HttpUtility.UrlEncode(Email)&password=@HttpUtility.UrlEncode(Password)">Anmelden</a>
+</form>
 
 @code {
     [Inject]
