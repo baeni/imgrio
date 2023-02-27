@@ -31,7 +31,7 @@
             <ul class="navbar-nav">
                 @if (AuthUser.Identity.IsAuthenticated)
                 {
-                    <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
+                    <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown" @onclick=HideDropdown>
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             @AuthUser.Identity.Name
                         </button>
