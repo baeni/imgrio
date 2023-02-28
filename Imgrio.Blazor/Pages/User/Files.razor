@@ -40,7 +40,7 @@ else
                             </div>
                             <div>
                                 <a class="card-link" href="/f/@userFile.Id">Ansehen</a>
-                                <a class="card-link" href="/f/@userFile.Id">Löschen</a>
+                                <button class="btn btn-link card-link" @onclick="() => UserFileService.DeleteUserFileAsync(userFile.Id)">Löschen</button>
                             </div>
                         </div>
                     </div>
