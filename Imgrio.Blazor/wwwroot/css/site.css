@@ -5,43 +5,12 @@ html {
     overflow-y: scroll;
 }
 
-/*.light {
-    --primary-color: #000000;
-    --secondary-color: #181818;
-    --background-primary: #ffffff;
-    --background-secondary: #f2f2f2;
-    --text-color: #000000;
-}*/
-
-/*.dark {
-    --primary-color: #ffffff;
-    --secondary-color: f2f2f2;
-    --background-primary: #000000;
-    --background-secondary: #181818;
-    --text-color: #ffffff;
-}*/
-
-html, body {
-    font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #ffffff;
-    color: #000000;
-}
-
 .max-vh-85 {
     max-height: 85vh;
 }
 
-h1:focus {
+h1:focus, h2:focus, h3:focus, h4:focus, h5:focus, h6:focus {
     outline: none;
-}
-
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-    font-weight: bold;
-    margin-bottom: 2rem;
-}
-
-a, .btn-link {
-    color: #0071c1;
 }
 
 .content {
