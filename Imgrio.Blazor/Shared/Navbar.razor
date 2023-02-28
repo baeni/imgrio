@@ -31,11 +31,11 @@
             <ul class="navbar-nav">
                 @if (AuthUser.Identity.IsAuthenticated)
                 {
-                    <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown" @onclick=HideDropdown>
+                    <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             @AuthUser.Identity.Name
                         </button>
-                        <ul class="dropdown-menu @DropdownCssClass my-0" aria-labelledby="about-us" x-placement="bottom-start">
+                        <ul class="dropdown-menu @DropdownCssClass my-0" aria-labelledby="about-us" x-placement="bottom-start" @onclick=HideDropdown>
                             <li><a class="dropdown-item" href="/u/files">Meine Dateien</a></li>
                             <li><a class="dropdown-item" href="/u/account">Mein Account</a></li>
                             <li><a class="dropdown-item text-danger" href="/u/sign-out">Abmelden</a></li>
