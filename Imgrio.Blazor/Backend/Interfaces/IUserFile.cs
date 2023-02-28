@@ -6,10 +6,6 @@
 
         string Extension { get; }
 
-        string FileName { get; }
-
-        string FileUrl { get; }
-
         string Title { get; }
 
         double Size { get; }
@@ -17,5 +13,7 @@
         DateTime UploadedAt { get; }
 
         string UploadedBy { get; }
+
+        string Base64 { get; }
     }
 }
