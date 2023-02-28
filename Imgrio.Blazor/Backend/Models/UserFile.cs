@@ -4,7 +4,7 @@ namespace Imgrio.Blazor.Backend.Models
 {
     public class UserFile : IUserFile
     {
-        public UserFile(Guid id, string title, string extension, double size, DateTime uploadedAt, string uploadedBy)
+        public UserFile(Guid id, string title, string extension, double size, DateTime uploadedAt, string uploadedBy, string base64)
         {
             Id = id;
             Title = title;
@@ -12,15 +12,12 @@ namespace Imgrio.Blazor.Backend.Models
             Size = size;
             UploadedAt = uploadedAt;
             UploadedBy = uploadedBy;
+            Base64 = base64;
         }
 
         public Guid Id { get; }
 
         public string Extension { get; }
-
-        public string FileName => $"{Id}.{Extension}";
-
-        public string FileUrl => "https://imgrio.azurewebsites.net/" + Path.Combine("data", $"{Id}.{Extension}");
 
         public string Title { get; }
 
@@ -29,5 +26,7 @@ namespace Imgrio.Blazor.Backend.Models
         public DateTime UploadedAt { get; }
 
         public string UploadedBy { get; }
+
+        public string Base64 { get; }
     }
 }
