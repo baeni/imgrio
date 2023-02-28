@@ -48,35 +48,8 @@ namespace Imgrio.Blazor.Controllers
                 return BadRequest("A file must be uploaded.");
             }
 
-            var id = Guid.NewGuid().ToString();
-            var title = Path.GetFileNameWithoutExtension(file.FileName);
-            var extension = Path.GetExtension(file.FileName);
-            var size = file.Length;
-            var uploadedAt = DateTime.UtcNow;
-            var uploadedBy = auth.User.LocalId;
-
-            if (extension.StartsWith('.'))
-            {
-                extension = extension.Substring(1);
-            }
-
-            // Save file to disk
-            using (var fileStream = new FileStream(Path.Combine(_userFileService.DataPath, $"{id}.{extension}"), FileMode.Create))
-            {
-                await file.CopyToAsync(fileStream);
-            }
-
             // Save file information to firestore
-            var docRef = _firestoreDb.Collection("files").Document(id);
-            var fields = new Dictionary<string, object>
-            {
-                { "title", title },
-                { "extension", extension },
-                { "size", size },
-                { "uploadedAt", uploadedAt },
-                { "uploadedBy", uploadedBy }
-            };
-            await docRef.SetAsync(fields);
+            var id = await _userFileService.CreateUserFileAsync(auth.User, file);
 
             return Ok($"https://imgrio.azurewebsites.net/f/{id}");
         }
