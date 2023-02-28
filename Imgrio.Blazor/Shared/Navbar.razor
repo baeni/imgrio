@@ -32,7 +32,7 @@
                 @if (AuthUser.Identity.IsAuthenticated)
                 {
                     <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
                             @AuthUser.Identity.Name
                         </button>
                         <ul class="dropdown-menu @DropdownCssClass my-0" aria-labelledby="about-us" x-placement="bottom-start" @onclick=HideDropdown>
@@ -76,6 +76,11 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ToggleDropdown()
+    {
+        collapseDropdown = !collapseDropdown;
     }
 
     private void ShowDropdown()
