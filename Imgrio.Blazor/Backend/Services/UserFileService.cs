@@ -72,5 +72,11 @@ namespace Imgrio.Blazor.Backend.Services
 
             return id;
         }
+
+        public async Task DeleteUserFileAsync(Guid id)
+        {
+            var docRef = _firestoreDb.Collection("files").Document(id.ToString());
+            await docRef.DeleteAsync();
+        }
     }
 }
