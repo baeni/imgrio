@@ -1,5 +1,5 @@
-using Imgrio.Blazor.Backend.Services;
 using Google.Cloud.Firestore;
+using Imgrio.Blazor.Backend.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Imgrio.Blazor
@@ -25,7 +25,7 @@ namespace Imgrio.Blazor
                 });
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<FirebaseAuthHandler>();
-            builder.Services.AddTransient(x => FirestoreDb.Create("imgrio"));
+            builder.Services.AddTransient(_ => FirestoreDb.Create("imgrio"));
             builder.Services.AddTransient<UserFileService>();
 
             var app = builder.Build();
