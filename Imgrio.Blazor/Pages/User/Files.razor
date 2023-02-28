@@ -26,7 +26,7 @@ else
                         <div class="ratio ratio-1x1 w-25 bg-light">
                             @if (userFile.Extension == "png" || userFile.Extension == "jpg" || userFile.Extension == "jpeg")
                             {
-                                <img src="@userFile.FileUrl" style="object-fit: cover;" />
+                                <img src="data:image/@userFile.Extension;base64, @userFile.Base64" style="object-fit: cover;" />
                             }
                             else
                             {
@@ -68,7 +68,7 @@ else
         var AuthState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         AuthUser = AuthState.User;
 
-        GroupedUserFiles = (await UserFileService.GetUserFiles())
+        GroupedUserFiles = (await UserFileService.GetUserFilesAsync())
                                 .Where(userFile => userFile.UploadedBy == AuthUser.FindFirstValue(ClaimTypes.NameIdentifier))
                                 .OrderByDescending(userFile => userFile.UploadedAt)
                                 .GroupBy(userFile => userFile.UploadedAt.Date);
