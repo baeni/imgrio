@@ -2,7 +2,6 @@
 @using Imgrio.Blazor.Backend.Services;
 @using Firebase.Auth;
 @using System.Web;
-@using System.Security.Claims;
 
 <PageTitle>Anmelden</PageTitle>
 
@@ -34,15 +33,10 @@
 
 @code {
     [Inject]
-    public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+    public UserAuthService UserAuthService { get; set; } = null!;
 
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
-
-    [Inject]
-    public FirebaseAuthHandler FirebaseAuthHandler { get; set; } = null!;
-
-    private ClaimsPrincipal AuthUser { get; set; } = null!;
 
     private string Alert { get; set; } = null!;
 
@@ -53,9 +47,7 @@
     {
         await base.OnInitializedAsync();
 
-        AuthUser = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
-
-        if (AuthUser.Identity.IsAuthenticated)
+        if ((await UserAuthService.GetUserAsync()).Identity.IsAuthenticated)
         {
             NavigationManager.NavigateTo("/u/files");
         }
@@ -71,7 +63,7 @@
 
         try
         {
-            await FirebaseAuthHandler.FirebaseAuthProvider.SendPasswordResetEmailAsync(Email);
+            await UserAuthService.SendPasswordResetEmailAsync(Email);
             Alert = "Wir haben dir einen Link zum Zurücksetzen deines Passworts gesendet.";
         }
         catch (HttpRequestException)
