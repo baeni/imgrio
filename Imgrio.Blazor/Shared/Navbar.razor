@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims;
+@using Imgrio.Blazor.Backend.Services;
 
 <nav class="navbar navbar-expand-md navbar-light mb-4 sticky-top">
     <div class="container">
@@ -29,11 +30,11 @@
 
             <!--User section-->
             <ul class="navbar-nav">
-                @if (AuthUser.Identity.IsAuthenticated)
+                @if (isSignedIn)
                 {
                     <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
-                            @AuthUser.Identity.Name
+                            @username
                         </button>
                         <ul class="dropdown-menu @DropdownCssClass my-0" aria-labelledby="about-us" x-placement="bottom-start" @onclick=HideDropdown>
                             <li><a class="dropdown-item" href="/u/files">Meine Dateien</a></li>
@@ -55,7 +56,10 @@
 
 @code {
     [Inject]
-    public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+    public UserAuthService UserAuthService { get; set; } = null!;
+
+    private bool isSignedIn = false;
+    private string username = "Nutzername";
 
     private bool collapseNavMenu = true;
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
@@ -64,13 +68,13 @@
     private bool collapseDropdown = true;
     private string? DropdownCssClass => collapseDropdown ? null : "show";
 
-    private ClaimsPrincipal AuthUser { get; set; } = null!;
-
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
-        AuthUser = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
+        var user = await UserAuthService.GetUserAsync();
+        isSignedIn = user.Identity.IsAuthenticated;
+        username = user.Identity.Name;
     }
 
     private void ToggleNavMenu()
