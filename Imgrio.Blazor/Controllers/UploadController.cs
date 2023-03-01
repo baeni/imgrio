@@ -9,14 +9,14 @@ namespace Imgrio.Blazor.Controllers
     [Route("api/v1/upload")]
     public class UserFileController : ControllerBase
     {
-        private readonly FirebaseAuthHandler _firebaseAuthHandler;
+        private readonly UserAuthService _userAuthService;
         private readonly UserFileService _userFileService;
         private readonly FirestoreDb _firestoreDb;
 
-        public UserFileController(FirebaseAuthHandler firebaseAuthHandler, UserFileService userFileService, FirestoreDb firestoreDb)
+        public UserFileController(UserAuthService userAuthService, UserFileService userFileService, FirestoreDb firestoreDb)
         {
             _userFileService = userFileService;
-            _firebaseAuthHandler = firebaseAuthHandler;
+            _userAuthService = userAuthService;
             _firestoreDb = firestoreDb;
         }
 
@@ -24,18 +24,9 @@ namespace Imgrio.Blazor.Controllers
         public async Task<IActionResult> PostUserFileAsync([FromForm] UserFileRequest request)
         {
             // Authorize
-            FirebaseAuthLink? auth;
-            try
-            {
-                auth = await _firebaseAuthHandler.FirebaseAuthProvider.SignInWithEmailAndPasswordAsync(request.Email, request.Password);
-                var token = auth.FirebaseToken;
+            var user = await _userAuthService.SignInAsync(request.Email, request.Password);
 
-                if (token == null)
-                {
-                    return Unauthorized("Invalid credentials.");
-                }
-            }
-            catch (FirebaseAuthException)
+            if (user == null)
             {
                 return Unauthorized("Invalid credentials.");
             }
@@ -49,7 +40,7 @@ namespace Imgrio.Blazor.Controllers
             }
 
             // Save file information to firestore
-            var id = await _userFileService.CreateUserFileAsync(auth.User, file);
+            var id = await _userFileService.CreateUserFileAsync(user, file);
 
             return Ok($"https://imgrio.azurewebsites.net/f/{id}");
         }
