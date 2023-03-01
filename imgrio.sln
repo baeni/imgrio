@@ -5,16 +5,30 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imgrio.Blazor", "Imgrio.Blazor\Imgrio.Blazor.csproj", "{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imgrio.Wpf", "Imgrio.Wpf\Imgrio.Wpf.csproj", "{B5220F6A-1E3F-4580-B680-1CD8D0BF89D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}.Debug|x64.Build.0 = Debug|Any CPU
 		{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}.Release|x64.ActiveCfg = Release|Any CPU
+		{24CE2668-38EA-49D4-9BE1-8E4E6DC53800}.Release|x64.Build.0 = Release|Any CPU
+		{B5220F6A-1E3F-4580-B680-1CD8D0BF89D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5220F6A-1E3F-4580-B680-1CD8D0BF89D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5220F6A-1E3F-4580-B680-1CD8D0BF89D4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B5220F6A-1E3F-4580-B680-1CD8D0BF89D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5220F6A-1E3F-4580-B680-1CD8D0BF89D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5220F6A-1E3F-4580-B680-1CD8D0BF89D4}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
