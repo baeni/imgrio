@@ -1,3 +1,4 @@
+using Imgrio.Blazor.Backend.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,16 +7,16 @@ namespace Imgrio.Blazor.Pages.User
 {
     public class SignOutRedirectModel : PageModel
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserAuthService _userAuthService;
 
-        public SignOutRedirectModel(IHttpContextAccessor httpContextAccessor)
+        public SignOutRedirectModel(UserAuthService userAuthService)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _userAuthService = userAuthService;
         }
 
         public async Task<ActionResult> OnGetAsync()
         {
-            await _httpContextAccessor.HttpContext.SignOutAsync();
+            await _userAuthService.SignOutAsync();
 
             return LocalRedirect("/");
         }
