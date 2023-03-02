@@ -43,13 +43,13 @@
     private string Email { get; set; } = null!;
     private string Password { get; set; } = null!;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await base.OnInitializedAsync();
+        base.OnInitialized();
 
-        if ((await UserAuthService.GetUserAsync()).Identity.IsAuthenticated)
+        if (UserAuthService.UserState.IsAuthenticated)
         {
-            NavigationManager.NavigateTo("/u/files");
+            //NavigationManager.NavigateTo("/u/files");
         }
     }
 
