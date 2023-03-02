@@ -26,7 +26,7 @@ namespace Imgrio.Blazor
                     options.LoginPath = "/u/sign-in";
                     options.LogoutPath = "/u/sign-out";
                 });
-            builder.Services.AddScoped<UserState>();
+            builder.Services.AddSingleton<UserState>();
             builder.Services.AddScoped<UserAuthService>();
             builder.Services.AddSingleton<IFirebaseAuthProvider>(_ => new FirebaseAuthProvider(new FirebaseConfig("AIzaSyC-a7ssy-0Wx5Vf1OVvu1KtSO5MJ8t-CD0")));
             builder.Services.AddTransient(_ => FirestoreDb.Create("imgrio"));
