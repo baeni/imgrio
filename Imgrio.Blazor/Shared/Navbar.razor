@@ -30,11 +30,11 @@
 
             <!--User section-->
             <ul class="navbar-nav">
-                @if (isSignedIn)
+                @if (UserAuthService.UserState.IsAuthenticated)
                 {
                     <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
-                            @username
+                            @UserAuthService.UserState.Name
                         </button>
                         <ul class="dropdown-menu @DropdownCssClass my-0" aria-labelledby="about-us" x-placement="bottom-start" @onclick=HideDropdown>
                             <li><a class="dropdown-item" href="/u/files">Meine Dateien</a></li>
@@ -58,24 +58,12 @@
     [Inject]
     public UserAuthService UserAuthService { get; set; } = null!;
 
-    private bool isSignedIn = false;
-    private string username = "Nutzername";
-
     private bool collapseNavMenu = true;
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
     private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
 
     private bool collapseDropdown = true;
     private string? DropdownCssClass => collapseDropdown ? null : "show";
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        var user = await UserAuthService.GetUserAsync();
-        isSignedIn = user.Identity.IsAuthenticated;
-        username = user.Identity.Name;
-    }
 
     private void ToggleNavMenu()
     {
