@@ -1,14 +1,9 @@
 ﻿@page "/"
-@using Imgrio.Blazor.Backend.Services;
 
 <div>
     <img class="d-flex align-items-center justify-content-center max-vh-85 w-100" src="@Path.Combine("assets", "illustration-index.png")" style="object-fit: cover;" />
-
-    @*<p class="h1" style="color: #899bc0; font-size: 45rem;">@UserFileService.GetUploadedFiles().Count()</p>
-    <p class="fs-1" style="color: #899bc0;">Dateien werden aktuell mit Fordele geteilt!</p>*@
 </div>
 
 @code {
-    [Inject]
-    public UserFileService UserFileService { get; set; } = null!;
+
 }
