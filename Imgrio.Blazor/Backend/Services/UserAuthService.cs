@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.Security.Authentication;
-using Microsoft.AspNetCore.Components.Authorization;
+using Imgrio.Blazor.Backend.Interfaces;
+using Imgrio.Blazor.Backend.Models;
 
 namespace Imgrio.Blazor.Backend.Services
 {
@@ -11,30 +12,23 @@ namespace Imgrio.Blazor.Backend.Services
     {
         private readonly IFirebaseAuthProvider _firebaseAuthProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-        public UserAuthService(
-            IFirebaseAuthProvider firebaseAuthProvider,
-            IHttpContextAccessor httpContextAccessor,
-            AuthenticationStateProvider authenticationStateProvider)
+        public UserAuthService(IFirebaseAuthProvider firebaseAuthProvider, IHttpContextAccessor httpContextAccessor, UserState userState)
         {
             _firebaseAuthProvider = firebaseAuthProvider;
             _httpContextAccessor = httpContextAccessor;
-            _authenticationStateProvider = authenticationStateProvider;
+
+            UserState = userState;
         }
 
-        public async Task<ClaimsPrincipal> GetUserAsync()
-        {
-            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-            return authState.User;
-        }
+        public IUserState UserState { get; }
 
         public async Task SendPasswordResetEmailAsync(string email)
         {
             await _firebaseAuthProvider.SendPasswordResetEmailAsync(email);
         }
 
-        public async Task<User?> SignInAsync(string email, string password)
+        public async Task SignInAsync(string email, string password)
         {
             try
             {
@@ -46,15 +40,15 @@ namespace Imgrio.Blazor.Backend.Services
                     throw new AuthenticationException("Firebase authentication failed.");
                 }
 
+                UserState.FirebaseUser = auth.User;
+
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, auth.User.LocalId),
-                    new Claim(ClaimTypes.Name, auth.User.Email.Split('@')[0]),
                     new Claim(ClaimTypes.Email, auth.User.Email),
-                    new Claim(ClaimTypes.Role, "User"),
+                    new Claim(ClaimTypes.Name, auth.User.Email.Split('@')[0]),
+                    new Claim(ClaimTypes.Role, "User")
                 };
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 var authProperties = new AuthenticationProperties
                 {
@@ -64,14 +58,12 @@ namespace Imgrio.Blazor.Backend.Services
 
                 await _httpContextAccessor.HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
+                    new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme)),
                     authProperties);
-
-                return auth.User;
             }
             catch (Exception)
             {
-                return null;
+                throw;
             }
         }
 
