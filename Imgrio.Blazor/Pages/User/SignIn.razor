@@ -1,13 +1,13 @@
 ﻿@page "/u/sign-in"
 @using Imgrio.Blazor.Backend.Services;
-@using Firebase.Auth;
 @using System.Web;
+@using Imgrio.Blazor.Controllers;
 
 <PageTitle>Anmelden</PageTitle>
 
 <h1>Anmelden</h1>
 
-<form class="w-50">
+<form class="w-50" @onsubmit="SignInAsync">
     <div class="mb-4">
         <input class="form-control" type="email" placeholder="Email Adresse" aria-describedby="emailHelp" @bind="Email" />
         <small id="emailHelp" class="form-text text-muted">Wir teilen deine Email Adresse niemals mit Dritten.</small>
@@ -18,7 +18,7 @@
     </div>
 
     <div class="mb-4">
-        <a @onclick="SendForgotPasswordMail" href="javascript:;">Passwort vergessen?</a>
+        <a @onclick="SendPasswordResetEmailAsync" href="javascript:;">Passwort vergessen?</a>
     </div>
 
     @if (Alert != null)
@@ -28,7 +28,8 @@
         </div>
     }
 
-    <a class="btn btn-primary" href="/u/sign-in-redirect?email=@HttpUtility.UrlEncode(Email)&password=@HttpUtility.UrlEncode(Password)">Anmelden</a>
+    <button class="btn btn-primary" type="submit">Anmelden</button>
+    <a class="btn btn-primary" href="/u/sign-in-redirect?email=@HttpUtility.UrlEncode(Email)&password=@HttpUtility.UrlEncode(Password)">Anmelden redirect</a>
 </form>
 
 @code {
@@ -43,17 +44,49 @@
     private string Email { get; set; } = null!;
     private string Password { get; set; } = null!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
 
         if (UserAuthService.UserState.IsAuthenticated)
         {
-            //NavigationManager.NavigateTo("/u/files");
+            NavigationManager.NavigateTo("/u/files");
         }
     }
 
-    private async Task SendForgotPasswordMail()
+    private async Task SignInAsync()
+    {
+        if (string.IsNullOrEmpty(Email))
+        {
+            Alert = "Bitte gib deine Email Adresse an um dich anzumelden.";
+            return;
+        }
+        else if (string.IsNullOrEmpty(Password))
+        {
+            Alert = "Bitte gib dein Password an um dich anzumelden.";
+            return;
+        }
+
+        var httpClient = new HttpClient();
+        var model = new AuthenticateController.AuthenticateModel
+        {
+            Email = Email,
+            Password = Password
+        };
+        var response = await httpClient.PostAsJsonAsync("https://localhost:7223/api/v1/authenticate", model);
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/u/files");
+        }
+        else
+        {
+            //Alert = "Die Anmeldung ist fehlgeschlagen. Bitte überprüfe deine Email Adresse und dein Password.";
+            Alert = $"Die Anmeldung ist fehlgeschlagen: {(await response.Content.ReadAsStringAsync())}";
+            return;
+        }
+    }
+
+    private async Task SendPasswordResetEmailAsync()
     {
         if (string.IsNullOrEmpty(Email))
         {
