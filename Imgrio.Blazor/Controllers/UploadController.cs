@@ -1,6 +1,7 @@
 ﻿using Imgrio.Blazor.Backend.Services;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Imgrio.Blazor.Controllers
 {
@@ -20,14 +21,18 @@ namespace Imgrio.Blazor.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostUserFileAsync([FromForm] UserFileRequest request)
+        public async Task<IActionResult> PostUserFileAsync([FromForm] UserFileModel model)
         {
             // Authorize
-            await _userAuthService.SignInAsync(request.Email, request.Password);
+            await _userAuthService.SignInAsync(model.Email, model.Password);
 
-            if (!_userAuthService.UserState.IsAuthenticated)
+            if (_userAuthService.UserState.FirebaseUser == null)
             {
-                return Unauthorized("Invalid credentials.");
+                return Unauthorized("Überprüfe deine Anmeldedaten.");
+            }
+            else if (!_userAuthService.UserState.IsAuthenticated)
+            {
+                return Unauthorized("Es gab einen unerwarteten Fehler mit der HttpContext Authentifizierung.");
             }
 
             // Validate file and extract information
@@ -35,7 +40,7 @@ namespace Imgrio.Blazor.Controllers
 
             if (file == null)
             {
-                return BadRequest("A file must be uploaded.");
+                return BadRequest("Es muss eine Datei hochgeladen werden.");
             }
 
             // Save file information to firestore
@@ -44,11 +49,11 @@ namespace Imgrio.Blazor.Controllers
             return Ok($"https://imgrio.azurewebsites.net/f/{id}");
         }
 
-        public class UserFileRequest
+        public class UserFileModel
         {
-            public string Email { get; set; }
+            public string Email { get; set; } = null!;
 
-            public string Password { get; set; }
+            public string Password { get; set; } = null!;
         }
     }
 }
