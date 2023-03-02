@@ -1,5 +1,4 @@
-﻿using Firebase.Auth;
-using Imgrio.Blazor.Backend.Services;
+﻿using Imgrio.Blazor.Backend.Services;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,9 +23,9 @@ namespace Imgrio.Blazor.Controllers
         public async Task<IActionResult> PostUserFileAsync([FromForm] UserFileRequest request)
         {
             // Authorize
-            var user = await _userAuthService.SignInAsync(request.Email, request.Password);
+            await _userAuthService.SignInAsync(request.Email, request.Password);
 
-            if (user == null)
+            if (!_userAuthService.UserState.IsAuthenticated)
             {
                 return Unauthorized("Invalid credentials.");
             }
@@ -40,7 +39,7 @@ namespace Imgrio.Blazor.Controllers
             }
 
             // Save file information to firestore
-            var id = await _userFileService.CreateUserFileAsync(user, file);
+            var id = await _userFileService.CreateUserFileAsync(_userAuthService.UserState.FirebaseUser, file);
 
             return Ok($"https://imgrio.azurewebsites.net/f/{id}");
         }
