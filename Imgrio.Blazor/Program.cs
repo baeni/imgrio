@@ -1,5 +1,6 @@
 using Firebase.Auth;
 using Google.Cloud.Firestore;
+using Imgrio.Blazor.Backend.Models;
 using Imgrio.Blazor.Backend.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -15,6 +16,7 @@ namespace Imgrio.Blazor
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddControllers();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -24,9 +26,9 @@ namespace Imgrio.Blazor
                     options.LoginPath = "/u/sign-in";
                     options.LogoutPath = "/u/sign-out";
                 });
-            builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<IFirebaseAuthProvider>(_ => new FirebaseAuthProvider(new FirebaseConfig("AIzaSyC-a7ssy-0Wx5Vf1OVvu1KtSO5MJ8t-CD0")));
-            builder.Services.AddTransient<UserAuthService>();
+            builder.Services.AddScoped<UserState>();
+            builder.Services.AddScoped<UserAuthService>();
+            builder.Services.AddSingleton<IFirebaseAuthProvider>(_ => new FirebaseAuthProvider(new FirebaseConfig("AIzaSyC-a7ssy-0Wx5Vf1OVvu1KtSO5MJ8t-CD0")));
             builder.Services.AddTransient(_ => FirestoreDb.Create("imgrio"));
             builder.Services.AddTransient<UserFileService>();
 
