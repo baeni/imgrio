@@ -1,9 +1,5 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Firebase.Auth;
 using Imgrio.Blazor.Backend.Services;
 
 namespace Imgrio.Blazor.Pages.User
@@ -19,9 +15,9 @@ namespace Imgrio.Blazor.Pages.User
 
         public async Task<ActionResult> OnGetAsync(string email, string password)
         {
-            var user = await _userAuthService.SignInAsync(email, password);
+            await _userAuthService.SignInAsync(email, password);
 
-            if (user != null)
+            if (_userAuthService.UserState.IsAuthenticated)
             {
                 return LocalRedirect("/u/files");
             }
