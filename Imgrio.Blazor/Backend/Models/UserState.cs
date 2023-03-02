@@ -21,7 +21,7 @@ namespace Imgrio.Blazor.Backend.Models
 
         public string Email => FirebaseUser?.Email ?? _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Email);
 
-        public string Name => /*FirebaseUser?.DisplayName ?? */_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
+        public string Name => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
 
         public string Role => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Role);
     }
