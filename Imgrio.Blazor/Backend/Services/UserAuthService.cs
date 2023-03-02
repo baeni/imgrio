@@ -23,15 +23,11 @@ namespace Imgrio.Blazor.Backend.Services
 
         public IUserState UserState { get; }
 
-        public async Task SendPasswordResetEmailAsync(string email)
-        {
-            await _firebaseAuthProvider.SendPasswordResetEmailAsync(email);
-        }
-
         public async Task SignInAsync(string email, string password)
         {
             try
             {
+                #region Firebase Authentication
                 var auth = await _firebaseAuthProvider.SignInWithEmailAndPasswordAsync(email, password);
                 var token = auth.FirebaseToken;
 
@@ -41,7 +37,9 @@ namespace Imgrio.Blazor.Backend.Services
                 }
 
                 UserState.FirebaseUser = auth.User;
+                #endregion
 
+                #region HttpContext Authentication
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, auth.User.LocalId),
@@ -60,6 +58,7 @@ namespace Imgrio.Blazor.Backend.Services
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme)),
                     authProperties);
+                #endregion
             }
             catch (Exception)
             {
@@ -71,6 +70,11 @@ namespace Imgrio.Blazor.Backend.Services
         {
             await _httpContextAccessor.HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        public async Task SendPasswordResetEmailAsync(string email)
+        {
+            await _firebaseAuthProvider.SendPasswordResetEmailAsync(email);
         }
     }
 }
