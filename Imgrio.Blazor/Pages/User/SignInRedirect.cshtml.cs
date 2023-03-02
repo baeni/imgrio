@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Imgrio.Blazor.Backend.Services;
 
 namespace Imgrio.Blazor.Pages.User
