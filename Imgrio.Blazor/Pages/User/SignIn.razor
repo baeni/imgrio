@@ -74,16 +74,13 @@
             Password = Password
         };
         var response = await httpClient.PostAsJsonAsync("https://localhost:7223/api/v1/authenticate", model);
-        if (response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode)
         {
-            NavigationManager.NavigateTo("/u/files");
-        }
-        else
-        {
-            //Alert = "Die Anmeldung ist fehlgeschlagen. Bitte überprüfe deine Email Adresse und dein Password.";
             Alert = $"Die Anmeldung ist fehlgeschlagen: {(await response.Content.ReadAsStringAsync())}";
             return;
         }
+
+        NavigationManager.NavigateTo("/u/files");
     }
 
     private async Task SendPasswordResetEmailAsync()
