@@ -24,10 +24,10 @@ namespace Imgrio.Blazor.Controllers
             {
                 return Unauthorized("Überprüfe deine Anmeldedaten.");
             }
-            else if (!_userAuthService.UserState.IsAuthenticated)
-            {
-                return Unauthorized("Es gab einen unerwarteten Fehler mit der HttpContext Authentifizierung.");
-            }
+            //else if (!_userAuthService.UserState.IsAuthenticated)
+            //{
+            //    return Unauthorized("Es gab einen unerwarteten Fehler mit der HttpContext Authentifizierung.");
+            //}
 
             return Ok("Authentifizierung erfolgreich.");
         }
