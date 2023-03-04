@@ -1,7 +1,7 @@
 ﻿using Imgrio.Blazor.Backend.Services;
-using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+using Imgrio.Blazor.Pages.Account;
+using Microsoft.AspNetCore.Identity;
 
 namespace Imgrio.Blazor.Controllers
 {
@@ -9,51 +9,46 @@ namespace Imgrio.Blazor.Controllers
     [Route("api/v1/upload")]
     public class UserFileController : ControllerBase
     {
-        private readonly UserAuthService _userAuthService;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserFileService _userFileService;
-        private readonly FirestoreDb _firestoreDb;
 
-        public UserFileController(UserAuthService userAuthService, UserFileService userFileService, FirestoreDb firestoreDb)
+        public UserFileController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, UserFileService userFileService)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _userFileService = userFileService;
-            _userAuthService = userAuthService;
-            _firestoreDb = firestoreDb;
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostUserFileAsync([FromForm] UserFileModel model)
+        public async Task<IActionResult> PostUserFileAsync([FromForm] SignInModel.InputModel input)
         {
-            // Authorize
-            await _userAuthService.SignInAsync(model.Email, model.Password);
-
-            if (_userAuthService.UserState.FirebaseUser == null)
+            #region Authorize
+            var user = await _userManager.FindByEmailAsync(input.Email);
+            if (user == null || user.UserName == null)
             {
                 return Unauthorized("Überprüfe deine Anmeldedaten.");
             }
-            else if (!_userAuthService.UserState.IsAuthenticated)
-            {
-                return Unauthorized("Es gab einen unerwarteten Fehler mit der HttpContext Authentifizierung.");
-            }
 
-            // Validate file and extract information
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, input.Password, isPersistent: false, lockoutOnFailure: false);
+            if (!result.Succeeded)
+            {
+                return Unauthorized("Überprüfe deine Anmeldedaten.");
+            }
+            #endregion
+
+            #region Validate file and extract information
             var file = Request.Form.Files.FirstOrDefault();
 
             if (file == null)
             {
                 return BadRequest("Es muss eine Datei hochgeladen werden.");
             }
+            #endregion
 
-            // Save file information to firestore
-            var id = await _userFileService.CreateUserFileAsync(_userAuthService.UserState.FirebaseUser, file);
+            var id = await _userFileService.CreateUserFileAsync(user, file);
 
             return Ok($"https://imgrio.azurewebsites.net/f/{id}");
-        }
-
-        public class UserFileModel
-        {
-            public string Email { get; set; } = null!;
-
-            public string Password { get; set; } = null!;
         }
     }
 }
