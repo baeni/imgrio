@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims;
-@using Imgrio.Blazor.Backend.Services;
+@using Microsoft.AspNetCore.Identity;
 
 <nav class="navbar navbar-expand-md navbar-light mb-4 sticky-top">
     <div class="container">
@@ -30,24 +30,28 @@
 
             <!--User section-->
             <ul class="navbar-nav">
-                @if (UserAuthService.UserState.IsAuthenticated)
+                @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
                 {
-                    <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
-                            @UserAuthService.UserState.Name
-                        </button>
-                        <ul class="dropdown-menu @DropdownCssClass my-0" aria-labelledby="about-us" x-placement="bottom-start" @onclick=HideDropdown>
-                            <li><a class="dropdown-item" href="/u/files">Meine Dateien</a></li>
-                            <li><a class="dropdown-item" href="/u/account">Mein Account</a></li>
-                            <li><a class="dropdown-item text-danger" href="/u/sign-out">Abmelden</a></li>
-                        </ul>
-                    </div>
+                    <li class="nav-item">
+                        <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
+                                @AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.Name
+                            </button>
+                            <ul class="dropdown-menu @DropdownCssClass my-0" aria-labelledby="about-us" x-placement="bottom-start" @onclick=HideDropdown>
+                                <li><a class="dropdown-item" href="/u/files">Meine Dateien</a></li>
+                                <li><a class="dropdown-item" href="/u/account">Mein Account</a></li>
+                                <li><a class="dropdown-item text-danger" href="/a/sign-out">Abmelden</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 }
                 else
                 {
-                    <a class="btn btn-primary" href="/u/sign-in">
-                        Anmelden
-                    </a>
+                    <li>
+                        <a class="btn btn-primary" href="/a/sign-in">
+                            Anmelden
+                        </a>
+                    </li>
                 }
             </ul>
         </div>
@@ -56,7 +60,10 @@
 
 @code {
     [Inject]
-    public UserAuthService UserAuthService { get; set; } = null!;
+    public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+
+    //[Inject]
+    //public UserAuthService UserAuthService { get; set; } = null!;
 
     private bool collapseNavMenu = true;
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
