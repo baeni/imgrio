@@ -28,7 +28,8 @@ namespace Imgrio.Blazor
                 options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<DataContext>();
 
-            builder.Services.AddDbContextFactory<DataContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+            var connectionString = builder.Configuration.GetConnectionString("Dev");
+            builder.Services.AddDbContextFactory<DataContext>(options => options.UseNpgsql(connectionString));
 
             builder.Services.AddTransient(_ => FirestoreDb.Create("imgrio"));
             builder.Services.AddTransient<UserFileService>();
