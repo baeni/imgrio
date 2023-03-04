@@ -1,6 +1,8 @@
 using Google.Cloud.Firestore;
 using Imgrio.Blazor.Backend.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Imgrio.Blazor.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Imgrio.Blazor
 {
@@ -14,17 +16,20 @@ namespace Imgrio.Blazor
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddControllers();
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.Cookie.Name = "imgrio.Auth";
-                    options.ExpireTimeSpan = TimeSpan.FromDays(7);
-                    options.SlidingExpiration = true;
-                    options.LoginPath = "/u/sign-in";
-                    options.LogoutPath = "/u/sign-out";
-                });
-            builder.Services.AddHttpContextAccessor();
-            builder.Services.AddTransient<FirebaseAuthHandler>();
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            }).AddEntityFrameworkStores<DataContext>();
+
+            builder.Services.AddDbContextFactory<DataContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+
             builder.Services.AddTransient(_ => FirestoreDb.Create("imgrio"));
             builder.Services.AddTransient<UserFileService>();
 

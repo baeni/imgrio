@@ -349,8 +349,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# data folder
-/Imgrio.Blazor/wwwroot/data/
+# macOS
+.DS_Store
 
 # google app credentials
 google-app-credentials.json

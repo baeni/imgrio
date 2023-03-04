@@ -1,6 +1,6 @@
 ﻿using Imgrio.Blazor.Backend.Models;
 using Google.Cloud.Firestore;
-using Firebase.Auth;
+using Microsoft.AspNetCore.Identity;
 
 namespace Imgrio.Blazor.Backend.Services
 {
@@ -25,7 +25,7 @@ namespace Imgrio.Blazor.Backend.Services
 
             var collectionSnapshot = await _firestoreDb.Collection("files").GetSnapshotAsync();
 
-            foreach(var documentSnapshot in collectionSnapshot.Documents)
+            foreach (var documentSnapshot in collectionSnapshot.Documents)
             {
                 var title = documentSnapshot.GetValue<string>("title");
                 var extension = documentSnapshot.GetValue<string>("extension");
@@ -40,14 +40,14 @@ namespace Imgrio.Blazor.Backend.Services
             return userFiles;
         }
 
-        public async Task<Guid> CreateUserFileAsync(User user, IFormFile file)
+        public async Task<Guid> CreateUserFileAsync(IdentityUser user, IFormFile file)
         {
             var id = Guid.NewGuid();
             var title = Path.GetFileNameWithoutExtension(file.FileName);
             var extension = Path.GetExtension(file.FileName).Substring(1);
             var size = file.Length;
             var uploadedAt = DateTime.UtcNow;
-            var uploadedBy = user.LocalId;
+            var uploadedBy = user.Id;
             string base64 = "";
 
             using (var memoryStream = new MemoryStream())

@@ -1,7 +1,7 @@
-﻿using Firebase.Auth;
-using Imgrio.Blazor.Backend.Services;
-using Google.Cloud.Firestore;
+﻿using Imgrio.Blazor.Backend.Services;
 using Microsoft.AspNetCore.Mvc;
+using Imgrio.Blazor.Pages.Account;
+using Microsoft.AspNetCore.Identity;
 
 namespace Imgrio.Blazor.Controllers
 {
@@ -9,56 +9,46 @@ namespace Imgrio.Blazor.Controllers
     [Route("api/v1/upload")]
     public class UserFileController : ControllerBase
     {
-        private readonly FirebaseAuthHandler _firebaseAuthHandler;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserFileService _userFileService;
-        private readonly FirestoreDb _firestoreDb;
 
-        public UserFileController(FirebaseAuthHandler firebaseAuthHandler, UserFileService userFileService, FirestoreDb firestoreDb)
+        public UserFileController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, UserFileService userFileService)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _userFileService = userFileService;
-            _firebaseAuthHandler = firebaseAuthHandler;
-            _firestoreDb = firestoreDb;
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostUserFileAsync([FromForm] UserFileRequest request)
+        public async Task<IActionResult> PostUserFileAsync([FromForm] SignInModel.InputModel input)
         {
-            // Authorize
-            FirebaseAuthLink? auth;
-            try
+            #region Authorize
+            var user = await _userManager.FindByEmailAsync(input.Email);
+            if (user == null || user.UserName == null)
             {
-                auth = await _firebaseAuthHandler.FirebaseAuthProvider.SignInWithEmailAndPasswordAsync(request.Email, request.Password);
-                var token = auth.FirebaseToken;
-
-                if (token == null)
-                {
-                    return Unauthorized("Invalid credentials.");
-                }
-            }
-            catch (FirebaseAuthException)
-            {
-                return Unauthorized("Invalid credentials.");
+                return Unauthorized("Überprüfe deine Anmeldedaten.");
             }
 
-            // Validate file and extract information
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, input.Password, isPersistent: false, lockoutOnFailure: false);
+            if (!result.Succeeded)
+            {
+                return Unauthorized("Überprüfe deine Anmeldedaten.");
+            }
+            #endregion
+
+            #region Validate file and extract information
             var file = Request.Form.Files.FirstOrDefault();
 
             if (file == null)
             {
-                return BadRequest("A file must be uploaded.");
+                return BadRequest("Es muss eine Datei hochgeladen werden.");
             }
+            #endregion
 
-            // Save file information to firestore
-            var id = await _userFileService.CreateUserFileAsync(auth.User, file);
+            var id = await _userFileService.CreateUserFileAsync(user, file);
 
             return Ok($"https://imgrio.azurewebsites.net/f/{id}");
-        }
-
-        public class UserFileRequest
-        {
-            public string Email { get; set; }
-
-            public string Password { get; set; }
         }
     }
 }
