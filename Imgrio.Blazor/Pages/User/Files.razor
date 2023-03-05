@@ -20,9 +20,9 @@ else
         <div class="row g-2 mb-5">
             @foreach (var userFile in group.ToList())
             {
-                <div class="col-sm-12 col-lg-6">
+                <div class="col-sm-12 col-lg-6 col-xxl-4">
                     <div class="card overflow-hidden" style="flex-direction: row;">
-                        <div class="ratio ratio-1x1 bg-light" style="width: 100px; height: 100px;">
+                        <div class="ratio ratio-1x1 bg-light" style="width: 105px; height: 105px;">
                             @if (userFile.Extension == "png" || userFile.Extension == "jpg" || userFile.Extension == "jpeg")
                             {
                                 <img src="data:image/@userFile.Extension;base64, @userFile.Base64" style="object-fit: cover;" />
@@ -33,13 +33,11 @@ else
                             }
                         </div>
                         <div class="card-body">
-                            <p class="h5 card-title">
-                                @userFile.Title
-                                <small class="text-muted ml-2">@userFile.UploadedAt.ToRelativeDateString()</small>
-                            </p>
-                            <div>
+                            <p class="h5 card-title mb-0">@userFile.Title</p>
+                            <small class="text-muted">@userFile.UploadedAt.ToRelativeDateString()</small>
+                            <div class="text-nowrap">
                                 <a class="card-link" href="/f/@userFile.Id">Ansehen</a>
-                                <button class="btn btn-link card-link" @onclick="() => UserFileService.DeleteUserFileAsync(userFile.Id)">Löschen</button>
+                                <a class="card-link" href="javascript:;" @onclick="() => UserFileService.DeleteUserFileAsync(userFile.Id)">Löschen</a>
                             </div>
                         </div>
                     </div>
