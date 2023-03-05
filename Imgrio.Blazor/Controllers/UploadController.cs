@@ -1,6 +1,6 @@
 ﻿using Imgrio.Blazor.Backend.Services;
 using Microsoft.AspNetCore.Mvc;
-using Imgrio.Blazor.Pages.Account;
+using Imgrio.Blazor.Pages.Auth;
 using Microsoft.AspNetCore.Identity;
 
 namespace Imgrio.Blazor.Controllers
