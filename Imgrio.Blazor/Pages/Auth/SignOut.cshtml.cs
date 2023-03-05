@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Imgrio.Blazor.Pages.Account
+namespace Imgrio.Blazor.Pages.Auth
 {
     public class SignOutModel : PageModel
     {

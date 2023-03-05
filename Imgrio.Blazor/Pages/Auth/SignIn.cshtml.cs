@@ -3,17 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace Imgrio.Blazor.Pages.Account
+namespace Imgrio.Blazor.Pages.Auth
 {
-    public class SignUpModel : PageModel
+    public class SignInModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public SignUpModel(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public SignInModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            _signInManager = signInManager;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [BindProperty]
@@ -36,30 +36,25 @@ namespace Imgrio.Blazor.Pages.Account
                 return Page();
             }
 
-            var identity = new IdentityUser { UserName = Input.Username, Email = Input.Email };
-            var result = await _userManager.CreateAsync(identity, Input.Password);
-            if (!result.Succeeded)
+            var user = await _userManager.FindByEmailAsync(Input.Email);
+            if (user == null || user.UserName == null)
             {
-                //Alert = $"Bitte behebe folgende Probleme:{Environment.NewLine}";
-
-                foreach (var error in result.Errors)
-                {
-                    //Alert += $"- {error.Code}{Environment.NewLine}";
-                }
-
+                //Alert = "Überprüfe deine Anmeldedaten.";
                 return Page();
             }
 
-            await _signInManager.SignInAsync(identity, isPersistent: true);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, isPersistent: true, lockoutOnFailure: false);
+            if (!result.Succeeded)
+            {
+                //Alert = "Überprüfe deine Anmeldedaten.";
+                return Page();
+            }
+
             return LocalRedirect(ReturnUrl);
         }
 
         public class InputModel
         {
-            [Required, MinLength(4), MaxLength(24)]
-            [DataType(DataType.Text)]
-            public string Username { get; set; } = string.Empty;
-
             [Required]
             [EmailAddress]
             public string Email { get; set; } = string.Empty;

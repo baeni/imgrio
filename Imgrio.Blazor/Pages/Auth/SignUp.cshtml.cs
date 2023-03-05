@@ -3,17 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace Imgrio.Blazor.Pages.Account
+namespace Imgrio.Blazor.Pages.Auth
 {
-    public class SignInModel : PageModel
+    public class SignUpModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public SignInModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public SignUpModel(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -36,25 +36,30 @@ namespace Imgrio.Blazor.Pages.Account
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null || user.UserName == null)
-            {
-                //Alert = "Überprüfe deine Anmeldedaten.";
-                return Page();
-            }
-
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, isPersistent: true, lockoutOnFailure: false);
+            var identity = new IdentityUser { UserName = Input.Username, Email = Input.Email };
+            var result = await _userManager.CreateAsync(identity, Input.Password);
             if (!result.Succeeded)
             {
-                //Alert = "Überprüfe deine Anmeldedaten.";
+                //Alert = $"Bitte behebe folgende Probleme:{Environment.NewLine}";
+
+                foreach (var error in result.Errors)
+                {
+                    //Alert += $"- {error.Code}{Environment.NewLine}";
+                }
+
                 return Page();
             }
 
+            await _signInManager.SignInAsync(identity, isPersistent: true);
             return LocalRedirect(ReturnUrl);
         }
 
         public class InputModel
         {
+            [Required, MinLength(4), MaxLength(24)]
+            [DataType(DataType.Text)]
+            public string Username { get; set; } = string.Empty;
+
             [Required]
             [EmailAddress]
             public string Email { get; set; } = string.Empty;
