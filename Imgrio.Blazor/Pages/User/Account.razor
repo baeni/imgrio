@@ -3,6 +3,24 @@
 
 <h1>Mein Account</h1>
 
+<AuthorizeView>
+    <form class="w-50">
+        <div class="mb-3">
+            <label>Nutzername</label>
+            <input class="form-control" type="text" value="@context.User.Identity!.Name" asp-for="Input.Username" />
+            <span class="text-danger" asp-validation-for="Input.Username"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input class="form-control" type="email" placeholder="Email" asp-for="Input.Email" />
+            <span class="text-danger" asp-validation-for="Input.Email"></span>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Speichern</button>
+    </form>
+</AuthorizeView>
+
 @code {
 
 }
