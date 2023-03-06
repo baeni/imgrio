@@ -1,49 +1,49 @@
 @using System.Security.Claims;
 @using Microsoft.AspNetCore.Identity;
 
-<nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: rgba(246,247,248, .75); backdrop-filter: blur(20px);">
+<nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: rgba(246,247,248, .75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
     <div class="container">
         <a class="navbar-brand" href="/">imgrio</a>
-        <button class="navbar-toggler @NavButtonCssClass" @onclick="ToggleNavMenu">
+
+        <!--Navigation section-->
+        <button class="navbar-toggler @NavButtonCssClass" data-toggle="collapse" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse @NavBarCssClass text-center" id="navbarCollapse">
-            <!--Navigation section-->
             <div class="navbar-nav mx-auto">
                 <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">Home</NavLink>
                 <NavLink class="nav-link" href="/f/upload" Match="NavLinkMatch.Prefix">Datei Hochladen</NavLink>
                 <NavLink class="nav-link" href="/sharex" Match="NavLinkMatch.Prefix">ShareX</NavLink>
             </div>
-
-            <!--User section-->
-            <ul class="navbar-nav">
-                <AuthorizeView>
-                    <Authorized>
-                        <li class="nav-item">
-                            <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
-                                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
-                                    @context.User.Identity!.Name
-                                </button>
-                                <div class="dropdown-menu shadow-sm @DropdownCssClass" @onclick=HideDropdown>
-                                    <a class="dropdown-item" href="/u/files">Meine Dateien</a>
-                                    <a class="dropdown-item" href="/u/account">Mein Account</a>
-                                    <hr class="dropdown-divider">
-                                    <a class="dropdown-item text-danger" href="/a/sign-out">Abmelden</a>
-                                </div>
-                            </div>
-                        </li>
-                    </Authorized>
-                    <NotAuthorized>
-                        <li>
-                            <a class="btn btn-primary" href="/a/sign-in">
-                                Anmelden
-                            </a>
-                        </li>
-                    </NotAuthorized>
-                </AuthorizeView>
-            </ul>
         </div>
+
+        <!--User section-->
+        <ul class="navbar-nav">
+            <AuthorizeView>
+                <Authorized>
+                    <li class="nav-item">
+                        <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
+                                @context.User.Identity!.Name
+                            </button>
+                            <div class="dropdown-menu position-absolute shadow-sm @DropdownCssClass" @onclick=HideDropdown>
+                                <a class="dropdown-item" href="/u/files">Meine Dateien</a>
+                                <a class="dropdown-item" href="/u/account">Mein Account</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item text-danger" href="/a/sign-out">Abmelden</a>
+                            </div>
+                        </div>
+                    </li>
+                </Authorized>
+                <NotAuthorized>
+                    <li>
+                        <a class="btn btn-primary" href="/a/sign-in">
+                            Anmelden
+                        </a>
+                    </li>
+                </NotAuthorized>
+            </AuthorizeView>
+        </ul>
     </div>
 </nav>
 
