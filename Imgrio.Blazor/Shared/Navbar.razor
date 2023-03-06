@@ -3,7 +3,7 @@
 
 <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: rgba(246,247,248, .75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
     <div class="container">
-        <a class="navbar-brand" href="/">imgrio</a>
+        <a class="navbar-brand" href="@Constants.PathToIndex">imgrio</a>
 
         <!--Navigation section-->
         <button class="navbar-toggler @NavButtonCssClass" data-toggle="collapse" @onclick="ToggleNavMenu">
@@ -11,9 +11,9 @@
         </button>
         <div class="collapse navbar-collapse @NavBarCssClass text-center" id="navbarCollapse">
             <div class="navbar-nav mx-auto">
-                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">Home</NavLink>
-                <NavLink class="nav-link" href="/f/upload" Match="NavLinkMatch.Prefix">Datei Hochladen</NavLink>
-                <NavLink class="nav-link" href="/sharex" Match="NavLinkMatch.Prefix">ShareX</NavLink>
+                <NavLink class="nav-link" href="@Constants.PathToIndex" Match="NavLinkMatch.All">Home</NavLink>
+                <NavLink class="nav-link" href="@Constants.PathToFileUpload" Match="NavLinkMatch.Prefix">Datei Hochladen</NavLink>
+                <NavLink class="nav-link" href="@Constants.PathToSharex" Match="NavLinkMatch.Prefix">ShareX</NavLink>
             </div>
         </div>
 
@@ -27,17 +27,17 @@
                                 @context.User.Identity!.Name
                             </button>
                             <div class="dropdown-menu shadow-sm @DropdownCssClass" @onclick=HideDropdown>
-                                <a class="dropdown-item" href="/u/files">Meine Dateien</a>
-                                <a class="dropdown-item" href="/u/account">Mein Account</a>
+                                <a class="dropdown-item" href="@Constants.PathToUserFiles">Meine Dateien</a>
+                                <a class="dropdown-item" href="@Constants.PathToUserAccount">Mein Account</a>
                                 <hr class="dropdown-divider">
-                                <a class="dropdown-item text-danger" href="/a/sign-out">Abmelden</a>
+                                <a class="dropdown-item text-danger" href="@Constants.PathToAuthLogout">Abmelden</a>
                             </div>
                         </div>
                     </li>
                 </Authorized>
                 <NotAuthorized>
                     <li>
-                        <a class="btn btn-primary" href="/a/sign-in">
+                        <a class="btn btn-primary" href="@Constants.PathToAuthLogin">
                             Anmelden
                         </a>
                     </li>
