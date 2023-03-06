@@ -26,7 +26,7 @@
                             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
                                 @context.User.Identity!.Name
                             </button>
-                            <div class="dropdown-menu position-absolute shadow-sm @DropdownCssClass" @onclick=HideDropdown>
+                            <div class="dropdown-menu shadow-sm @DropdownCssClass" @onclick=HideDropdown>
                                 <a class="dropdown-item" href="/u/files">Meine Dateien</a>
                                 <a class="dropdown-item" href="/u/account">Mein Account</a>
                                 <hr class="dropdown-divider">
