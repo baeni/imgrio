@@ -1,35 +1,35 @@
 ﻿@page "/a/sign-up"
 @model Imgrio.Blazor.Pages.Auth.SignUpModel
 
-<div class="card">
-    <div class="card-body p-5">
-        <form method="post">
-            <h1 class="mb-5">Registrieren</h1>
-
+<form class="pt-5" method="post">
+    <div class="row">
+        <div class="col-xs-12 col-lg-8">
+            <h1 class="mb-4" style="font-size: 3.5rem;">Registrieren</h1>
+            <p>imgrio ist eine Plattform zum Teilen von Inhalten. Erstelle dir einen Account, um vollen Zugang zur Plattform zu erhalten.</p>
+        </div>
+        <div class="col-sm-12 col-lg-4">
             <div class="mb-3">
-                <input class="form-control form-control-lg" type="text" placeholder="Nutzername" asp-for="Input.Username" />
+                <input class="form-control" type="text" placeholder="Nutzername" asp-for="Input.Username" />
                 <span class="text-danger" asp-validation-for="Input.Username"></span>
             </div>
 
             <div class="mb-3">
-                <input class="form-control form-control-lg" type="email" placeholder="Email" asp-for="Input.Email" />
+                <input class="form-control" type="email" placeholder="Email" asp-for="Input.Email" />
                 <span class="text-danger" asp-validation-for="Input.Email"></span>
             </div>
 
             <div class="mb-3">
-                <input class="form-control form-control-lg" type="password" placeholder="Passwort" asp-for="Input.Password" />
+                <input class="form-control" type="password" placeholder="Passwort" asp-for="Input.Password" />
                 <span class="text-danger" asp-validation-for="Input.Password"></span>
             </div>
 
-            <div class="mb-5">
-                <input class="form-control form-control-lg" type="password" placeholder="Passwort wiederholen" asp-for="Input.Password" />
+            <div class="mb-4">
+                <input class="form-control" type="password" placeholder="Passwort wiederholen" asp-for="Input.Password" />
                 <span class="text-danger" asp-validation-for="Input.Password"></span>
             </div>
 
-            <button class="btn btn-lg btn-block btn-primary mb-3" type="submit">Registrieren</button>
-            <div class="card-text">
-                Du hast schon einen Account? <a href="/a/sign-in">Anmelden</a>
-            </div>
-        </form>
+            <button class="btn btn-primary mb-3" type="submit">Registrieren</button>
+            <p>Du hast schon einen Account? <a href="/a/sign-in">Login</a></p>
+        </div>
     </div>
-</div>
+</form>
