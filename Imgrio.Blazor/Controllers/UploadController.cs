@@ -44,6 +44,11 @@ namespace Imgrio.Blazor.Controllers
             {
                 return BadRequest("Es muss eine Datei hochgeladen werden.");
             }
+
+            if (file.Length > Constants.MaxFileSizeInBytes)
+            {
+                return BadRequest($"Die Datei darf maximal {Constants.MaxFileSizeInBytes / 1000000}MB groß sein.");
+            }
             #endregion
 
             var id = await _userFileService.CreateUserFileAsync(user, file);
