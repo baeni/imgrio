@@ -51,7 +51,7 @@ else
             <p class="fs-5 text-muted">@fancyUploadedAt</p>
         </div>
         <div class="col-sm-12 col-lg-6">
-            <a class="btn btn-primary" href="data:@MimeTypes.MimeTypeMap.GetMimeType(Path.Combine($"{UserFile.Id}.{UserFile.Extension}"));base64, @UserFile.Base64" download>Herunterladen</a>
+            <a class="btn btn-dark" href="data:@MimeTypes.MimeTypeMap.GetMimeType(Path.Combine($"{UserFile.Id}.{UserFile.Extension}"));base64, @UserFile.Base64" download>Herunterladen</a>
         </div>
     </div>
 }
