@@ -12,7 +12,6 @@
         <div class="collapse navbar-collapse @NavBarCssClass text-center" id="navbarCollapse">
             <div class="navbar-nav mx-auto">
                 <NavLink class="nav-link" href="@Constants.PathToIndex" Match="NavLinkMatch.All">Home</NavLink>
-                <NavLink class="nav-link" href="@Constants.PathToFileUpload" Match="NavLinkMatch.Prefix">Datei Hochladen</NavLink>
                 <NavLink class="nav-link" href="@Constants.PathToSharex" Match="NavLinkMatch.Prefix">ShareX</NavLink>
             </div>
         </div>
@@ -23,10 +22,12 @@
                 <Authorized>
                     <li class="nav-item">
                         <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
-                            <button class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
+                            <button class="btn btn-light text-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
                                 @context.User.Identity!.Name
                             </button>
                             <div class="dropdown-menu shadow-sm @DropdownCssClass" @onclick=HideDropdown>
+                                <a class="dropdown-item" href="@Constants.PathToFileUpload">Datei Hochladen</a>
+                                <hr class="dropdown-divider">
                                 <a class="dropdown-item" href="@Constants.PathToUserFiles">Meine Dateien</a>
                                 <a class="dropdown-item" href="@Constants.PathToUserAccount">Mein Account</a>
                                 <hr class="dropdown-divider">
@@ -37,7 +38,7 @@
                 </Authorized>
                 <NotAuthorized>
                     <li>
-                        <a class="btn btn-dark" href="@Constants.PathToAuthLogin">
+                        <a class="btn btn-light text-dark" href="@Constants.PathToAuthLogin">
                             Login
                         </a>
                     </li>
