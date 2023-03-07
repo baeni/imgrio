@@ -354,3 +354,6 @@ MigrationBackup/
 
 # google app credentials
 google-app-credentials.json
+
+# config folder
+.config/
