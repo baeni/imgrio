@@ -14,6 +14,21 @@
 
 <div class="mb-5">
     <h2 id="configuration">Konfiguration</h2>
+    <p>Als nächstes konfigurieren wir alles so, dass ShareX mit @Constants.AppName funktioniert. Da wir das meiste bereits für dich erledigt haben, musst du dafür nur unsere <a href="@Path.Combine("assets", $"{Constants.AppName}.sxcu")" download>Konfiguration herunterladen</a>.</p>
+    <p>Nun importierst du diese Konfiguration mit einem Doppelklick auf die heruntergeladene Datei in ShareX. Das einzige, was du jetzt noch selber erledigen musst, ist das einfügen deiner Zugangsdaten. Navigiere dafür zur folgenden Einstellung:</p>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Ziele</li>
+            <li class="breadcrumb-item">Benutzerdefinierte Uploader-Einstellungen...</li>
+        </ol>
+    </nav>
+
+    <p>In der Liste auf der linken Seite solltest du nun eine Konfiguration namens "@Constants.AppName" sehen. Stelle sicher, dass diese ausgewählt ist. Anschließend findest du auf der rechten Seite eine Tabelle mit den Einträgen "Email" und "Password". In den jeweils dazugehörigen Werte-feldern solltest du nun deine Zugangsdaten eintragen.</p>
+</div>
+
+@*<div class="mb-5">
+    <h2 id="configuration">Konfiguration</h2>
     <p>Als nächstes konfigurieren wir alles so, dass ShareX mit imgrio funktioniert. Navigiere dafür zur folgenden Einstellung:</p>
 
     <nav aria-label="breadcrumb">
@@ -106,7 +121,7 @@
 <div class="mb-5">
     <h2 id="overview">Überblick</h2>
     <p>Anschließen sollten deine Einstellungen ungefähr so aussehen:</p>
-</div>
+</div>*@
 
 @code {
 
