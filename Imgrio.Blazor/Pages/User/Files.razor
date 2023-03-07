@@ -36,7 +36,7 @@ else
                             <p class="h5 card-title mb-0">@userFile.Title</p>
                             <small class="text-muted">@userFile.UploadedAt.ToRelativeDateString()</small>
                             <div class="text-nowrap">
-                                <a class="card-link" href="@Constants.PathToFileView + @userFile.Id">Ansehen</a>
+                                <a class="card-link" href="@Constants.PathToFileView@userFile.Id">Ansehen</a>
                                 <a class="card-link" href="javascript:;" @onclick="() => UserFileService.DeleteUserFileAsync(userFile.Id)">Löschen</a>
                             </div>
                         </div>
