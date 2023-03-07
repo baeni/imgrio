@@ -1,6 +1,6 @@
 @using Microsoft.AspNetCore.Components.Authorization
 
-<nav class="bg-white">
+<nav class="bg-neutral-50 dark:bg-neutral-900">
     <div class="mx-auto max-w-3xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -32,17 +32,15 @@
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="/" class="text-gray-400 hover:bg-gray-100 hover:text-black rounded-md px-3 py-2 text-sm font-medium">Home</a>
-
-                        <a href="/sharex" class="text-gray-400 hover:bg-gray-100 hover:text-black rounded-md px-3 py-2 text-sm font-medium">ShareX</a>
+                        <a href="/" class="text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="/sharex" class="text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md px-3 py-2 text-sm font-medium">ShareX</a>
                     </div>
                 </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <AuthorizeView>
                     <Authorized>
-                        <a class="text-gray-400 hover:bg-gray-100 hover:text-black rounded-full p-1 focus:outline-none" href="/f/upload">
+                        <a class="text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full p-1 focus:outline-none" href="/f/upload">
                             <span class="sr-only">Datei Hochladen</span>
                             <div class="h-50 w-6">
                                 <i class="fa-solid fa-file-import"></i>
@@ -59,9 +57,9 @@
                                 <a href="/a/login" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Login</a>
                             </NotAuthorized>
                             <Authorized>
-                                <button class="inline-flex w-full justify-center gap-x-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-md px-3 py-2 text-sm font-medium" id="menu-button" aria-expanded="true" aria-haspopup="true" @onclick="ToggleDropdown">
+                                <button class="text-gray-600 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium" id="menu-button" aria-expanded="true" aria-haspopup="true" @onclick="ToggleDropdown">
                                     @context.User.Identity!.Name
-                                    <div class="-mr-1 h-50 w-50 text-gray-600">
+                                    <div class="-mr-1 h-50 w-50 text-gray-600 dark:text-gray-100">
                                         <i class="fa-solid fa-angle-down"></i>
                                     </div>
                                 </button>
