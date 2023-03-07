@@ -1,0 +1,14 @@
+﻿{
+  "Version": "15.0.0",
+  "Name": "imgrio",
+  "DestinationType": "ImageUploader, TextUploader, FileUploader",
+  "RequestMethod": "POST",
+  "RequestURL": "https://imgrio.azurewebsites.net/api/v1/upload",
+  "Body": "MultipartFormData",
+  "Arguments": {
+    "Email": "deine@email.de",
+    "Password": "De!nPassw0rt"
+  },
+  "FileFormName": "file",
+  "URL": "{response}"
+}
