@@ -1,5 +1,6 @@
 ﻿using Imgrio.Blazor.Backend.Services;
 using Imgrio.Blazor.Pages.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +58,7 @@ namespace Imgrio.Blazor.Controllers
         }
 
         [HttpPost("user")]
+        [Authorize]
         public async Task<IActionResult> PostUserFileWithUserAsync([FromForm] IdentityUser user)
         {
             #region Authorize
