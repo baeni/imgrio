@@ -48,10 +48,10 @@
                     <div>
                         <AuthorizeView>
                             <NotAuthorized>
-                                <a href="@Constants.PathToAuthLogin" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Login</a>
+                                <a href="@Constants.PathToAuthLogin" class="text-neutral-900 bg-neutral-100 hover:bg-neutral-200 dark:text-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 rounded-md px-3 py-2 text-sm font-medium">Login</a>
                             </NotAuthorized>
                             <Authorized>
-                                <button class="text-gray-600 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium" id="menu-button" aria-expanded="true" aria-haspopup="true" @onclick="ToggleDropdown">
+                                <button class="text-neutral-900 bg-neutral-100 hover:bg-neutral-200 dark:text-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium" id="menu-button" aria-expanded="true" aria-haspopup="true" @onclick="ToggleDropdown">
                                     @context.User.Identity!.Name
                                     <div class="-mr-1 h-50 w-50 text-gray-600 dark:text-gray-100">
                                         <i class="fa-solid fa-angle-down"></i>
