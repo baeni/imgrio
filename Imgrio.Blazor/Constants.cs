@@ -13,7 +13,7 @@
         public const string PathToAuthLogin = "/a/login";
         public const string PathToAuthLogout = "/a/logout";
         public const string PathToFileUpload = "/f/upload";
-        public const string PathToFileView = "/f";
+        public const string PathToFileView = "/f/";
         public const string PathToUserAccount = "/u/account";
         public const string PathToUserFiles = "/u/files";
 
