@@ -47,7 +47,7 @@ else
 
     <div class="row">
         <div class="col-sm-12 col-lg-6">
-            <h1>@UserFile.Title</h1>
+            <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight">@UserFile.Title</h1>
             <p class="fs-5 text-muted">@fancyUploadedAt</p>
         </div>
         <div class="col-sm-12 col-lg-6">
@@ -78,6 +78,5 @@ else
         fancyFileType = $"Dateityp: {UserFile.Extension.ToUpper()}";
         fancyFileSize = $"Dateigröße: {UserFile.ToFormattedSizeString()}";
         fancyUploadedAt = $"Hochgeladen am {UserFile.UploadedAt.ToString("dd.MM.yyyy")}";
-
     }
 }
