@@ -1,7 +1,7 @@
 @using System.Security.Claims;
 @using Microsoft.AspNetCore.Identity;
 
-<nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: rgba(246,247,248, .75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+<nav class="navbar navbar-expand-md navbar-light border-bottom border-secondary-subtle fixed-top" style="background-color: rgba(255, 255, 255, .75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
     <div class="container">
         <a class="navbar-brand" href="@Constants.PathToIndex">@Constants.AppName</a>
 
@@ -23,22 +23,22 @@
                 <Authorized>
                     <li class="nav-item">
                         <div class="dropdown" @onmouseenter="ShowDropdown" @onmouseleave="HideDropdown">
-                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
+                            <button class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" @onclick=ToggleDropdown>
                                 @context.User.Identity!.Name
                             </button>
                             <div class="dropdown-menu shadow-sm @DropdownCssClass" @onclick=HideDropdown>
                                 <a class="dropdown-item" href="@Constants.PathToUserFiles">Meine Dateien</a>
                                 <a class="dropdown-item" href="@Constants.PathToUserAccount">Mein Account</a>
                                 <hr class="dropdown-divider">
-                                <a class="dropdown-item text-danger" href="@Constants.PathToAuthLogout">Abmelden</a>
+                                <a class="dropdown-item text-danger" href="@Constants.PathToAuthLogout">Logout</a>
                             </div>
                         </div>
                     </li>
                 </Authorized>
                 <NotAuthorized>
                     <li>
-                        <a class="btn btn-primary" href="@Constants.PathToAuthLogin">
-                            Anmelden
+                        <a class="btn btn-dark" href="@Constants.PathToAuthLogin">
+                            Login
                         </a>
                     </li>
                 </NotAuthorized>
