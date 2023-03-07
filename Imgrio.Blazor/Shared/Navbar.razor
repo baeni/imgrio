@@ -3,8 +3,8 @@
 <nav class="bg-neutral-50 dark:bg-neutral-900">
     <div class="mx-auto max-w-3xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
+            <!-- Mobile menu button -->
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <!-- Mobile menu button-->
                 <button @onclick="ToggleNavMenu" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
                     <!--
@@ -25,18 +25,20 @@
                     </svg>
                 </button>
             </div>
+
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex flex-shrink-0 items-center">
-                    <img class="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
-                    <img class="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                    <img class="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="@Constants.AppName">
+                    <img class="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="@Constants.AppName">
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
-                        <a href="/" class="text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md px-3 py-2 text-sm font-medium">Home</a>
-                        <a href="/sharex" class="text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md px-3 py-2 text-sm font-medium">ShareX</a>
+                        <a href="@Constants.PathToIndex" class="text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="@Constants.PathToSharex" class="text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md px-3 py-2 text-sm font-medium">ShareX</a>
                     </div>
                 </div>
             </div>
+
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <AuthorizeView>
                     <Authorized>
@@ -54,7 +56,7 @@
                     <div>
                         <AuthorizeView>
                             <NotAuthorized>
-                                <a href="/a/login" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Login</a>
+                                <a href="@Constants.PathToAuthLogin" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Login</a>
                             </NotAuthorized>
                             <Authorized>
                                 <button class="text-gray-600 dark:text-gray-100 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-medium" id="menu-button" aria-expanded="true" aria-haspopup="true" @onclick="ToggleDropdown">
@@ -79,11 +81,11 @@
                     -->
                     <div id="dropdown-menu" class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none @DropdownCssClass" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" @onclick="ToggleDropdown">
                         <div class="py-1" role="none">
-                            <a href="/u/files" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-4">Meine Dateien</a>
-                            <a href="/u/account" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-5">Mein Account</a>
+                            <a href="@Constants.PathToUserFiles" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-4">Meine Dateien</a>
+                            <a href="@Constants.PathToUserAccount" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-5">Mein Account</a>
                         </div>
                         <div class="py-1" role="none">
-                            <a href="/a/logout" class="text-red-600 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-4">Logout</a>
+                            <a href="@Constants.PathToAuthLogout" class="text-red-600 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-4">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -91,11 +93,11 @@
         </div>
     </div>
 
-    <!-- Mobile menu, show/hide based on menu state. -->
+    <!-- Mobile menu -->
     <div class="sm:hidden @NavBarCssClass" id="mobile-menu">
         <div class="space-y-1 px-2 pt-2 pb-3">
-            <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Home</a>
-            <a href="/sharex" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">ShareX</a>
+            <a href="@Constants.PathToIndex" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Home</a>
+            <a href="@Constants.PathToSharex" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">ShareX</a>
         </div>
     </div>
 </nav>
