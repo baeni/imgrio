@@ -1,5 +1,4 @@
-﻿@page "/a/sign-up"
-@*@attribute [Route(Constants.PathToAuthRegister)]*@
+﻿@page "/a/register"
 @model Imgrio.Blazor.Pages.Auth.SignUpModel
 
 <form class="pt-5" method="post">
@@ -30,7 +29,7 @@
             </div>
 
             <button class="btn btn-primary mb-3" type="submit">Registrieren</button>
-            <p>Du hast schon einen Account? <a href="/a/sign-in">Login</a></p>
+            <p>Du hast schon einen Account? <a href="@Constants.PathToAuthLogin">Login</a></p>
         </div>
     </div>
 </form>
