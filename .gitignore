@@ -352,8 +352,8 @@ MigrationBackup/
 # macOS
 .DS_Store
 
-# google app credentials
-google-app-credentials.json
+# firebase credentials
+firebasecredentials.json
 
 # config folder
 .config/
