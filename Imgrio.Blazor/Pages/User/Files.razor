@@ -1,11 +1,11 @@
 ﻿@attribute [Route(Constants.PathToUserFiles)]
+@attribute [Authorize]
 @using Imgrio.Blazor.Backend.Models;
 @using Imgrio.Blazor.Backend.Services;
 @using System.Security.Claims;
 @using Imgrio.Blazor.Backend.Utils;
-@attribute [Authorize]
 
-<h1>Meine Dateien</h1>
+<h1 class="mb-4 text-4xl font-bold leading-none tracking-tight">Meine Dateien</h1>
 
 @if (GroupedUserFiles.Count() <= 0)
 {
