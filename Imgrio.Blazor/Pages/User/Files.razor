@@ -9,7 +9,7 @@
 
 @if (GroupedUserFiles.Count() <= 0)
 {
-    <p class="text-muted">Du scheinst noch keine Dateien hochgeladen zu haben. Wenn du das ändern möchtest, kannst du das <a href="/f/upload">hier</a> oder via <a href="/sharex">ShareX</a> tun!</p>
+    <p class="text-muted">Du scheinst noch keine Dateien hochgeladen zu haben. Wenn du das ändern möchtest, kannst du das <a href="@Constants.PathToFileUpload">hier</a> oder via <a href="@Constants.PathToSharex">ShareX</a> tun!</p>
 }
 else
 {
@@ -36,7 +36,7 @@ else
                             <p class="h5 card-title mb-0">@userFile.Title</p>
                             <small class="text-muted">@userFile.UploadedAt.ToRelativeDateString()</small>
                             <div class="text-nowrap">
-                                <a class="card-link" href="/f/@userFile.Id">Ansehen</a>
+                                <a class="card-link" href="@Constants.PathToFileView + @userFile.Id">Ansehen</a>
                                 <a class="card-link" href="javascript:;" @onclick="() => UserFileService.DeleteUserFileAsync(userFile.Id)">Löschen</a>
                             </div>
                         </div>
