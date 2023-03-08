@@ -16,31 +16,30 @@ else
 {
     @foreach (var group in GroupedUserFiles)
     {
-        <p class="h5 text-muted mb-3">@group.Key.ToString("dd.MM.yyyy")</p>
+        <p class="mb-2 text-lg font-bold leading-none tracking-tight">@group.Key.ToString("dd.MM.yyyy")</p>
 
-        <div class="row g-2 mb-5">
+        <div class="grid sm:grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
             @foreach (var userFile in group.ToList())
             {
-                <div class="col-sm-12 col-lg-6 col-xxl-4">
-                    <div class="card overflow-hidden" style="flex-direction: row;">
-                        <div class="ratio ratio-1x1 bg-light" style="width: 105px; height: 105px;">
-                            @if (userFile.Extension == "png" || userFile.Extension == "jpg" || userFile.Extension == "jpeg")
-                            {
-                                <img src="@userFile.Url" style="object-fit: cover;" />
-                            }
-                            else
-                            {
-                                <p class="h4 d-flex align-items-center justify-content-center text-muted">@userFile.Extension.ToUpper()</p>
-                            }
-                        </div>
-                        <div class="card-body">
-                            <p class="h5 card-title mb-0">@userFile.Title</p>
-                            <small class="text-muted">@userFile.UploadedAt.ToRelativeDateString()</small>
-                            <div class="text-nowrap">
-                                <a class="card-link" href="@($"{Constants.PathToFileView}{userFile.Id}")">Ansehen</a>
-                                <a class="card-link" href="javascript:;" @onclick="() => UserFileService.DeleteUserFileAsync(userFile.Id)">Löschen</a>
-                            </div>
-                        </div>
+                <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800">
+                    <div class="sm:h-8 sm:w-8 lg:h-32 lg:w-32">
+                        @if (userFile.Extension == "png" || userFile.Extension == "jpg" || userFile.Extension == "jpeg")
+                        {
+                            <img class="object-cover h-full w-full" title="@userFile.Title" src="@userFile.Url">
+                        }
+                        else
+                        {
+                            <p class="h4 d-flex align-items-center justify-content-center text-muted">@userFile.Extension.ToUpper()</p>
+                        }
+                    </div>
+                    <div class="flex flex-col justify-between p-4 leading-normal">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">@userFile.Title</h5>
+
+
+                        <a href="@($"{Constants.PathToFileView}{userFile.Id}")" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Ansehen
+                            <svg aria-hidden="true" class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </a>
                     </div>
                 </div>
             }
