@@ -15,18 +15,18 @@ namespace Imgrio.Blazor.Backend.Models
             Url = url;
         }
 
-        public Guid Id { get; }
+        public Guid Id { get; private set; }
 
-        public string Extension { get; }
+        public string Extension { get; private set; }
 
-        public string Title { get; }
+        public string Title { get; private set; }
 
-        public double Size { get; }
+        public double Size { get; private set; }
 
-        public DateTime UploadedAt { get; }
+        public DateTime UploadedAt { get; private set; }
 
-        public string UploadedBy { get; }
+        public string UploadedBy { get; private set; }
 
-        public string Url { get; }
+        public string Url { get; private set; }
     }
 }
