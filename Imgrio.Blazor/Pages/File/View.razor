@@ -15,8 +15,8 @@ else
     @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
     {
         <HeadContent>
-            <meta property="og:image" content="https://imgrio.azurewebsites.net/@Path.Combine("data", $"{UserFile.Id}.{UserFile.Extension}")">
-            <meta name="twitter:image:src" content="https://imgrio.azurewebsites.net/@Path.Combine("data", $"{UserFile.Id}.{UserFile.Extension}")">
+            <meta property="og:image" content="@UserFile.Url">
+            <meta name="twitter:image:src" content="@UserFile.Url">
             <meta name="twitter:card" content="summary_large_image">
         </HeadContent>
     }
@@ -38,7 +38,7 @@ else
     <div class="text-center my-5">
         @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
         {
-            <img class="mw-100 max-vh-85 rounded shadow-lg mb-4" src="data:image/@UserFile.Extension;base64, @UserFile.Base64" style="object-fit: cover;" />
+            <img class="mw-100 max-vh-85 rounded shadow-lg mb-4" src="@UserFile.Url" style="object-fit: cover;" />
         }
         else {
             <h1>@UserFile.Extension.ToUpper()</h1>
@@ -51,7 +51,7 @@ else
             <p class="fs-5 text-muted">@fancyUploadedAt</p>
         </div>
         <div class="col-sm-12 col-lg-6">
-            <a class="btn btn-dark" href="data:@MimeTypes.MimeTypeMap.GetMimeType(Path.Combine($"{UserFile.Id}.{UserFile.Extension}"));base64, @UserFile.Base64" download>Herunterladen</a>
+            <a class="btn btn-dark" href="@UserFile.Url" download>Herunterladen</a>
         </div>
     </div>
 }
