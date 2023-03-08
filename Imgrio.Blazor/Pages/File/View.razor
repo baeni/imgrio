@@ -33,7 +33,7 @@ else
 
     <PageTitle>Datei ansehen</PageTitle>
 
-    <div class="text-center my-5">
+    <div class="flex flex-wrap justify-center my-5">
         @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
         {
             <img class="mw-100 max-vh-85 rounded shadow-lg mb-4" src="@UserFile.Url" style="object-fit: cover;" />
