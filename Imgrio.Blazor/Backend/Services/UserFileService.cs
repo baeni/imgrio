@@ -14,10 +14,51 @@ namespace Imgrio.Blazor.Backend.Services
             _webHostEnvironment = webHostEnvironment;
             _firestoreDb = firestoreDb;
 
-            DataPath = Path.Combine(_webHostEnvironment.WebRootPath, "data");
+            AbsoluteFilesPath = Path.Combine("data", "files");
+            FilesPath = Path.Combine(_webHostEnvironment.WebRootPath, AbsoluteFilesPath);
+            if (!Path.Exists(FilesPath))
+            {
+                Directory.CreateDirectory(FilesPath);
+            }
         }
 
-        public string DataPath { get; }
+        public string AbsoluteFilesPath { get; }
+        public string FilesPath { get; }
+
+        public async Task<Guid> CreateUserFileAsync(IdentityUser user, IFormFile file)
+        {
+            var id = Guid.NewGuid();
+            var title = Path.GetFileNameWithoutExtension(file.FileName);
+            var extension = Path.GetExtension(file.FileName).Substring(1);
+            var size = file.Length;
+            var uploadedAt = DateTime.UtcNow;
+            var uploadedBy = user.Id;
+            var pathAbsolute = Path.Combine(AbsoluteFilesPath, $"{id}.{extension}");
+            var path = Path.Combine(FilesPath, $"{id}.{extension}");
+
+            #region Save file to disk
+            using (Stream fileStream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+            #endregion
+
+            #region Save file information and referende to firestore
+            var docRef = _firestoreDb.Collection("files").Document(id.ToString());
+            var fields = new Dictionary<string, object>
+            {
+                { "title", title },
+                { "extension", extension },
+                { "size", size },
+                { "uploadedAt", uploadedAt },
+                { "uploadedBy", uploadedBy },
+                { "url", pathAbsolute }
+            };
+            await docRef.SetAsync(fields);
+            #endregion
+
+            return id;
+        }
 
         public async Task<IEnumerable<UserFile>> GetUserFilesAsync()
         {
@@ -32,45 +73,12 @@ namespace Imgrio.Blazor.Backend.Services
                 var size = documentSnapshot.GetValue<double>("size");
                 var uploadedAt = documentSnapshot.GetValue<DateTime>("uploadedAt");
                 var uploadedBy = documentSnapshot.GetValue<string>("uploadedBy");
-                var base64 = documentSnapshot.GetValue<string>("base64");
+                var url = documentSnapshot.GetValue<string>("url");
 
-                userFiles.Add(new UserFile(Guid.Parse(documentSnapshot.Id), title, extension, size, uploadedAt, uploadedBy, base64));
+                userFiles.Add(new UserFile(Guid.Parse(documentSnapshot.Id), title, extension, size, uploadedAt, uploadedBy, url));
             }
 
             return userFiles;
-        }
-
-        public async Task<Guid> CreateUserFileAsync(IdentityUser user, IFormFile file)
-        {
-            var id = Guid.NewGuid();
-            var title = Path.GetFileNameWithoutExtension(file.FileName);
-            var extension = Path.GetExtension(file.FileName).Substring(1);
-            var size = file.Length;
-            var uploadedAt = DateTime.UtcNow;
-            var uploadedBy = user.Id;
-            string base64 = "";
-
-            using (var memoryStream = new MemoryStream())
-            {
-                await file.CopyToAsync(memoryStream);
-                var fileBytes = memoryStream.ToArray();
-                base64 = Convert.ToBase64String(fileBytes);
-            }
-
-            // Save file information to firestore
-            var docRef = _firestoreDb.Collection("files").Document(id.ToString());
-            var fields = new Dictionary<string, object>
-            {
-                { "title", title },
-                { "extension", extension },
-                { "size", size },
-                { "uploadedAt", uploadedAt },
-                { "uploadedBy", uploadedBy },
-                { "base64", base64 }
-            };
-            await docRef.SetAsync(fields);
-
-            return id;
         }
 
         public async Task DeleteUserFileAsync(Guid id)
