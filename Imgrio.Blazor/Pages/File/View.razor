@@ -3,8 +3,6 @@
 @using Imgrio.Blazor.Backend.Models;
 @using Imgrio.Blazor.Backend.Services;
 @using Imgrio.Blazor.Backend.Utils;
-@using Google.Cloud.Firestore.V1;
-@using Google.Cloud.Firestore;
 
 @if (UserFile == null)
 {
@@ -67,13 +65,18 @@ else
     private string fancyFileSize = null!;
     private string fancyUploadedAt = null!;
 
-    private UserFile UserFile { get; set; } = null!;
+    private UserFile? UserFile { get; set; } = null;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
-        UserFile = (await UserFileService.GetUserFilesAsync()).First(userFile => userFile.Id == Id);
+        UserFile = await UserFileService.GetUserFileAsync(Id);
+
+        if(UserFile == null)
+        {
+            return;
+        }
 
         fancyFileType = $"Dateityp: {UserFile.Extension.ToUpper()}";
         fancyFileSize = $"Dateigröße: {UserFile.ToFormattedSizeString()}";
