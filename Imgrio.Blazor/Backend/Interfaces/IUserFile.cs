@@ -14,6 +14,6 @@
 
         string UploadedBy { get; }
 
-        string Base64 { get; }
+        string Url { get; }
     }
 }
