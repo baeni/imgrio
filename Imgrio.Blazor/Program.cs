@@ -1,4 +1,3 @@
-using Google.Cloud.Firestore;
 using Imgrio.Blazor.Backend.Services;
 using Imgrio.Blazor.Data;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +16,9 @@ namespace Imgrio.Blazor
             builder.Services.AddServerSideBlazor();
             builder.Services.AddControllers();
 
+            var connectionString = builder.Configuration.GetConnectionString("Default");
+            builder.Services.AddDbContextFactory<DataContext>(options => options.UseNpgsql(connectionString));
+
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
@@ -28,10 +30,6 @@ namespace Imgrio.Blazor
                 options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<DataContext>();
 
-            var connectionString = builder.Configuration.GetConnectionString("Default");
-            builder.Services.AddDbContextFactory<DataContext>(options => options.UseNpgsql(connectionString));
-
-            builder.Services.AddTransient(_ => FirestoreDb.Create("imgrio"));
             builder.Services.AddTransient<UserFileService>();
 
             var app = builder.Build();
