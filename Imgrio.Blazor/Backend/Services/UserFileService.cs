@@ -1,18 +1,19 @@
 ﻿using Imgrio.Blazor.Backend.Models;
-using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Identity;
+using Imgrio.Blazor.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Imgrio.Blazor.Backend.Services
 {
     public class UserFileService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly FirestoreDb _firestoreDb;
+        private readonly IDbContextFactory<DataContext> _dbContextFactory;
 
-        public UserFileService(IWebHostEnvironment webHostEnvironment, FirestoreDb firestoreDb)
+        public UserFileService(IWebHostEnvironment webHostEnvironment, IDbContextFactory<DataContext> dbContextFactory)
         {
             _webHostEnvironment = webHostEnvironment;
-            _firestoreDb = firestoreDb;
+            _dbContextFactory = dbContextFactory;
 
             AbsoluteFilesPath = Path.Combine("data", "files");
             FilesPath = Path.Combine(_webHostEnvironment.WebRootPath, AbsoluteFilesPath);
@@ -33,7 +34,7 @@ namespace Imgrio.Blazor.Backend.Services
             var size = file.Length;
             var uploadedAt = DateTime.UtcNow;
             var uploadedBy = user.Id;
-            var pathAbsolute = Path.Combine(AbsoluteFilesPath, $"{id}.{extension}");
+            var absolutePath = Path.Combine(AbsoluteFilesPath, $"{id}.{extension}");
             var path = Path.Combine(FilesPath, $"{id}.{extension}");
 
             #region Save file to disk
@@ -43,39 +44,36 @@ namespace Imgrio.Blazor.Backend.Services
             }
             #endregion
 
-            #region Save file information and referende to firestore
-            var docRef = _firestoreDb.Collection("files").Document(id.ToString());
-            var fields = new Dictionary<string, object>
+            #region Save file information and reference to database
+            using (var context = await _dbContextFactory.CreateDbContextAsync())
             {
-                { "title", title },
-                { "extension", extension },
-                { "size", size },
-                { "uploadedAt", uploadedAt },
-                { "uploadedBy", uploadedBy },
-                { "url", pathAbsolute }
-            };
-            await docRef.SetAsync(fields);
+                await context.UserFiles.AddAsync(new UserFile(id, title, extension, size, uploadedAt, uploadedBy, absolutePath));
+                context.SaveChanges();
+            }
             #endregion
 
             return id;
         }
 
-        public async Task<IEnumerable<UserFile>> GetUserFilesAsync()
+        public async Task<UserFile?> GetUserFileAsync(Guid id)
         {
-            var userFiles = new List<UserFile>();
+            UserFile? userFile;
 
-            var collectionSnapshot = await _firestoreDb.Collection("files").GetSnapshotAsync();
-
-            foreach (var documentSnapshot in collectionSnapshot.Documents)
+            using (var context = await _dbContextFactory.CreateDbContextAsync())
             {
-                var title = documentSnapshot.GetValue<string>("title");
-                var extension = documentSnapshot.GetValue<string>("extension");
-                var size = documentSnapshot.GetValue<double>("size");
-                var uploadedAt = documentSnapshot.GetValue<DateTime>("uploadedAt");
-                var uploadedBy = documentSnapshot.GetValue<string>("uploadedBy");
-                var url = documentSnapshot.GetValue<string>("url");
+                userFile = await context.UserFiles.FindAsync(id);
+            }
 
-                userFiles.Add(new UserFile(Guid.Parse(documentSnapshot.Id), title, extension, size, uploadedAt, uploadedBy, url));
+            return userFile;
+        }
+
+        public async Task<IEnumerable<UserFile>> GetUserFilesAsync(IdentityUser user)
+        {
+            List<UserFile> userFiles;
+
+            using (var context = await _dbContextFactory.CreateDbContextAsync())
+            {
+                userFiles = await context.UserFiles.Where(userFile => userFile.UploadedBy == user.Id).ToListAsync();
             }
 
             return userFiles;
@@ -83,8 +81,27 @@ namespace Imgrio.Blazor.Backend.Services
 
         public async Task DeleteUserFileAsync(Guid id)
         {
-            var docRef = _firestoreDb.Collection("files").Document(id.ToString());
-            await docRef.DeleteAsync();
+            UserFile? userFile;
+
+            #region Remove file information and reference from database
+            using (var context = await _dbContextFactory.CreateDbContextAsync())
+            {
+                userFile = await GetUserFileAsync(id);
+                if (userFile == null)
+                {
+                    return;
+                }
+
+                context.UserFiles.Remove(userFile);
+                context.SaveChanges();
+            }
+            #endregion
+
+            var path = Path.Combine(FilesPath, $"{id}.{userFile.Extension}");
+
+            #region Delete file from disk
+            File.Delete(path);
+            #endregion
         }
     }
 }
