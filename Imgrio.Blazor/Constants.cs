@@ -3,6 +3,7 @@
     public static class Constants
     {
         public const string AppName = "imgrio";
+        public const string AppUrl = "https://imgrio.azurewebsites.net";
 
         public const string PathToIndex = "/";
         public const string PathToSharex = "/sharex";
