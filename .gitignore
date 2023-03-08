@@ -355,5 +355,8 @@ MigrationBackup/
 # firebase credentials
 firebasecredentials.json
 
+# data folder
+data/
+
 # config folder
 .config/
