@@ -3,7 +3,7 @@
     public static class Constants
     {
         public const string AppName = "imgrio";
-        public static readonly string AppUrl = !Program.App.Environment.IsDevelopment()
+        public static readonly string AppUrl = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != Environments.Development
                                                     ? "https://imgrio.azurewebsites.net"
                                                     : "https://localhost:7223";
 
