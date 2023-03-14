@@ -52,7 +52,7 @@ namespace Imgrio.Blazor.Controllers
 
             var id = await _userFileService.CreateUserFileAsync(user, file);
 
-            return Ok(Constants.AppUrl + Constants.PathToFileView + id);
+            return Redirect($"{Constants.AppUrl}{Constants.PathToFileView}{id}");
         }
 
         [HttpPost("user")]
@@ -81,7 +81,7 @@ namespace Imgrio.Blazor.Controllers
 
             var id = await _userFileService.CreateUserFileAsync(user, file);
 
-            return Ok(Constants.AppUrl + Constants.PathToFileView + id);
+            return Redirect($"{Constants.AppUrl}{Constants.PathToFileView}{id}");
         }
     }
 }
