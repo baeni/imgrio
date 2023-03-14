@@ -3,7 +3,9 @@
     public static class Constants
     {
         public const string AppName = "imgrio";
-        public const string AppUrl = "https://imgrio.azurewebsites.net";
+        public static readonly string AppUrl = !Program.App.Environment.IsDevelopment()
+                                                    ? "https://imgrio.azurewebsites.net"
+                                                    : "https://localhost:7223";
 
         public const string PathToIndex = "/";
         public const string PathToSharex = "/sharex";
