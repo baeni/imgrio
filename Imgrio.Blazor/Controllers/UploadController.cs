@@ -22,7 +22,7 @@ namespace Imgrio.Blazor.Controllers
         }
 
         [HttpPost("credentials")]
-        public async Task<IActionResult> PostUserFileWithCredentialsAsync([FromForm] SignInModel.InputModel input)
+        public async Task<IActionResult> PostUserFileWithCredentialsAsync([FromForm] IFormFile file, [FromForm] SignInModel.InputModel input)
         {
             #region Authorize
             var user = await _userManager.FindByEmailAsync(input.Email);
@@ -39,8 +39,6 @@ namespace Imgrio.Blazor.Controllers
             #endregion
 
             #region Validate file and extract information
-            var file = Request.Form.Files.FirstOrDefault();
-
             if (file == null)
             {
                 return BadRequest("Es muss eine Datei hochgeladen werden.");
@@ -59,9 +57,10 @@ namespace Imgrio.Blazor.Controllers
 
         [HttpPost("user")]
         [Authorize]
-        public async Task<IActionResult> PostUserFileWithUserAsync([FromForm] IdentityUser user)
+        public async Task<IActionResult> PostUserFileWithUserAsync([FromForm] IFormFile file)
         {
             #region Authorize
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             if (user == null)
             {
                 return Unauthorized("Überprüfe deine Anmeldedaten.");
@@ -69,8 +68,6 @@ namespace Imgrio.Blazor.Controllers
             #endregion
 
             #region Validate file and extract information
-            var file = Request.Form.Files.FirstOrDefault();
-
             if (file == null)
             {
                 return BadRequest("Es muss eine Datei hochgeladen werden.");
