@@ -43,14 +43,17 @@ else
         }
     </div>
 
-    <div class="row">
-        <div class="col-sm-12 col-lg-6">
-            <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight">@UserFile.Title</h1>
+    <div class="flex flex-wrap justify-center gap-y-4 gap-x-6">
+        <div>
+            <h1 class="text-4xl font-bold leading-none tracking-tight">@UserFile.Title</h1>
             <p class="fs-5 text-muted">@fancyUploadedAt</p>
         </div>
-        <div class="col-sm-12 col-lg-6">
-            <a class="btn btn-dark" href="@UserFile.Url" download>Herunterladen</a>
-        </div>
+        <a href="@UserFile.Url" download class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-blue-500 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
+            <span class="relative text-base font-semibold text-white">Herunterladen</span>
+        </a>
+        <a href="@UserFile.Url" download class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-blue-500/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max">
+            <span class="text-neutral900 dark:text-white relative text-base font-semibold">Löschen</span>
+        </a>
     </div>
 }
 
