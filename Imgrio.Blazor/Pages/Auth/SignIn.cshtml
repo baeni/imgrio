@@ -1,25 +1,28 @@
 ﻿@page "/a/login"
 @model Imgrio.Blazor.Pages.Auth.SignInModel
 
-<form class="pt-5" method="post">
-    <div class="row">
-        <div class="col-xs-12 col-lg-8">
-            <h1 class="mb-4" style="font-size: 3.5rem;">Willkommen zurück!</h1>
-            <p>imgrio ist eine Plattform zum Teilen von Inhalten. Melde dich mit deinem Account an, um vollen Zugang zur Plattform zu erhalten.</p>
-        </div>
-        <div class="col-sm-12 col-lg-4">
-            <div class="mb-3">
-                <input class="form-control" type="text" placeholder="Email" asp-for="Input.Email" />
-                <span class="text-danger" asp-validation-for="Input.Email"></span>
-            </div>
-
-            <div class="mb-4">
-                <input class="form-control" type="password" placeholder="Passwort" asp-for="Input.Password" />
-                <span class="text-danger" asp-validation-for="Input.Password"></span>
-            </div>
-
-            <button class="btn btn-dark mb-3" type="submit">Login</button>
-            <p>Du hast noch keinen Account? <a href="@Constants.PathToAuthRegister">Registrieren</a></p>
-        </div>
+<form class="pt-5 space-y-4 md:space-y-6" method="post">
+    <div class="col-xs-12 col-lg-8">
+        <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight">Willkommen zurück!</h1>
+        <p>@Constants.AppName ist eine Plattform zum Teilen von Inhalten. Melde dich mit deinem Account an, um vollen Zugang zur Plattform zu erhalten.</p>
     </div>
+
+    <div>
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+        <input type="email" asp-for="Input.Email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="deine@email.de">
+    </div>
+    <div>
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Passwort</label>
+        <input type="password" asp-for="Input.Password" name="password" id="password" placeholder="••••••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    </div>
+
+    <button type="submit" class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-blue-500 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max mt-3">
+        <span class="relative text-base font-semibold text-white">
+            Login
+        </span>
+    </button>
+
+    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+        Du hast noch keinen Account? <a href="@Constants.PathToAuthRegister" class="font-medium text-blue-500 hover:underline">Registrieren</a>
+    </p>
 </form>
