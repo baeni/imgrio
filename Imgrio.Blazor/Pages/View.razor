@@ -1,4 +1,4 @@
-﻿@attribute [Route(Constants.PathToFileView + "{id:guid}")]
+﻿@attribute [Route(Constants.PathToView + "{id:guid}")]
 @using Imgrio.Blazor.Backend.Interfaces;
 @using Imgrio.Blazor.Backend.Models;
 @using Imgrio.Blazor.Backend.Services;
@@ -157,7 +157,7 @@ else
         // TODO authorize user
 
         await UserFileService.DeleteUserFileAsync(Id);
-        NavigationManager.NavigateTo(Constants.PathToUserFiles);
+        NavigationManager.NavigateTo(Constants.PathToDashboardFiles);
     }
 
     private void ToggleDeleteModal()
