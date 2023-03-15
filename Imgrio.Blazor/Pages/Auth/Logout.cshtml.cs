@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Imgrio.Blazor.Pages.Auth
 {
-    public class SignOutModel : PageModel
+    public class LogoutModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public SignOutModel(SignInManager<IdentityUser> signInManager)
+        public LogoutModel(SignInManager<IdentityUser> signInManager)
         {
             _signInManager = signInManager;
         }
