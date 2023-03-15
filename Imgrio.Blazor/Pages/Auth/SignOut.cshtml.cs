@@ -17,7 +17,7 @@ namespace Imgrio.Blazor.Pages.Auth
         {
             await _signInManager.SignOutAsync();
 
-            return LocalRedirect("/");
+            return LocalRedirect(Constants.PathToIndex);
         }
     }
 }

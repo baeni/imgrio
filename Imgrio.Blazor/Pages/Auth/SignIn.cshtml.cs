@@ -19,17 +19,8 @@ namespace Imgrio.Blazor.Pages.Auth
         [BindProperty]
         public InputModel Input { get; set; } = new InputModel();
 
-        public string ReturnUrl { get; set; } = string.Empty;
-
-        public void OnGet()
-        {
-            ReturnUrl = Url.Content("~/");
-        }
-
         public async Task<IActionResult> OnPostAsync()
         {
-            ReturnUrl = Url.Content("~/");
-
             if (!ModelState.IsValid)
             {
                 //Alert = "Bitte fülle alle Felder aus.";
@@ -50,7 +41,7 @@ namespace Imgrio.Blazor.Pages.Auth
                 return Page();
             }
 
-            return LocalRedirect(ReturnUrl);
+            return LocalRedirect(Constants.PathToDashboardFiles);
         }
 
         public class InputModel
