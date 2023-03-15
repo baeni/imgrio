@@ -36,17 +36,22 @@
     private string _username = "imgriouser";
     private string _email = "deine@email.com";
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await base.OnInitializedAsync();
+        await base.OnAfterRenderAsync(firstRender);
 
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = await UserManager.GetUserAsync(authState.User);
-
-        if (user != null)
+        if (firstRender)
         {
-            _username = user.UserName!;
-            _email = user.Email!;
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = await UserManager.GetUserAsync(authState.User);
+
+            if (user != null)
+            {
+                _username = user.UserName!;
+                _email = user.Email!;
+
+                StateHasChanged();
+            }
         }
     }
 }
