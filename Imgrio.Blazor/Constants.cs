@@ -16,15 +16,15 @@
 
         public const string PathToIndex = "/";
         public const string PathToSharex = "/sharex";
-        public const string PathToView = "/f/";
+        public const string PathToView = "/v/";
 
         public const string PathToImprint = "/imprint";
         public const string PathToPrivacyPolicy = "/privacy-policy";
         public const string PathToCopyright = "https://baeni.de";
 
-        public const string PathToAuthRegister = "/account/register";
-        public const string PathToAuthLogin = "/account/login";
-        public const string PathToAuthLogout = "/account/logout";
+        public const string PathToAuthRegister = "/auth/register";
+        public const string PathToAuthLogin = "/auth/login";
+        public const string PathToAuthLogout = "/auth/logout";
 
         public const string PathToDashboardUpload = "/dashboard/upload";
         public const string PathToDashboardAccount = "/dashboard/account";
