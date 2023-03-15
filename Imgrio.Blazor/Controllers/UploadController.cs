@@ -22,7 +22,7 @@ namespace Imgrio.Blazor.Controllers
         }
 
         [HttpPost("credentials")]
-        public async Task<IActionResult> PostUserFileWithCredentialsAsync([FromForm] IFormFile file, [FromForm] SignInModel.InputModel input)
+        public async Task<IActionResult> PostUserFileWithCredentialsAsync([FromForm] IFormFile file, [FromForm] LoginModel.InputModel input)
         {
             #region Authorize
             var user = await _userManager.FindByEmailAsync(input.Email);
