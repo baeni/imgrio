@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Imgrio.Blazor.Pages.Auth
 {
-    public class SignInModel : PageModel
+    public class LoginModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public SignInModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public LoginModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
