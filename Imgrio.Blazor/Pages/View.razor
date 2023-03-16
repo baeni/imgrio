@@ -35,7 +35,7 @@ else
     <div class="flex flex-wrap justify-center my-5">
         @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
         {
-            <img class="mw-100 max-vh-85 rounded-lg shadow-xl shadow-neutral-300 mb-4" src="@UserFile.Url" style="object-fit: cover;" />
+            <img src="@UserFile.Url" onerror="this.style.display='none'" class="object-cover mw-100 max-vh-85 rounded-2xl shadow-xl shadow-neutral-300 mb-4" />
         }
         else {
             <h1>@UserFile.Extension.ToUpper()</h1>
