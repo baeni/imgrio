@@ -5,7 +5,11 @@
 @using Imgrio.Blazor.Backend.Utils;
 @using Microsoft.AspNetCore.Identity;
 
-@if (UserFile == null)
+@if (!_hasData)
+{
+    
+}
+else if (UserFile == null)
 {
     <p class="text-muted">Ich habe überall gesucht, aber die angeforderte Datei ist mir dabei nicht zu begegnet...</p>
 }
@@ -26,9 +30,9 @@ else
             <meta property="og:title" content="@UserFile.Extension" />
             <meta name="twitter:title" content="@UserFile.Extension" />
 
-            <meta name="description" content="@fancyUploadedAt">
-            <meta property="og:description" content="@fancyUploadedAt" />
-            <meta name="twitter:description" content="@fancyUploadedAt" />
+            <meta name="description" content="@_fancyUploadedAt">
+            <meta property="og:description" content="@_fancyUploadedAt" />
+            <meta name="twitter:description" content="@_fancyUploadedAt" />
         </HeadContent>
     }
 
@@ -45,7 +49,7 @@ else
     <div class="flex flex-wrap justify-center gap-y-4 gap-x-6">
         <div>
             <h1 class="text-4xl font-bold leading-none tracking-tight">@UserFile.Title</h1>
-            <p class="fs-5 text-muted">@fancyUploadedAt</p>
+            <p class="fs-5 text-muted">@_fancyUploadedAt</p>
         </div>
         <a href="@UserFile.Url" download class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-blue-500 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
             <span class="relative text-base font-semibold text-white">Herunterladen</span>
@@ -129,29 +133,36 @@ else
     [Parameter]
     public Guid Id { get; set; }
 
-    private string fancyFileType = null!;
-    private string fancyFileSize = null!;
-    private string fancyUploadedAt = null!;
+    private UserFile? UserFile { get; set; }
 
-    private UserFile? UserFile { get; set; } = null;
+    private bool _hasData;
 
-    private bool showDeleteModal = false;
-    private string DeleteModalCssClass => showDeleteModal ? "block" : "hidden";
+    private string _fancyFileType = null!;
+    private string _fancyFileSize = null!;
+    private string _fancyUploadedAt = null!;
 
-    protected override async Task OnInitializedAsync()
+    private bool _showDeleteModal = false;
+    private string DeleteModalCssClass => _showDeleteModal ? "block" : "hidden";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await base.OnInitializedAsync();
+        await base.OnAfterRenderAsync(firstRender);
 
-        UserFile = await UserFileService.GetUserFileAsync(Id);
-
-        if(UserFile == null)
+        if (firstRender)
         {
-            return;
-        }
+            UserFile = await UserFileService.GetUserFileAsync(Id);
 
-        fancyFileType = $"Dateityp: {UserFile.Extension.ToUpper()}";
-        fancyFileSize = $"Dateigröße: {UserFile.ToFormattedSizeString()}";
-        fancyUploadedAt = $"Hochgeladen am {UserFile.UploadedAt.ToString("dd.MM.yyyy")}";
+            if (UserFile != null)
+            {
+                _fancyFileType = $"Dateityp: {UserFile.Extension.ToUpper()}";
+                _fancyFileSize = $"Dateigröße: {UserFile.ToFormattedSizeString()}";
+                _fancyUploadedAt = $"Hochgeladen am {UserFile.UploadedAt.ToString("dd.MM.yyyy")}";
+            }
+
+            _hasData = true;
+
+            StateHasChanged();
+        }
     }
 
     [Authorize]
@@ -165,6 +176,6 @@ else
 
     private void ToggleDeleteModal()
     {
-        showDeleteModal = !showDeleteModal;
+        _showDeleteModal = !_showDeleteModal;
     }
 }
