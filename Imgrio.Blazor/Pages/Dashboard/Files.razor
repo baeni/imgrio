@@ -10,21 +10,22 @@
 
 @if (GroupedUserFiles == null)
 {
-    <h2 class="h-2.5 w-16 mb-1 bg-neutral-500 rounded-full dark:bg-white"></h2>
+    <div class="animate-pulse">
+        <h2 class="text-md h-4 w-20 mb-2 mt-5 rounded-full bg-neutral-300 dark:bg-white"></h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
-        @for (int i = 0; i < 5; i++)
-        {
-            <div role="status" class="flex flex-row items-center overflow-hidden bg-white border border-neutral-200 rounded-lg shadow md:max-w-xl dark:border-neutral-700 dark:bg-neutral-800">
-                <div class="flex flex-col items-center h-24 w-24">
-                    <span class="h-full w-full text-2xl font-medium text-neutral-300 bg-neutral-100 dark:text-neutral-600 dark:bg-neutral-700"></span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+            @for (int i = 0; i < 4; i++)
+            {
+                <div role="status" class="flex flex-row items-center overflow-hidden bg-white border border-neutral-200 rounded-lg shadow md:max-w-xl dark:border-neutral-700 dark:bg-neutral-800">
+                    <div class="flex flex-col items-center h-24 w-24">
+                        <span class="h-full w-full text-2xl font-medium text-neutral-300 bg-neutral-100 dark:text-neutral-600 dark:bg-neutral-700"></span>
+                    </div>
+                    <h3 class="h-4 w-32 ml-4 truncate text-xl font-bold bg-gray-200 rounded-full dark:bg-gray-700"></h3>
+                    <span class="sr-only">Loading...</span>
                 </div>
-                <h3 class="h-2.5 px-4 truncate text-xl font-bold bg-gray-200 rounded-full dark:bg-gray-700"></h3>
-                <span class="sr-only">Loading...</span>
-            </div>
-        }
+            }
+        </div>
     </div>
-    
 }
 else if (GroupedUserFiles.Count() <= 0)
 {
@@ -50,7 +51,7 @@ else
                             <span title="@userFile.Title" class="h-full w-full text-2xl font-medium text-neutral-300 bg-neutral-100 dark:text-neutral-600 dark:bg-neutral-700">@userFile.Extension.ToUpper()</span>
                         }
                     </div>
-                    <h3 class="px-4 truncate text-xl font-bold">@userFile.Title</h3>
+                    <h3 class="mx-4 truncate text-xl font-bold">@userFile.Title</h3>
                 </a>
             }
         </div>
