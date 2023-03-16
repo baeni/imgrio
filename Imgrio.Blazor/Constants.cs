@@ -9,12 +9,6 @@
                                                     ? "https://imgrio.azurewebsites.net"
                                                     : "https://localhost:7223";
 
-        public const string SymbolAppLogo = "/assets/symbols/logo.svg";
-        public const string SymbolFiles = "/assets/symbols/files.svg";
-        public const string SymbolUpload = "/assets/symbols/upload.svg";
-        public const string SymbolAccount = "/assets/symbols/account.svg";
-        public const string SymbolLogout = "/assets/symbols/logout.svg";
-
         public const string PathToIndex = "/";
         public const string PathToSharex = "/sharex";
         public const string PathToView = "/v/";
