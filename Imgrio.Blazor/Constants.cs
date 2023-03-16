@@ -3,7 +3,8 @@
     public static class Constants
     {
         public const string AppName = "imgrio";
-        public const string AppDescription = $"{AppName} ist eine Plattform zum Teilen von Inhalten. Aktuell ist der volle Zugriff auf ausgewählte Personen beschränkt.";
+        public const string AppDescription = $"{AppName} ist eine Plattform zum Teilen von Inhalten. Aktuell ist der vollumfängliche Zugriff nur für ausgewählte Personen möglich.";
+        public const string AppContact = "baeni.saa@gmail.com";
         public static readonly string AppUrl = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != Environments.Development
                                                     ? "https://imgrio.azurewebsites.net"
                                                     : "https://localhost:7223";
