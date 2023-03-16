@@ -14,7 +14,7 @@ else
     @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
     {
         <HeadContent>
-            <meta property="og:image" content="@UserFile.Url">
+            <meta property="og:image" content="@Path.Combine(Constants.AppUrl, UserFile.Url)">
             <meta name="twitter:image:src" content="@UserFile.Url">
             <meta name="twitter:card" content="summary_large_image">
         </HeadContent>
@@ -114,6 +114,9 @@ else
 }
 
 @code {
+    [Inject]
+    public IWebHostEnvironment WebHostEnvironment { get; set; } = null!;
+
     [Inject]
     public UserFileService UserFileService { get; set; } = null!;
 
