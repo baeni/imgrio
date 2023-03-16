@@ -16,12 +16,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
             @for (int i = 0; i < 4; i++)
             {
-                <div role="status" class="flex flex-row items-center overflow-hidden bg-white border border-neutral-200 rounded-lg shadow md:max-w-xl dark:border-neutral-700 dark:bg-neutral-800">
-                    <div class="flex flex-col items-center h-24 w-24">
-                        <span class="h-full w-full bg-neutral-100 dark:bg-neutral-700"></span>
+                <div class="flex flex-row items-center overflow-hidden bg-white border border-neutral-200 rounded-lg shadow md:max-w-xl dark:border-neutral-700 dark:bg-neutral-800">
+                    <div class="flex flex-col items-center h-24 w-24 bg-neutral-100 dark:bg-neutral-700">
+                        <span class="h-full w-full"></span>
                     </div>
-                    <h3 class="h-4 w-32 ml-4 truncate text-xl font-bold bg-gray-200 rounded-full dark:bg-gray-700"></h3>
-                    <span class="sr-only">Loading...</span>
+                    <h3 class="h-4 w-32 ml-4 bg-neutral-200 rounded-full dark:bg-neutral-700"></h3>
                 </div>
             }
         </div>
@@ -41,14 +40,14 @@ else
             @foreach (var userFile in group.ToList())
             {
                 <a href="@($"{Constants.PathToView}{userFile.Id}")" class="flex flex-row items-center overflow-hidden bg-white border border-neutral-200 rounded-lg shadow md:max-w-xl dark:border-neutral-700 dark:bg-neutral-800">
-                    <div class="flex flex-col items-center h-24 w-24 text-neutral-300 bg-neutral-100 dark:text-neutral-600 dark:bg-neutral-700">
+                    <div class="flex flex-col items-center h-24 w-24 bg-neutral-100 dark:bg-neutral-700">
                         @if (userFile.Extension == "png" || userFile.Extension == "jpg" || userFile.Extension == "jpeg")
                         {
-                            <img title="@userFile.Title" src="@userFile.Url" alt="@userFile.Title" class="object-cover h-full w-full">
+                            <img title="@userFile.Title" src="@userFile.Url" onerror="this.style.display='none'" class="object-cover h-full w-full">
                         }
                         else
                         {
-                            <span title="@userFile.Title" class="h-full w-full text-2xl font-medium text-neutral-300 bg-neutral-100 dark:text-neutral-600 dark:bg-neutral-700">@userFile.Extension.ToUpper()</span>
+                            <span title="@userFile.Title" class="h-full w-full text-2xl font-medium text-neutral-300 dark:text-neutral-600">@userFile.Extension.ToUpper()</span>
                         }
                     </div>
                     <h3 class="mx-4 truncate text-xl font-bold">@userFile.Title</h3>
