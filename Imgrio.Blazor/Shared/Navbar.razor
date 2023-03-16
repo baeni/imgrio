@@ -56,7 +56,7 @@
 
     <!-- Mobile menu -->
     <div class="border-b-2 border-neutral-200 sm:hidden @NavBarCssClass" id="mobile-menu">
-        <div class="space-y-1 px-2 pt-2 pb-3">
+        <div @onclick="ToggleNavMenu" class="space-y-1 px-2 pt-2 pb-3">
             <a href="@Constants.PathToIndex" class="text-gray-600 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">
                 Home
             </a>
@@ -67,7 +67,6 @@
             <AuthorizeView>
                 <Authorized>
                     <hr/>
-
                     <a href="@Constants.PathToDashboardFiles" class="text-gray-600 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">
                         Meine Dateien
                     </a>
