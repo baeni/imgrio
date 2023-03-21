@@ -21,9 +21,10 @@
         public const string PathToAuthLogin = "/auth/login";
         public const string PathToAuthLogout = "/auth/logout";
 
+        public const string PathToDashboardFiles = "/dashboard/files";
         public const string PathToDashboardUpload = "/dashboard/upload";
         public const string PathToDashboardAccount = "/dashboard/account";
-        public const string PathToDashboardFiles = "/dashboard/files";
+        public const string PathToDashboardAdministration = "/dashboard/administration";
 
         public const int MaxFileSizeInBytes = 10000000;
     }
