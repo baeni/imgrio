@@ -2,9 +2,13 @@
 @model Imgrio.Blazor.Pages.Auth.RegisterModel
 
 <h1 class="mb-4 text-4xl font-bold leading-none tracking-tight">Registrieren</h1>
-@*<p>@Constants.AppDescription Erstelle dir einen Account, um vollen Zugang zur Plattform zu erhalten.</p>
+<p>@Constants.AppDescription Die Registrierung eines neuen Accounts ist daher zurzeit nicht möglich!</p>
 
-<form class="pt-5 space-y-4 md:space-y-6" method="post">
+<p class="text-sm font-light text-gray-500 dark:text-gray-400">
+    Du hast schon einen Account? <a href="@Constants.PathToAuthLogin" class="font-medium text-blue-500 hover:underline">Login</a>
+</p>
+
+@*@<form class="pt-5 space-y-4 md:space-y-6" method="post">
     <div>
         <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nutzername</label>
         <input type="text" asp-for="Input.Username" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="imgriuser">
