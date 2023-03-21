@@ -352,8 +352,9 @@ MigrationBackup/
 # macOS
 .DS_Store
 
-# firebase credentials
+# api credentials
 firebasecredentials.json
+sendgridcredentials.json
 
 # data folder
 data/
