@@ -56,7 +56,9 @@ else
             <img src="@UserFile.Url" onerror="this.style.display='none'" class="object-cover mw-100 max-vh-85 rounded-2xl shadow-xl shadow-neutral-300 mb-4" />
         }
         else {
-            <h1>@UserFile.Extension.ToUpper()</h1>
+            <div class="flex flex-col items-center h-96 aspect-[2/3] bg-neutral-100 dark:bg-neutral-700">
+                <span title="@UserFile.Title" class="m-auto text-2xl font-medium text-neutral-300 dark:text-neutral-600">@UserFile.Extension.ToUpper()</span>
+            </div>
         }
     </div>
 
@@ -72,6 +74,10 @@ else
             <Authorized>
                 @if (UserManager.GetUserId(context.User) == UserFile.UploadedBy)
                 {
+                    @*<button @onclick="() => ModalService.Show<DeleteModal>()" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-blue-500/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max">
+                        <span class="text-neutral900 dark:text-white relative text-base font-semibold">Löschen</span>
+                    </button>*@
+
                     <button @onclick="ToggleDeleteModal" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-blue-500/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max">
                         <span class="text-neutral900 dark:text-white relative text-base font-semibold">Löschen</span>
                     </button>
@@ -143,6 +149,9 @@ else
 
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
+
+    [CascadingParameter]
+    public IModalService ModalService { get; set; } = null!;
 
     [Parameter]
     public Guid Id { get; set; }
