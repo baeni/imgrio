@@ -1,3 +1,4 @@
+using Blazored.Modal;
 using Imgrio.Blazor.Backend.Services;
 using Imgrio.Blazor.Data;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ namespace Imgrio.Blazor
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddControllers();
+            builder.Services.AddBlazoredModal();
 
             var connectionString = builder.Configuration.GetConnectionString("Default");
             builder.Services.AddDbContextFactory<DataContext>(options => options.UseNpgsql(connectionString));
