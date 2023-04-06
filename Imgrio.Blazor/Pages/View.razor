@@ -10,7 +10,7 @@
 {
     <div class="animate-pulse">
         <div class="flex flex-wrap justify-center my-5">
-            <span class="h-96 w-3/4 bg-neutral-200 rounded-2xl shadow-xl shadow-neutral-300 mb-4"></span>
+            <span class="h-96 w-3/4 bg-neutral-200 rounded-2xl shadow-xl shadow-neutral-300 dark:shadow-neutral-900 mb-4"></span>
         </div>
 
         <div class="flex flex-wrap justify-center gap-y-4 gap-x-6">
@@ -54,7 +54,7 @@ else
     <div class="flex flex-wrap justify-center my-5">
         @if (UserFile.Extension == "png" || UserFile.Extension == "jpg" || UserFile.Extension == "jpeg")
         {
-            <img src="@UserFile.Url" onerror="this.style.display='none'" class="object-cover mw-100 max-vh-85 rounded-2xl shadow-xl shadow-neutral-300 mb-4" />
+            <img src="@UserFile.Url" onerror="this.style.display='none'" class="object-cover mw-100 max-vh-85 rounded-2xl shadow-xl shadow-neutral-300 dark:shadow-neutral-900 mb-4" />
         }
         else {
             <div class="flex flex-col items-center h-96 aspect-[2/3] bg-neutral-100 dark:bg-neutral-700">
