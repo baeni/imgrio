@@ -1,0 +1,37 @@
+﻿@attribute [Route(Constants.PathToSharex)]
+
+<h1 class="mb-4 text-4xl font-bold leading-none tracking-tight">ShareX</h1>
+
+<div class="mb-5">
+    <p>ShareX ist eine beliebte Open-Source Screenshot Verwaltungs Software für Microsoft Windows. Hier erfährst du, wie du ShareX mit imgrio konfigurierst.</p>
+</div>
+
+<div class="mb-5">
+    <h2 id="installation" class="text-lg font-bold">Installation</h2>
+    <p>Zu Beginn solltest du erst einmal ShareX installieren. Klicke dafür <a href="https://getsharex.com/" target="_blank" class="font-medium text-blue-500 hover:underline">hier</a> und anschließend auf "Download", um die aktuellste Version herunterzuladen.</p>
+    <p>Beim Setup kannst du einfach immer auf "Weiter" klicken, bis die Installation von ShareX abgeschlossen ist.</p>
+</div>
+
+<div class="mb-5">
+    <h2 id="configuration" class="text-lg font-bold">Konfiguration</h2>
+    <p>Als nächstes konfigurieren wir alles so, dass ShareX mit @Constants.AppName funktioniert. Da wir das meiste bereits für dich erledigt haben, musst du dafür nur unsere <a href="@Path.Combine("assets", "sharex configuration (unzip).zip")" download class="font-medium text-blue-500 hover:underline">Konfiguration herunterladen</a>.</p>
+    <p>Nun importierst du diese Konfiguration mit einem Doppelklick auf die heruntergeladene Datei in ShareX. Das einzige, was du jetzt noch selber erledigen musst, ist das einfügen deiner Zugangsdaten. Navigiere dafür zur folgenden Einstellung:</p>
+
+    <nav class="flex px-5 py-3 my-4 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li>
+                <div class="flex items-center">
+                    Ziele
+                </div>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <svg aria-hidden="true" class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                    Benutzerdefinierte Uploader-Einstellungen...
+                </div>
+            </li>
+        </ol>
+    </nav>
+
+    <p>In der Liste auf der linken Seite solltest du nun eine Konfiguration namens "@Constants.AppName" sehen. Stelle sicher, dass diese ausgewählt ist. Anschließend findest du auf der rechten Seite eine Tabelle mit den Einträgen "Email" und "Password". In den jeweils dazugehörigen Werte-feldern solltest du nun deine Zugangsdaten eintragen.</p>
+</div>

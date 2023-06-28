@@ -348,3 +348,16 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# macOS
+.DS_Store
+
+# api credentials
+firebasecredentials.json
+sendgridcredentials.json
+
+# data folder
+data/
+
+# config folder
+.config/

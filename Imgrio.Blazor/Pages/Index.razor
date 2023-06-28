@@ -1,0 +1,48 @@
+﻿@attribute [Route(Constants.PathToIndex)]
+
+<div class="relative" id="home">
+    <div aria-hidden="true" class="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20">
+        <div class="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
+        <div class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
+    </div>
+    <div class="container">
+        <div class="relative pt-36 ml-auto">
+            <div class="lg:w-2/3 text-center mx-auto">
+                <h1 class="text-gray-800 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">
+                    Take. Give. <span class="text-blue-500">Share.</span>
+                </h1>
+                <p class="mt-8 text-gray-500 dark:text-gray-300">
+                    @Constants.AppDescription Verbreite Gutes!
+                </p>
+                <div class="mt-16 flex flex-wrap justify-center gap-y-4 gap-x-6">
+                    <AuthorizeView>
+                        <NotAuthorized>
+                            <a href="@Constants.PathToAuthLogin" class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-blue-500 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
+                                <span class="relative text-base font-semibold text-white">
+                                    Anmelden
+                                </span>
+                            </a>
+                            <a href="@Constants.PathToAuthRegister" class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-blue-500/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max">
+                                <span class="text-neutral900 dark:text-white relative text-base font-semibold">
+                                    Account erstellen
+                                </span>
+                            </a>
+                        </NotAuthorized>
+                        <Authorized>
+                            <a href="@Constants.PathToDashboardUpload" class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-blue-500 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
+                                <span class="relative text-base font-semibold text-white">
+                                    Datei Hochladen
+                                </span>
+                            </a>
+                            <a href="@Constants.PathToDashboardFiles" class="relative flex h-11 w-full items-center justify-center px-6 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-blue-500/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max">
+                                <span class="text-neutral900 dark:text-white relative text-base font-semibold">
+                                    Meine Dateien
+                                </span>
+                            </a>
+                        </Authorized>
+                    </AuthorizeView>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
