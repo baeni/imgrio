@@ -18,7 +18,7 @@ namespace Imgrio.Blazor
             builder.Services.AddControllers();
             builder.Services.AddBlazoredModal();
 
-            var connectionString = builder.Configuration.GetConnectionString("Default");
+            var connectionString = builder.Configuration.GetConnectionString("Postgres");
             builder.Services.AddDbContextFactory<DataContext>(options => options.UseNpgsql(connectionString));
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
