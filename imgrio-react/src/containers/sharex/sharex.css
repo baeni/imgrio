@@ -1,0 +1,27 @@
+.sharex {
+  padding: 2rem 20rem;
+}
+
+.sharex__container-headline {
+  color: #fff;
+  font-family: var(--font-family-brand);
+  font-size: 1.5rem;
+}
+
+.sharex__container-text {
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 1050px) {
+  .sharex {
+    padding: 2rem;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .sharex {
+    padding: 1rem;
+  }
+}
