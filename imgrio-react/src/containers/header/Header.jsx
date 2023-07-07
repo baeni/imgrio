@@ -1,6 +1,8 @@
 import React from 'react';
 import './header.css';
 
+import { FaClone } from 'react-icons/fa';
+
 import statistics from '../../assets/statistics.png';
 
 const Header = () => {
@@ -18,7 +20,7 @@ const Header = () => {
           <button className="btn btn--secondary">Los gehts!</button>
         </div>
         <div className="header__container-statistics">
-          <img src={statistics} alt="statistics" />
+          <FaClone className="header__container-statistics-icon" />
           <p><span className="header__container-statistics--bold">1.248</span> Inhalte wurden bereits mit imgrio geteilt!</p>
         </div>
       </div>
