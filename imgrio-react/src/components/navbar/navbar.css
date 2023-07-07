@@ -5,6 +5,8 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
 }
 
 .navbar__links {
@@ -22,6 +24,7 @@
 }
 
 .navbar__links-container {
+  margin-left: 3rem;
   display: flex;
   flex-direction: row;
 }
