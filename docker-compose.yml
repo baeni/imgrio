@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: ./imgrio-api
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+      - 8443:443
+    restart: always
+
+  # react:
+  #   build:
+  #     context: ./imgrio-react
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   restart: always

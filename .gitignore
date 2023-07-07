@@ -356,8 +356,5 @@ MigrationBackup/
 firebasecredentials.json
 sendgridcredentials.json
 
-# data folder
-data/
-
 # config folder
 .config/
