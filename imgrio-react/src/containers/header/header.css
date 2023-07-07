@@ -57,8 +57,9 @@
   align-items: center;
 }
 
-.header__container-statistics img {
-  width: 35px;
+.header__container-statistics-icon {
+  color: var(--color-secondary2);
+  font-size: 1.25rem;
 }
 
 .header__container-statistics p {
