@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  api:
+    image: bennysaa/imgrio-api:latest
+    ports:
+      - 8080:80
+      - 8443:443
+    restart: always
+
+  # react:
+  #   image: bennysaa/imgrio-react:latest
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   restart: always
