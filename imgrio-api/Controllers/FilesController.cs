@@ -34,7 +34,7 @@ namespace imgrio_api.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetAllFilesInfo()
+        public async Task<IActionResult> GetAllFilesInfoAsync()
         {
             // TODO: Verify authentication
 
