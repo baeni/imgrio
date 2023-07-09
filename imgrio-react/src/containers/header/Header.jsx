@@ -13,7 +13,7 @@ const Header = () => {
           <p>Take. Give. <span className="header__container-slogan--accent">Share.</span></p>
         </div>
         <div className="header__container-description">
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni laboriosam rerum atque recusandae exercitationem quam iure vero omnis, obcaecati.</p>
+          <p>imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der vollumfängliche Zugriff nur für ausgewählte Personen möglich.</p>
         </div>
         <div className="header__container-buttons">
           <button className="btn btn--primary">Anmelden</button>
