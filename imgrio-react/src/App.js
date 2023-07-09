@@ -5,15 +5,19 @@ import './App.css';
 import { Navbar } from './components';
 import { Header, ShareX } from './containers';
 
+import { MsalProvider, msalInstance } from './authConfig';
+
 const App = () => {
   return (
-    <div className="App">
+    <MsalProvider instance={msalInstance}>
+      <div className="App">
         <div className="gradient__bg">
             <Navbar />
             <Header />
         </div>
         <ShareX />
-    </div>
+      </div>
+    </MsalProvider>
   )
 }
 
