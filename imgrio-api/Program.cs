@@ -19,6 +19,13 @@ namespace imgrio_api
 
             builder.Services.AddControllers();
 
+            builder.Services.AddCors(options => options.AddDefaultPolicy(options =>
+            {
+                options.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
             var app = builder.Build();
 
             app.UseHttpsRedirection();
@@ -27,6 +34,8 @@ namespace imgrio_api
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.UseCors();
 
             app.Run();
         }
