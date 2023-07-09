@@ -32,6 +32,7 @@ namespace imgrio_api.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllFilesInfo()
         {
