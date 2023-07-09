@@ -32,12 +32,9 @@ namespace imgrio_api.Controllers
             _configuration = configuration;
         }
 
-        [AllowAnonymous]
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetAllFilesInfoAsync()
         {
-            // TODO: Verify authentication
-
             var set = _dbContext.Set<UploadedFile>();
 
             var count = await set.CountAsync();
@@ -51,11 +48,9 @@ namespace imgrio_api.Controllers
             });
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), AllowAnonymous]
         public async Task<IActionResult> GetFileInfoByIdAsync(Guid id)
         {
-            // TODO: Verify authentication
-
             var uploadedFile = await _dbContext.FindAsync<UploadedFile>(id);
 
             if (uploadedFile == null)
@@ -69,8 +64,6 @@ namespace imgrio_api.Controllers
         [HttpGet("users/{userId}")]
         public async Task<IActionResult> GetFilesInfoByUserIdAsync(Guid userId)
         {
-            // TODO: Verify authentication
-
             var uploadedFiles = await _dbContext.Set<UploadedFile>()
                 .Where(x => x.UploadedBy == userId).ToArrayAsync();
 
@@ -80,8 +73,6 @@ namespace imgrio_api.Controllers
         [HttpPost("users/{userId}")]
         public async Task<IActionResult> PostFileByUserIdAsync(Guid userId, [FromForm] IFormFile file)
         {
-            // TODO: Verify authentication
-
             var uploadedFile = new UploadedFile(
                 Guid.NewGuid(),
                 file.FileName,
@@ -130,8 +121,6 @@ namespace imgrio_api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFileByIdAsync(Guid id)
         {
-            // TODO: Verify authentication
-
             var uploadedFile = await _dbContext.FindAsync<UploadedFile>(id);
 
             if (uploadedFile == null)
@@ -173,8 +162,6 @@ namespace imgrio_api.Controllers
        [HttpDelete("users/{userId}")]
         public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
         {
-            // TODO: Verify authentication
-
             var uploadedFiles = await _dbContext.Set<UploadedFile>().Where(x => x.UploadedBy == userId).ToArrayAsync();
 
             if (uploadedFiles == null || uploadedFiles.Length <= 0)
