@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './header.css';
 
 import { FaClone } from 'react-icons/fa';
 
-import statistics from '../../assets/statistics.png';
-
 const Header = () => {
+  // const [data, setData] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(process.env.REACT_APP_API_URL + '/files');
+  //       const jsonData = await response.json();
+  //       setData(jsonData);
+  //     } catch (error) {
+  //       console.error('An error occurred while attempting to fetch data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   return (
     <div className="header">
       <div className="header__container">
@@ -21,7 +35,7 @@ const Header = () => {
         </div>
         <div className="header__container-statistics">
           <FaClone className="header__container-statistics-icon" />
-          <p><span className="header__container-statistics--bold">1.248</span> Inhalte wurden bereits mit imgrio geteilt!</p>
+          {/* <p><span className="header__container-statistics--bold">{data?.count ?? '?'}</span> Dateien sind aktuell dank imgrio im Umlauf!</p> */}
         </div>
       </div>
     </div>
