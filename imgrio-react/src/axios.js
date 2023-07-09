@@ -10,8 +10,6 @@ apiClient.interceptors.request.use(async (config) => {
   const activeAccount = pca.getActiveAccount();
   const accounts = pca.getAllAccounts();
 
-  console.log(activeAccount);
-
   if (!activeAccount && accounts.length === 0) {
     return config; 
   }
