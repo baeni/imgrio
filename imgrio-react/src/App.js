@@ -5,17 +5,20 @@ import './App.css';
 import { Navbar } from './components';
 import { Header, ShareX } from './containers';
 
-import { MsalProvider, msalInstance } from './authConfig';
+import { pca } from './authConfig';
+import { MsalProvider, AuthenticatedTemplate } from '@azure/msal-react';
 
 const App = () => {
   return (
-    <MsalProvider instance={msalInstance}>
+    <MsalProvider instance={pca}>
       <div className="App">
         <div className="gradient__bg">
             <Navbar />
             <Header />
         </div>
-        <ShareX />
+        <AuthenticatedTemplate>
+          <ShareX />
+        </AuthenticatedTemplate>
       </div>
     </MsalProvider>
   )
