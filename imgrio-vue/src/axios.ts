@@ -3,7 +3,7 @@ import axios from 'axios';
 import { msalInstance, loginRequest } from './authConfig';
 
 const apiClient = axios.create({
-  baseURL: 'https://localhost:7158'
+  baseURL: 'http://localhost:8080'
 });
 
 apiClient.interceptors.request.use(async (config) => {
@@ -19,7 +19,7 @@ apiClient.interceptors.request.use(async (config) => {
       ...loginRequest,
       account: activeAccount || accounts[0]
     });
-    config.headers.Authorization = `Bearer ${token.idToken}`;
+    config.headers.Authorization = `Bearer ${token.accessToken}`;
   } catch (error) {
     console.error();
   }
