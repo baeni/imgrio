@@ -66,6 +66,8 @@ const props = defineProps({
 }
 
 .btn--transparent {
+  margin: 0;
+  padding-inline: 0;
   background: transparent;
   color: #fff;
 }
