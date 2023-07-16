@@ -8,79 +8,66 @@ const isAuthenticated = useIsAuthenticated();
 
 <template>
   <div className="navbar section--padding">
-    <div className="navbar__links">
-      <a className="navbar__links-brand" href="/">
+    <div className="navbar__container">
+      <a className="navbar__container-brand" href="/">
         <img src="/logo.svg" alt="imgrio" />
       </a>
-      <div className="navbar__links-container">
-        <p><a href="/sharex">ShareX</a></p>
-        <p><a href="/dashboard/files">Dashboard</a></p>
+      <div className="navbar__container-links">
+        <a href="/sharex">ShareX</a>
+        <a href="/dashboard/files">Dashboard</a>
       </div>
-    </div>
-    <div className="navbar__sign">
-      <LogoutButton small transparent v-if="isAuthenticated" />
-      <LoginButton small transparent v-else />
+      <div className="navbar__container-sign">
+        <LogoutButton small transparent v-if="isAuthenticated" />
+        <LoginButton small transparent v-else />
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .navbar {
-  padding-block: 0;
   display: flex;
   position: fixed;
-  top: 0;
+  justify-content: center;
+  padding-block: 0;
   height: 6.25rem;
   width: 100%;
+  top: 0;
+}
+
+.navbar__container {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-  z-index: 999;
+  width: 100%;
 }
 
-.navbar__links {
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.navbar__links-brand {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--color-primary);
-  font-family: var(--font-family-brand);
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 25px;
-}
-
-.navbar__links-brand img {
+.navbar__container-brand img {
   width: 3.5rem;
 }
 
-.navbar__links-container {
-  margin-inline: 2rem;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
+.navbar__container-sign {
+  text-align: right;
 }
 
-.navbar__links-container p,
-.navbar__sign p,
-.navbar__menu-container {
-  color: #fff;
-  font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 0.9rem;
-  line-height: 25px;
-  text-transform: capitalize;
+.navbar__container-brand,
+.navbar__container-sign {
+  flex: none;
+  width: 8rem;
+}
 
+.navbar__container-links {
+  flex: 2;
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 25px;
+  color: #fff;
+  text-align: center;
+}
+
+.navbar__container-links a {
   margin-inline: 1rem;
-  cursor: pointer;
 }
 
 /* @media screen and (max-width: 1050px) {
