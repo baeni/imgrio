@@ -1,7 +1,11 @@
 using imgrio_api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace imgrio_api
 {
@@ -11,6 +15,14 @@ namespace imgrio_api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+            {
+                policy.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            }));
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
@@ -18,24 +30,18 @@ namespace imgrio_api
             builder.Services.AddDbContext<ImgrioDbContext>(options => options.UseNpgsql(connectionString));
 
             builder.Services.AddControllers();
-
-            builder.Services.AddCors(options => options.AddDefaultPolicy(options =>
-            {
-                options.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
+            builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
 
             app.UseHttpsRedirection();
 
+            app.UseCors();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
-
-            app.UseCors();
 
             app.Run();
         }
