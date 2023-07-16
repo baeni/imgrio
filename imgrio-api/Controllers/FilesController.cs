@@ -9,7 +9,7 @@ using Renci.SshNet.Async;
 namespace imgrio_api.Controllers
 {
     /*
-     * Endpoint to managa files:
+     * Endpoint to manage files:
      * - Get information about all files
      * - Get a single file by its ID
      * - Get multiple files by a UserID
