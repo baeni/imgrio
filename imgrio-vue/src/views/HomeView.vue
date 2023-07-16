@@ -39,12 +39,12 @@ fetchData();
         </p>
       </div>
       <div class="secion__container-buttons">
-        <Knob text="Los gehts" />
+        <Knob text="Los gehts" href="/sharex" />
         <Knob text="Dashboard" href="/dashboard" primary v-if="isAuthenticated" />
         <LoginButton primary v-else />
       </div>
       <div class="secion__container-statistics">
-        <FaClone class="secion__container-statistics-icon" />
+        <img src="../assets/icons/statistics.svg" />
         <p>
           <span class="secion__container-statistics--bold">{{ data.count }}</span> Dateien sind
           aktuell dank imgrio im Umlauf!
@@ -83,12 +83,13 @@ fetchData();
 }
 
 .secion__container-statistics {
+  display: inline-flex;
   margin: 3rem auto 0;
 }
 
-.secion__container-statistics-icon {
+.secion__container-statistics img {
   color: var(--color-secondary2);
-  font-size: 1.25rem;
+  width: 0.9rem;
 }
 
 .secion__container-statistics p {
