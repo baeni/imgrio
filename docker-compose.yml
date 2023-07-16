@@ -1,15 +1,15 @@
 version: "3"
 
 services:
-  react:
+  vue:
     build:
-      context: ./imgrio-react
+      context: ./imgrio-vue
       dockerfile: Dockerfile
     ports:
       - 80:80
       - 443:443
     restart: always
-    
+
   api:
     build:
       context: ./imgrio-api
