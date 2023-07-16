@@ -22,7 +22,7 @@ function toggleUploadPopup() {
   </div>
 
   <div class="overlay" @click="toggleUploadPopup" v-if="isUploadPopupVisible">
-    <UploadPopup />
+    <UploadPopup @click.stop />
   </div>
 </template>
 
@@ -63,7 +63,6 @@ function toggleUploadPopup() {
   font-weight: 500;
   font-size: 0.8rem;
   line-height: 20px;
-  text-transform: Upp;
 
   margin-inline-end: 2rem;
   cursor: pointer;
