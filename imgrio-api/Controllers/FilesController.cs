@@ -49,7 +49,7 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("{id}"), AllowAnonymous]
-        public async Task<IActionResult> GetFileInfoByIdAsync(Guid id)
+        public async Task<IActionResult> GetFileByIdAsync(Guid id)
         {
             var uploadedFile = await _dbContext.FindAsync<UploadedFile>(id);
 
@@ -62,7 +62,7 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("users/{userId}")]
-        public async Task<IActionResult> GetFilesInfoByUserIdAsync(Guid userId)
+        public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
         {
             var uploadedFiles = await _dbContext.Set<UploadedFile>()
                 .Where(x => x.UploadedBy == userId).ToArrayAsync();
