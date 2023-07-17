@@ -19,7 +19,7 @@ apiClient.interceptors.request.use(async (config) => {
       ...loginRequest,
       account: activeAccount || accounts[0]
     });
-    config.headers.Authorization = `Bearer ${token.accessToken}`;
+    config.headers.Authorization = `Bearer ${token.idToken}`;
   } catch (error) {
     console.error();
   }
