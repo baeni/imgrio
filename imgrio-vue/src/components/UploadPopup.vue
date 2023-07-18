@@ -14,7 +14,7 @@ const postFile = async () => {
 
 <template>
   <div class="section__container">
-    <div class="section__container-title">
+    <div class="section__container-title section__title">
       <h1>Datei Hochladen</h1>
     </div>
     <form class="section__container-form">
@@ -38,7 +38,8 @@ const postFile = async () => {
 <style scoped>
 .section__container {
   margin: 0 auto;
-  padding: 3rem 1rem;
+  padding: 1.5rem;
+  padding-top: 3rem;
   width: 20%;
   min-width: 350px;
   background: var(--color-dark);
@@ -48,7 +49,6 @@ const postFile = async () => {
 }
 
 .section__container-title {
-  padding-bottom: 1rem;
   font-family: var(--font-family);
   font-size: 1rem;
   line-height: 55px;
