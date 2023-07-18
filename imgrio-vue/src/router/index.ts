@@ -35,8 +35,8 @@ const router = createRouter({
           component: () => import('../views/dashboard/FilesView.vue')
         },
         {
-          path: 'upload',
-          component: () => import('../views/dashboard/UploadView.vue')
+          path: 'settings',
+          component: () => import('../views/dashboard/SettingsView.vue')
         }
       ],
       meta: {
