@@ -44,7 +44,6 @@ fetchData();
         <LoginButton primary v-else />
       </div>
       <div class="secion__container-statistics">
-        <img src="../assets/icons/statistics.svg" />
         <p>
           <span class="secion__container-statistics--bold">{{ data.count }}</span> Dateien sind
           aktuell dank imgrio im Umlauf!
@@ -83,20 +82,10 @@ fetchData();
 }
 
 .secion__container-statistics {
-  display: inline-flex;
   margin: 3rem auto 0;
-}
-
-.secion__container-statistics img {
-  color: var(--color-secondary2);
-  width: 0.9rem;
-}
-
-.secion__container-statistics p {
-  margin-left: 1rem;
-  color: var(--color-text);
   font-family: var(--font-family);
   font-size: 0.75rem;
+  color: var(--color-light);
 }
 
 .secion__container-statistics--bold {
