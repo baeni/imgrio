@@ -18,6 +18,10 @@ const props = defineProps({
   transparent: {
     type: Boolean,
     default: false
+  },
+  hover: {
+    type: Boolean,
+    default: true
   }
 });
 </script>
@@ -25,9 +29,10 @@ const props = defineProps({
 <template>
   <a
     :href="href"
-    :class="`btn ${primary ? 'btn--primary' : 'btn--secondary'} ${
-      small ? 'btn--small' : 'btn--large'
-    } ${transparent ? 'btn--transparent' : ''}`"
+    :class="`btn ${primary ? 'btn--primary' : 'btn--secondary'}
+                 ${small ? 'btn--small' : 'btn--large'}
+                 ${transparent ? 'btn--transparent' : ''}
+                 ${hover ? 'btn--hover' : ''}`"
     >{{ text }}</a
   >
 </template>
@@ -70,5 +75,9 @@ const props = defineProps({
   padding-inline: 0;
   background: transparent;
   color: #fff;
+}
+
+.btn--hover:hover {
+  filter: brightness(0.8);
 }
 </style>
