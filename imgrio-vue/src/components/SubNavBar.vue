@@ -15,8 +15,8 @@ function toggleUploadPopup() {
     <div class="subnavbar__links">
       <div class="subnavbar__links-container">
         <p><a href="/dashboard/files">Meine Dateien</a></p>
-        <!-- <p><a href="/dashboard/upload">Datei Hochladen</a></p> -->
         <p><a @click="toggleUploadPopup">Datei Hochladen</a></p>
+        <p><a href="/dashboard/settings">Einstellungen</a></p>
       </div>
     </div>
   </div>
