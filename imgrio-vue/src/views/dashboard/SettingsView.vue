@@ -1,0 +1,110 @@
+<script setup lang="ts">
+import Knob from '@/components/Knob.vue';
+</script>
+
+<template>
+  <div class="section__container section--margin">
+    <div class="section__container-title section__title">
+      <h1>Einstellungen</h1>
+    </div>
+    <form class="section__container-form">
+      <div class="section__container-form-input-group">
+        <label for="firstName">Vorname</label>
+        <input type="text" id="firstName" value="Max" disabled />
+      </div>
+
+      <div class="section__container-form-input-group">
+        <label for="lastName">Nachname</label>
+        <input type="text" id="lastName" value="Mustermann" disabled />
+      </div>
+
+      <div class="section__container-form-input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" value="mustermann@mail.com" disabled />
+      </div>
+
+      <div class="section__container-form-input-group">
+        <label for="imageAnimation">Bild-Animation</label>
+        <select id="imageAnimation">
+          <option value="false">Inaktiv</option>
+          <option value="true">Aktiv</option>
+        </select>
+      </div>
+
+      <div class="section__container-form-input-group">
+        <label for="externalHost">Datei-Server</label>
+        <select id="externalHost">
+          <option value="false">imgrio</option>
+          <option value="true">Eigener</option>
+        </select>
+      </div>
+
+      <div class="section__container-form-button">
+        <Knob text="Änderungen speichern" small transparent />
+      </div>
+    </form>
+  </div>
+</template>
+
+<style scoped>
+.section__container {
+  color: #fff;
+}
+
+.section__container-title {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  line-height: 55px;
+}
+
+.section__container-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.section__container-form-input-group {
+  display: flex;
+  margin-block-end: 2.5rem;
+  align-items: center;
+  gap: 25px;
+}
+
+.section__container-form-input-group label {
+  flex: 1;
+  text-align: right;
+  padding: 0.5rem;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 30px;
+  color: var(--color-light);
+}
+
+.section__container-form-input-group input,
+.section__container-form-input-group select {
+  flex: 2.75;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  line-height: 30px;
+  background: var(--color-dark);
+  color: var(--color-light);
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+
+.section__container-form-input-group input:disabled,
+.section__container-form-input-group select:disabled {
+  filter: brightness(0.5);
+  cursor: not-allowed;
+}
+
+.section__container-form-input-group select {
+  cursor: pointer;
+}
+
+.section__container-form-button {
+  margin: 0 auto;
+}
+</style>
