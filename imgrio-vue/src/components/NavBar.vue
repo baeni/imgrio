@@ -33,6 +33,8 @@ const isAuthenticated = useIsAuthenticated();
   height: 6.25rem;
   width: 100%;
   top: 0;
+  backdrop-filter: blur(10px);
+  z-index: 999;
 }
 
 .navbar__container {
