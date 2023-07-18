@@ -2,19 +2,19 @@
 const props = defineProps({
   file: {
     type: Object,
-    default: {
-      name: 'Lorem',
-      image: '../assets/placeholder.jpg'
-    }
+    required: true
   }
 });
 </script>
 
 <template>
-  <a href="/v/asdf">
+  <a :href="`/v/${file.id}`">
     <div class="card">
       <div class="card__container">
-        <div class="card__container-image" :style="`background-image: url(${file.externalUri})`"></div>
+        <div
+          class="card__container-image"
+          :style="`background-image: url(${file.externalUri})`"
+        ></div>
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
