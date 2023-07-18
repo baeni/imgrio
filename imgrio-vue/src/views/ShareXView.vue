@@ -1,6 +1,6 @@
 <template>
   <div class="section__container section--margin">
-    <div class="section__container-title">
+    <div class="section__container-title section__title">
       <h1>ShareX</h1>
     </div>
   </div>
@@ -12,7 +12,6 @@
 }
 
 .section__container-title {
-  padding-bottom: 1rem;
   font-family: var(--font-family);
   font-size: 1rem;
   line-height: 55px;
