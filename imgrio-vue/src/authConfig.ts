@@ -4,9 +4,9 @@ import { LogLevel, PublicClientApplication } from '@azure/msal-browser';
 export const msalConfig = {
   auth: {
     clientId: 'a2e1cc16-6af7-4986-8efc-d8d7e614daa2',
-    authority: 'https://login.microsoftonline.com/870c73fe-c22b-46ff-87c3-b7bf53ed6125'
-    // redirectUri: '/dashboard', // Must be registered as a SPA redirectURI on your app registration
-    // postLogoutRedirectUri: '/' // Must be registered as a SPA redirectURI on your app registration
+    authority: 'https://login.microsoftonline.com/870c73fe-c22b-46ff-87c3-b7bf53ed6125',
+    redirectUri: '/dashboard',
+    postLogoutRedirectUri: '/'
   },
   cache: {
     cacheLocation: 'localStorage'
