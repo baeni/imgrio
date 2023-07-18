@@ -1,31 +1,36 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import { useFilesStore } from '@/stores/files';
 
-const fetchData = async () => {
-  try {
-    const response = await fetch(`"http://localhost:8080/files/${useRoute().params.id}"`);
-    return await response.json();
-  } catch (error) {
-    console.error('An error occurred while attempting to fetch data:', error);
-  }
-};
+const fileId = useRoute().params.id;
 
-const file = await fetchData();
+const file = useFilesStore().files.filter((obj) => obj.id === fileId)[0];
 </script>
 
 <template>
   <div class="section gradient__bg">
-    <div class="secion__container section__padding">
-      <div
-        class="section__container-image"
-        :style="`'background-image: url('http://49.12.218.142/~root/imgrio/UploadedFiles/${file.uploadedBy}/${file.nameWithExtension}');'`"
-      ></div>
+    <div class="section__container section--padding">
+      <div class="section__container-image">
+        <img :src="file.externalUri" />
+      </div>
+      <div class="section__container-title">
+        <p>{{ file.name }}</p>
+      </div>
+      <div class="section__container-date">
+        {{
+          new Date(file.uploadedAt).toLocaleDateString('de-de', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          })
+        }}
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.secion__container {
+.section__container {
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -36,19 +41,31 @@ const file = await fetchData();
   min-height: 100vh;
 }
 
-.section__container-image {
-  position: relative;
-  height: 80vh;
+.section__container-image img {
   max-width: 100%;
+  margin-bottom: 2rem;
   background-color: var(--color-secondary2);
   background-repeat: no-repeat;
   background-size: cover;
   transform-style: preserve-3d;
-  animation: rot 5s infinite ease;
+  animation: pulse 5s infinite ease;
   border-radius: 1rem;
 }
 
-@keyframes rot {
+.section__container-title {
+  font-family: var(--font-family);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 35px;
+  white-space: nowrap;
+}
+
+.section__container-date {
+  font-family: var(--font-family);
+  font-size: 1rem;
+}
+
+/* @keyframes pulse {
   0% {
     transform: rotateZ(-0.5deg) translateY(0px);
   }
@@ -60,5 +77,5 @@ const file = await fetchData();
   100% {
     transform: rotateZ(-0.5deg) translateY(0px);
   }
-}
+} */
 </style>
