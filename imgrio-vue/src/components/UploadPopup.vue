@@ -1,13 +1,40 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { apiClient } from '@/axios';
+import { useToast } from 'vue-toastification';
 
 import Knob from './Knob.vue';
 
+const toast = useToast();
+const selectedFile = ref<File | null>(null);
+
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (target.files && target.files.length > 0) {
+    selectedFile.value = target.files[0];
+  }
+};
+
 const postFile = async () => {
   try {
-    await apiClient.post('files/users/6822c35d-4884-44f3-b3d6-ea172c0c2265');
+    if (!selectedFile.value) {
+      toast.error('Du musst eine Datei auswählen!', {
+        timeout: 2000
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', selectedFile.value);
+
+    toast.info('Datei wird hochgeladen...');
+
+    await apiClient.post('files/users/6822c35d-4884-44f3-b3d6-ea172c0c2265', formData);
+
+    toast.success('Datei erfolgreich hochgeladen.');
   } catch (error) {
-    console.error('An error occurred while attempting to fetch data:', error);
+    toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
+    return;
   }
 };
 </script>
@@ -28,7 +55,15 @@ const postFile = async () => {
             oder auswählen
           </p>
         </div>
-        <input type="file" accept="image/*" id="input" name="file" required hidden />
+        <input
+          type="file"
+          accept="image/*"
+          id="input"
+          name="file"
+          @change="handleFileChange"
+          required
+          hidden
+        />
       </label>
       <Knob text="Hochladen" primary @click="postFile" />
     </form>
