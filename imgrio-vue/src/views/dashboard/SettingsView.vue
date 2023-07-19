@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useToast } from 'vue-toastification';
+
 import Knob from '@/components/Knob.vue';
+
+const toast = useToast();
 </script>
 
 <template>
@@ -39,8 +43,21 @@ import Knob from '@/components/Knob.vue';
         </select>
       </div>
 
+      <div class="section__container-form-input-group">
+        <label for="externalHost">Sprache</label>
+        <select id="externalHost">
+          <option value="de-de">Deutsch</option>
+          <option value="en-us">Englisch</option>
+        </select>
+      </div>
+
       <div class="section__container-form-button">
-        <Knob text="Änderungen speichern" small transparent />
+        <Knob
+          text="Änderungen speichern"
+          small
+          transparent
+          @click="() => toast.success('Änderungen gespeichert.')"
+        />
       </div>
     </form>
   </div>
