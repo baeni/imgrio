@@ -43,10 +43,10 @@ export const msalInstance = new PublicClientApplication(msalConfig);
 
 // Add here scopes for id token to be used at MS Identity Platform endpoints.
 export const loginRequest = {
-  scopes: ['api://d9bf5b2c-ee47-40fd-8b61-cc6cd86d2582/full']
+  scopes: ['api://d9bf5b2c-ee47-40fd-8b61-cc6cd86d2582/access_as_user']
 };
 
-// Add here the endpoints for MS Graph API services you would like to use.
-export const graphConfig = {
-  graphMeEndpoint: 'https://graph.microsoft.com/v1.0/me'
-};
+// // Add here the endpoints for MS Graph API services you would like to use.
+// export const graphConfig = {
+//   graphMeEndpoint: 'https://graph.microsoft.com/v1.0/me'
+// };
