@@ -24,7 +24,13 @@ namespace imgrio_api
             }));
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+                .AddJwtBearer(options =>
+                {
+                    builder.Configuration.Bind("AzureAd", options);
+                    options.Authority = $"{builder.Configuration["AzureAd:Instance"]}{builder.Configuration["AzureAd:TenantId"]}/v2.0";
+                    
+                    options.TokenValidationParameters.ValidateIssuer = false;
+                });
 
             var connectionString = builder.Configuration.GetConnectionString("Postgres");
             builder.Services.AddDbContext<ImgrioDbContext>(options => options.UseNpgsql(connectionString));
