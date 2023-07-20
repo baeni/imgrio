@@ -2,9 +2,9 @@
 
 namespace imgrio_api.Models
 {
-    public class UploadedFile
+    public class UserFile
     {
-        public UploadedFile(
+        public UserFile(
             Guid id,
             string title,
             string type,
