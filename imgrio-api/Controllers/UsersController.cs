@@ -1,6 +1,5 @@
 ﻿using imgrio_api.Data;
 using imgrio_api.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +24,7 @@ namespace imgrio_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsersInfo()
         {
-            var set = _dbContext.Set<UploadedFile>();
+            var set = _dbContext.Set<UserFile>();
 
             var count = await set.Select(x => x.UploadedBy).Distinct().CountAsync();
             var countToday = await set
