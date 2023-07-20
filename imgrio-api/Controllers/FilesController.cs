@@ -36,7 +36,7 @@ namespace imgrio_api.Controllers
         [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetAllFilesInfoAsync()
         {
-            var set = _dbContext.Set<UploadedFile>();
+            var set = _dbContext.Set<UserFile>();
 
             var count = await set.CountAsync();
             var countToday = await set
@@ -52,7 +52,7 @@ namespace imgrio_api.Controllers
         [HttpGet("{id}"), AllowAnonymous]
         public async Task<IActionResult> GetFileByIdAsync(Guid id)
         {
-            var uploadedFile = await _dbContext.FindAsync<UploadedFile>(id);
+            var uploadedFile = await _dbContext.FindAsync<UserFile>(id);
 
             if (uploadedFile == null)
             {
@@ -65,7 +65,7 @@ namespace imgrio_api.Controllers
         [HttpGet("users/{userId}")]
         public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
         {
-            var uploadedFiles = await _dbContext.Set<UploadedFile>()
+            var uploadedFiles = await _dbContext.Set<UserFile>()
                 .Where(x => x.UploadedBy == userId).ToArrayAsync();
 
             return Ok(uploadedFiles);
@@ -78,7 +78,7 @@ namespace imgrio_api.Controllers
             var fileId = Guid.NewGuid();
             var isUserSelfHosting = false;
 
-            var uploadedFile = new UploadedFile(
+            var uploadedFile = new UserFile(
                 fileId,
                 file.FileName,
                 fileType,
@@ -124,7 +124,7 @@ namespace imgrio_api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFileByIdAsync(Guid id)
         {
-            var uploadedFile = await _dbContext.FindAsync<UploadedFile>(id);
+            var uploadedFile = await _dbContext.FindAsync<UserFile>(id);
 
             if (uploadedFile == null)
             {
@@ -163,7 +163,7 @@ namespace imgrio_api.Controllers
        [HttpDelete("users/{userId}")]
         public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
         {
-            var uploadedFiles = await _dbContext.Set<UploadedFile>().Where(x => x.UploadedBy == userId).ToArrayAsync();
+            var uploadedFiles = await _dbContext.Set<UserFile>().Where(x => x.UploadedBy == userId).ToArrayAsync();
 
             if (uploadedFiles == null || uploadedFiles.Length <= 0)
             {
