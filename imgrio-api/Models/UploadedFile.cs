@@ -1,5 +1,4 @@
 ﻿using HeyRed.Mime;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace imgrio_api.Models
 {
@@ -7,36 +6,36 @@ namespace imgrio_api.Models
     {
         public UploadedFile(
             Guid id,
-            string name,
+            string title,
             string type,
             long size,
             DateTime uploadedAt,
             Guid uploadedBy,
-            bool isExternal,
-            string? externalUri)
+            string url,
+            bool isSelfHosted)
         {
             Id = id;
-            Name = name;
+            Title = title;
             Type = type;
             Size = size;
             UploadedAt = uploadedAt;
             UploadedBy = uploadedBy;
-            IsExternal = isExternal;
-            ExternalUri = externalUri;
-
-            NameWithExtension = $"{Id}.{MimeTypesMap.GetExtension(Type)}";
+            Url = url;
+            IsSelfHosted = isSelfHosted;
         }
 
         public Guid Id { get; private set; }
-        public string Name { get; private set; }
+        public string Title { get; private set; }
         public string Type { get; private set; }
         public long Size { get; private set; }
         public DateTime UploadedAt { get; private set; }
         public Guid UploadedBy { get; private set; }
-        public bool IsExternal { get; private set; }
-        public string? ExternalUri { get; set; }
+        public string Url { get; private set; }
+        public bool IsSelfHosted { get; private set; }
 
-        [NotMapped]
-        public string NameWithExtension { get; private set; }
+        public override string ToString()
+        {
+            return $"{Id}.{MimeTypesMap.GetExtension(Type)}";
+        }
     }
 }
