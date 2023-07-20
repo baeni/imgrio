@@ -1,4 +1,5 @@
-﻿using imgrio_api.Data;
+﻿using HeyRed.Mime;
+using imgrio_api.Data;
 using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -73,17 +74,21 @@ namespace imgrio_api.Controllers
         [HttpPost("users/{userId}")]
         public async Task<IActionResult> PostFileByUserIdAsync(Guid userId, [FromForm] IFormFile file)
         {
+            var fileType = file.ContentType;
+            var fileId = Guid.NewGuid();
+            var isUserSelfHosting = false;
+
             var uploadedFile = new UploadedFile(
-                Guid.NewGuid(),
+                fileId,
                 file.FileName,
-                file.ContentType,
+                fileType,
                 file.Length,
                 DateTime.UtcNow,
                 userId,
-                false,
-                null);
+                isUserSelfHosting? "<notYetImplemented>" : $"https://storage.imgrio.com/{userId}/{fileId}.{MimeTypesMap.GetExtension(fileType)}",
+                isUserSelfHosting);
 
-            if (uploadedFile.IsExternal)
+            if (uploadedFile.IsSelfHosted)
             {
                 #region save to user server
                 // TODO
@@ -93,10 +98,8 @@ namespace imgrio_api.Controllers
             else
             {
                 #region save to imgrio server
-                using var client = new SftpClient(
-                        _configuration.GetValue<string>("UploadServer:Host")!,
-                        _configuration.GetValue<string>("UploadServer:User")!,
-                        _configuration.GetValue<string>("UploadServer:Password")!);
+                var connectionInfo = _configuration.GetConnectionString("UploadServer")?.Split(':');
+                using var client = new SftpClient(connectionInfo?[0], connectionInfo?[1], connectionInfo?[2]);
                 client.Connect();
 
                 var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
@@ -104,7 +107,7 @@ namespace imgrio_api.Controllers
                 {
                     client.CreateDirectory(path);
                 }
-                await client.UploadAsync(file.OpenReadStream(), $"{path}/{uploadedFile.NameWithExtension}");
+                await client.UploadAsync(file.OpenReadStream(), $"{path}/{uploadedFile}");
 
                 client.Disconnect();
                 #endregion
@@ -115,7 +118,7 @@ namespace imgrio_api.Controllers
             await _dbContext.SaveChangesAsync();
             #endregion
 
-            return Ok($"Successfully posted file '{uploadedFile.Name}' for user with id: {userId}");
+            return Ok($"Successfully posted file '{uploadedFile.Title}' for user with id: {userId}");
         }
 
         [HttpDelete("{id}")]
@@ -133,7 +136,7 @@ namespace imgrio_api.Controllers
             await _dbContext.SaveChangesAsync();
             #endregion
 
-            if (uploadedFile.IsExternal)
+            if (uploadedFile.IsSelfHosted)
             {
                 #region delete from user server
                 // TODO
@@ -143,14 +146,12 @@ namespace imgrio_api.Controllers
             else
             {
                 #region delete from imgrio server
-                using var client = new SftpClient(
-                    _configuration.GetValue<string>("UploadServer:Host")!,
-                    _configuration.GetValue<string>("UploadServer:User")!,
-                    _configuration.GetValue<string>("UploadServer:Password")!);
+                var connectionInfo = _configuration.GetConnectionString("UploadServer")?.Split(':');
+                using var client = new SftpClient(connectionInfo?[0], connectionInfo?[1], connectionInfo?[2]);
                 client.Connect();
 
                 var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
-                client.DeleteFile($"{path}/{uploadedFile.NameWithExtension}");
+                client.DeleteFile($"{path}/{uploadedFile}");
 
                 client.Disconnect();
                 #endregion
@@ -176,7 +177,7 @@ namespace imgrio_api.Controllers
 
             foreach (var uploadedFile in uploadedFiles)
             {
-                if (uploadedFile.IsExternal)
+                if (uploadedFile.IsSelfHosted)
                 {
                     #region delete from user server
                     // TODO
@@ -186,14 +187,12 @@ namespace imgrio_api.Controllers
                 else
                 {
                     #region delete from imgrio server
-                    using var client = new SftpClient(
-                        _configuration.GetValue<string>("UploadServer:Host")!,
-                        _configuration.GetValue<string>("UploadServer:User")!,
-                        _configuration.GetValue<string>("UploadServer:Password")!);
+                    var connectionInfo = _configuration.GetConnectionString("UploadServer")?.Split(':');
+                    using var client = new SftpClient(connectionInfo?[0], connectionInfo?[1], connectionInfo?[2]);
                     client.Connect();
 
                     var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
-                    client.DeleteFile($"{path}/{uploadedFile.NameWithExtension}");
+                    client.DeleteFile($"{path}/{uploadedFile}");
 
                     client.Disconnect();
                     #endregion
