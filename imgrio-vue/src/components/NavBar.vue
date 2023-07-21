@@ -2,24 +2,42 @@
 import LoginButton from './LoginButton.vue';
 import LogoutButton from './LogoutButton.vue';
 import { useIsAuthenticated } from '@/composition-api/useIsAuthenticated';
+import { ref } from 'vue';
 
 const isAuthenticated = useIsAuthenticated();
+
+const isMenuActive = ref(false);
+
+function toggleMenu() {
+  isMenuActive.value = !isMenuActive.value;
+}
 </script>
 
 <template>
-  <div className="navbar section--padding">
-    <div className="navbar__container">
-      <a className="navbar__container-brand" href="/">
+  <div class="navbar section--padding">
+    <div class="navbar__container">
+      <a class="navbar__container-brand" href="/">
         <img src="/logo.svg" alt="imgrio" />
       </a>
-      <div className="navbar__container-links">
+      <div class="navbar__container-links">
         <a href="/sharex">ShareX</a>
         <a href="/dashboard/files">Dashboard</a>
       </div>
-      <div className="navbar__container-sign">
+      <div class="navbar__container-sign">
         <LogoutButton small transparent v-if="isAuthenticated" />
         <LoginButton small transparent v-else />
       </div>
+      <div class="navbar__container-burger" @click="toggleMenu">
+        <img src="../assets/icons/burger-open.svg" v-if="!isMenuActive" />
+        <img src="../assets/icons/burger-close.svg" v-else />
+      </div>
+    </div>
+    <div class="navbar__menu" v-if="isMenuActive">
+      <a href="/sharex">ShareX</a>
+      <a href="/dashboard/files">Dashboard</a>
+
+      <LogoutButton small transparent v-if="isAuthenticated" />
+      <LoginButton small transparent v-else />
     </div>
   </div>
 </template>
@@ -72,15 +90,41 @@ const isAuthenticated = useIsAuthenticated();
   margin-inline: 1rem;
 }
 
-/* @media screen and (max-width: 1050px) {
-  .navbar {
-    padding: 2rem;
-  }
+.navbar__container-burger {
+  display: none;
+  z-index: 999;
 }
 
-@media screen and (max-width: 650px) {
-  .navbar {
-    padding: 1rem;
+.navbar__menu {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  padding: 3rem;
+  background: var(--color-darkest);
+  color: #fff;
+}
+
+.navbar__menu a {
+  display: block;
+  padding: 0.75rem 0;
+  font-family: var(--font-family);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 35px;
+  color: #fff;
+}
+
+@media screen and (max-width: 1050px) {
+  .navbar__container-links {
+    display: none;
   }
-} */
+
+  .navbar__container-sign {
+    display: none;
+  }
+
+  .navbar__container-burger {
+    display: block;
+  }
+}
 </style>
