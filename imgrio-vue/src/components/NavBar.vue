@@ -92,10 +92,12 @@ function toggleMenu() {
 
 .navbar__container-burger {
   display: none;
+  cursor: pointer;
   z-index: 999;
 }
 
 .navbar__menu {
+  display: none;
   position: absolute;
   width: 100%;
   height: 100vh;
@@ -114,7 +116,7 @@ function toggleMenu() {
   color: #fff;
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 768px) {
   .navbar__container-links {
     display: none;
   }
@@ -124,6 +126,10 @@ function toggleMenu() {
   }
 
   .navbar__container-burger {
+    display: block;
+  }
+
+  .navbar__menu {
     display: block;
   }
 }
