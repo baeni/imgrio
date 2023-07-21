@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { InteractionType, AccountInfo } from '@azure/msal-browser';
+import { InteractionType } from '@azure/msal-browser';
 import { msalInstance } from '@/authConfig';
 import { Client } from '@microsoft/microsoft-graph-client';
-import { User } from '@microsoft/microsoft-graph-types';
+import type { User } from '@microsoft/microsoft-graph-types';
 import {
   AuthCodeMSALBrowserAuthenticationProvider,
-  AuthCodeMSALBrowserAuthenticationProviderOptions
+  type AuthCodeMSALBrowserAuthenticationProviderOptions
 } from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser';
 import { useToast } from 'vue-toastification';
 
