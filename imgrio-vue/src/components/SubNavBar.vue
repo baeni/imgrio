@@ -39,7 +39,7 @@ function toggleUploadPopup() {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-top: 2px solid var(--color-dark);
-  z-index: 999;
+  z-index: 998;
 }
 
 .subnavbar__links {
@@ -47,6 +47,7 @@ function toggleUploadPopup() {
   flex: 1;
   justify-content: flex-start;
   align-items: center;
+  white-space: nowrap;
 }
 
 .subnavbar__links-container {
