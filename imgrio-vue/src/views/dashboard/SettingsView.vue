@@ -1,7 +1,39 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { InteractionType, AccountInfo } from '@azure/msal-browser';
+import { msalInstance } from '@/authConfig';
+import { Client } from '@microsoft/microsoft-graph-client';
+import { User } from '@microsoft/microsoft-graph-types';
+import {
+  AuthCodeMSALBrowserAuthenticationProvider,
+  AuthCodeMSALBrowserAuthenticationProviderOptions
+} from '@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser';
 import { useToast } from 'vue-toastification';
 
 import Knob from '@/components/Knob.vue';
+import { onMounted } from 'vue';
+
+const account = msalInstance.getActiveAccount() ?? msalInstance.getAllAccounts()[0];
+
+const options: AuthCodeMSALBrowserAuthenticationProviderOptions = {
+  account: account,
+  interactionType: InteractionType.Redirect,
+  scopes: ['user.read', 'mail.send']
+};
+
+const client = Client.initWithMiddleware({
+  authProvider: new AuthCodeMSALBrowserAuthenticationProvider(msalInstance, options)
+});
+
+const userDefails = ref<User | null>(null);
+
+onMounted(async () => {
+  try {
+    userDefails.value = await client.api('/me').get();
+  } catch (error) {
+    throw error;
+  }
+});
 
 const toast = useToast();
 </script>
@@ -14,17 +46,17 @@ const toast = useToast();
     <form class="section__container-form">
       <div class="section__container-form-input-group">
         <label for="firstName">Vorname</label>
-        <input type="text" id="firstName" value="Max" disabled />
+        <input type="text" id="firstName" :value="userDefails?.givenName" disabled />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="lastName">Nachname</label>
-        <input type="text" id="lastName" value="Mustermann" disabled />
+        <input type="text" id="lastName" :value="userDefails?.surname" disabled />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="email">Email</label>
-        <input type="email" id="email" value="mustermann@mail.com" disabled />
+        <input type="email" id="email" :value="userDefails?.mail" disabled />
       </div>
 
       <div class="section__container-form-input-group">
