@@ -4,8 +4,9 @@ import { useUserFilesStore } from '@/stores/userFiles';
 
 import FileCard from '../../components/FileCard.vue';
 
-const userFilesileStore = useUserFilesStore();
-const userFiles = computed(() => userFilesileStore.userFiles);
+const userFilesStore = useUserFilesStore();
+userFilesStore.fetchUserFiles();
+const userFiles = computed(() => userFilesStore.userFiles);
 </script>
 
 <template>
