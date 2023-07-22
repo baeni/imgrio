@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { useFilesStore } from '@/stores/files';
+import { computed } from 'vue';
+import { useUserFilesStore } from '@/stores/userFiles';
 
 import FileCard from '../../components/FileCard.vue';
 
-const fileStore = useFilesStore();
+const userFilesileStore = useUserFilesStore();
+const userFiles = computed(() => userFilesileStore.userFiles);
 </script>
 
 <template>
@@ -16,7 +18,7 @@ const fileStore = useFilesStore();
         <p>Oktober 2023</p>
       </div>
       <div class="section__container-list">
-        <FileCard :file="file" v-for="file in fileStore.files" />
+        <FileCard :file="file" v-for="file in userFiles.value.files" />
       </div>
     </div>
   </div>
@@ -71,3 +73,4 @@ const fileStore = useFilesStore();
   }
 }
 </style>
+@/stores/userFiles
