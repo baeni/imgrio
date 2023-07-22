@@ -98,7 +98,7 @@ namespace imgrio_api.Controllers
             else
             {
                 #region save to imgrio server
-                var connectionInfo = _configuration.GetConnectionString("UserFileServer")?.Split(':');
+                var connectionInfo = _configuration.GetConnectionString("UserFileServer")?.Split(';');
                 using var client = new SftpClient(connectionInfo?[0], connectionInfo?[1], connectionInfo?[2]);
                 client.Connect();
 
