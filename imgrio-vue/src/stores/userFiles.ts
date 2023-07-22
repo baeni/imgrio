@@ -12,7 +12,7 @@ export const useUserFilesStore = defineStore('userFilesStore', () => {
     const userDetailsStore = useUserDetailsStore();
     const userDetails = computed(() => userDetailsStore.userDetails);
 
-    userFiles.value = apiClient.get(`files/users/${userDetails.value.id}`);
+    userFiles.value = await apiClient.get(`files/users/${userDetails.value.id}`);
   }
 
   return { fetchUserFiles, userFiles };
