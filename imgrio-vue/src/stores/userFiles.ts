@@ -1,5 +1,4 @@
 import { ref } from 'vue';
-import { computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import { useUserDetailsStore } from './userDetails';
@@ -10,9 +9,8 @@ export const useUserFilesStore = defineStore('userFilesStore', () => {
 
   async function fetchUserFiles() {
     const userDetailsStore = useUserDetailsStore();
-    const userDetails = computed(() => userDetailsStore.userDetails);
 
-    userFiles.value = await apiClient.get(`files/users/${userDetails.value.id}`);
+    userFiles.value = (await apiClient.get(`files/users/${userDetailsStore.userDetails.id}`)).data;
   }
 
   return { fetchUserFiles, userFiles };
