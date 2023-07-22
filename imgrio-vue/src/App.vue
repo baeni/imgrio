@@ -10,9 +10,9 @@ const userDetailsStore = useUserDetailsStore();
 const msal = useMsal();
 const accounts = msal.accounts.value;
 
-onMounted(() => {
+onMounted(async () => {
   if (accounts.length !== 0) {
-    userDetailsStore.fetchUserDetails();
+    await userDetailsStore.fetchUserDetails();
   }
 });
 
