@@ -3,6 +3,7 @@ version: "3"
 services:
   api:
     image: bennysaa/imgrio:api-0.1.0
+    container_name: imgrio-api
     ports:
       - 80:80
       - 443:443
