@@ -17,8 +17,7 @@ namespace imgrio_api
 
             builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
             {
-                policy.WithOrigins("imgrio.com", "insider.imgrio.com")
-                    .SetIsOriginAllowed(origin => new Uri(origin).IsLoopback)
+                policy.SetIsOriginAllowed(origin => origin.Equals("imgrio.com") || origin.EndsWith(".imgrio.com"))
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials();
