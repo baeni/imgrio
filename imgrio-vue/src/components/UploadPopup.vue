@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { computed } from 'vue';
 import { apiClient } from '@/axios';
 import { useUserDetailsStore } from '@/stores/userDetails';
+import { useUserFilesStore } from '@/stores/userFiles';
 import { useToast } from 'vue-toastification';
 
 import Knob from './Knob.vue';
@@ -12,6 +13,8 @@ const selectedFile = ref<File>();
 
 const userDetailsStore = useUserDetailsStore();
 const userDetails = computed(() => userDetailsStore.userDetails);
+
+const userFilesStore = useUserFilesStore();
 
 const handleFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -31,7 +34,9 @@ async function postFile() {
 
     const formData = new FormData();
     formData.append('file', selectedFile.value);
-    await apiClient.post(`files/users/${userDetails.value.id}`, formData);
+    const response = (await apiClient.post(`files/users/${userDetails.value.id}`, formData)).data;
+
+    userFilesStore.userFiles?.push(response);
 
     toast.success('Datei erfolgreich hochgeladen.');
   } catch {
