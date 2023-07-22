@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { useFilesStore } from '@/stores/files';
+import { apiClient } from '@/axios';
 
-const fileId = useRoute().params.id;
-
-const file = useFilesStore().files.filter((obj) => obj.id === fileId)[0];
+const file = await apiClient.get(`files/${useRoute().params.id}`);
 </script>
 
 <template>
   <div class="section gradient__bg">
     <div class="section__container section--padding">
       <div class="section__container-image">
-        <img :src="file.externalUri" />
+        <img :src="file.Url" />
       </div>
       <div class="section__container-title">
-        <p>{{ file.name }}</p>
+        <p>{{ file.title }}</p>
       </div>
       <div class="section__container-date">
         {{
