@@ -3,7 +3,7 @@ import axios from 'axios';
 import { msalInstance, loginRequest } from './authConfig';
 
 const apiClient = axios.create({
-  baseURL: 'http://api.imgrio.com'
+  baseURL: 'https://api.imgrio.com'
 });
 
 apiClient.interceptors.request.use(async (config) => {
