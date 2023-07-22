@@ -14,4 +14,7 @@ EXPOSE 80
 EXPOSE 443
 COPY --from=publish /app/publish .
 
-ENTRYPOINT ["dotnet", "imgrio-api.dll"]
+COPY ./imgrio.com.pem /app/imgrio.com.pem
+COPY ./imgrio.com.key /app/imgrio.com.key
+
+ENTRYPOINT ["dotnet", "imgrio-api.dll", "--urls", "https://+:443"]
