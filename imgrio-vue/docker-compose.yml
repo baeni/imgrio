@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: bennysaa/imgrio:vue-0.1.0
+    container_name: imgrio-vue
     ports:
       - 80:80
       - 443:443
