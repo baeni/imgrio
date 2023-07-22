@@ -6,6 +6,7 @@ import {
   PublicClientApplication,
   type RedirectRequest
 } from '@azure/msal-browser';
+import { useUserDetailsStore } from '@/stores/userDetails';
 
 export function registerGuard(router: Router) {
   router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
@@ -15,6 +16,15 @@ export function registerGuard(router: Router) {
         redirectStartPage: to.fullPath
       };
       const shouldProceed = await isAuthenticated(msalInstance, InteractionType.Redirect, request);
+
+      if (shouldProceed) {
+        const userDetailsStore = useUserDetailsStore();
+
+        if (!userDetailsStore.userDetails) {
+          await userDetailsStore.fetchUserDetails();
+        }
+      }
+
       return shouldProceed || '/failed';
     }
 
