@@ -11,10 +11,7 @@ const props = defineProps({
   <a :href="`/v/${file.id}`">
     <div class="card">
       <div class="card__container">
-        <div
-          class="card__container-image"
-          :style="`background-image: url(${file.externalUri})`"
-        ></div>
+        <div class="card__container-image" :style="`background-image: url(${file.url})`"></div>
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
