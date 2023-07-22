@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import { computed } from 'vue';
 import { apiClient } from '@/axios';
 import { useUserDetailsStore } from '@/stores/userDetails';
-import type { User } from '@microsoft/microsoft-graph-types';
 import { useToast } from 'vue-toastification';
 
 import Knob from './Knob.vue';
@@ -12,7 +11,7 @@ const toast = useToast();
 const selectedFile = ref<File>();
 
 const userDetailsStore = useUserDetailsStore();
-const userDetails = computed(() => userDetailsStore.userDetails) as User;
+const userDetails = computed(() => userDetailsStore.userDetails);
 
 const handleFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -32,7 +31,7 @@ async function postFile() {
 
     const formData = new FormData();
     formData.append('file', selectedFile.value);
-    await apiClient.post(`files/users/${userDetails.id}`, formData);
+    await apiClient.post(`files/users/${userDetails.value.id}`, formData);
 
     toast.success('Datei erfolgreich hochgeladen.');
   } catch {
