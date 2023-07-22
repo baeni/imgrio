@@ -1,42 +1,45 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { computed } from 'vue';
 import { apiClient } from '@/axios';
+import { useUserDetailsStore } from '@/stores/userDetails';
+import type { User } from '@microsoft/microsoft-graph-types';
 import { useToast } from 'vue-toastification';
 
 import Knob from './Knob.vue';
 
 const toast = useToast();
-const selectedFile = ref<File | null>(null);
+const selectedFile = ref<File>();
+
+const userDetailsStore = useUserDetailsStore();
+const userDetails = computed(() => userDetailsStore.userDetails) as User;
 
 const handleFileChange = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  if (target.files && target.files.length > 0) {
-    selectedFile.value = target.files[0];
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    selectedFile.value = input.files[0];
   }
 };
 
-const postFile = async () => {
+async function postFile() {
   try {
     if (!selectedFile.value) {
-      toast.error('Du musst eine Datei auswählen!', {
-        timeout: 2000
-      });
+      toast.error('Du musst eine Datei auswählen!');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', selectedFile.value);
-
     toast.info('Datei wird hochgeladen...');
 
-    await apiClient.post('files/users/6822c35d-4884-44f3-b3d6-ea172c0c2265', formData);
+    const formData = new FormData();
+    formData.append('file', selectedFile.value);
+    await apiClient.post(`files/users/${userDetails.id}`, formData);
 
     toast.success('Datei erfolgreich hochgeladen.');
-  } catch (error) {
+  } catch {
     toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
     return;
   }
-};
+}
 </script>
 
 <template>
