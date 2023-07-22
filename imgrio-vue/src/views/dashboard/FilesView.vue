@@ -16,7 +16,7 @@ const userFiles = computed(() => userFilesStore.userFiles);
     </div>
     <div>
       <div class="section__container-subtitle">
-        <p>Oktober 2023</p>
+        <p>{{ userFiles.length }} Dateien</p>
       </div>
       <div class="section__container-list">
         <FileCard :file="file" v-for="file in userFiles.value" />
