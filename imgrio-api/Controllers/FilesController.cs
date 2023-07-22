@@ -118,7 +118,7 @@ namespace imgrio_api.Controllers
             await _dbContext.SaveChangesAsync();
             #endregion
 
-            return Ok($"Successfully posted file '{uploadedFile.Title}' for user with id: {userId}");
+            return Ok(uploadedFile);
         }
 
         [HttpDelete("{id}")]
