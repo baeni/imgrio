@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { apiClient } from '@/axios';
 
 const file = ref();
-file.value = await apiClient.get(`files/${useRoute().params.id}`);
+
+onMounted(async () => {
+  file.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
+});
 </script>
 
 <template>
   <div class="section gradient__bg">
-    <div class="section__container section--padding">
+    <div class="section__container section--padding" v-if="file">
       <div class="section__container-image">
         <img :src="file.url" />
       </div>
