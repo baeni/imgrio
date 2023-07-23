@@ -30,8 +30,6 @@ async function postFile() {
       return;
     }
 
-    toast.info('Datei wird hochgeladen...');
-
     const formData = new FormData();
     formData.append('file', selectedFile.value);
     const response = (await apiClient.post(`files/users/${userDetails.value.id}`, formData)).data;
