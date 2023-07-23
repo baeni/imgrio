@@ -4,8 +4,6 @@ using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Renci.SshNet;
-using Renci.SshNet.Async;
 
 namespace imgrio_api.Controllers
 {
@@ -85,7 +83,7 @@ namespace imgrio_api.Controllers
                 file.Length,
                 DateTime.UtcNow,
                 userId,
-                isUserSelfHosting? "<notYetImplemented>" : $"https://storage.imgrio.com/{userId}/{fileId}.{MimeTypesMap.GetExtension(fileType)}",
+                isUserSelfHosting ? "<notYetImplemented>" : $"https://data.imgrio.com/{userId}/{fileId}.{MimeTypesMap.GetExtension(fileType)}",
                 isUserSelfHosting);
 
             if (uploadedFile.IsSelfHosted)
@@ -98,18 +96,13 @@ namespace imgrio_api.Controllers
             else
             {
                 #region save to imgrio server
-                var connectionInfo = _configuration.GetConnectionString("UserFileServer")?.Split(';');
-                using var client = new SftpClient(connectionInfo?[0], connectionInfo?[1], connectionInfo?[2]);
-                client.Connect();
-
-                var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
-                if (!client.Exists(path))
+                var path = $"./data/{uploadedFile.UploadedBy}";
+                if (!Directory.Exists(path))
                 {
-                    client.CreateDirectory(path);
+                    Directory.CreateDirectory(path);
                 }
-                await client.UploadAsync(file.OpenReadStream(), $"{path}/{uploadedFile}");
-
-                client.Disconnect();
+                using var stream = new FileStream($"{path}/{uploadedFile}", FileMode.Create);
+                await file.CopyToAsync(stream);
                 #endregion
             }
 
@@ -146,14 +139,12 @@ namespace imgrio_api.Controllers
             else
             {
                 #region delete from imgrio server
-                var connectionInfo = _configuration.GetConnectionString("UploadServer")?.Split(':');
-                using var client = new SftpClient(connectionInfo?[0], connectionInfo?[1], connectionInfo?[2]);
-                client.Connect();
-
-                var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
-                client.DeleteFile($"{path}/{uploadedFile}");
-
-                client.Disconnect();
+                var path = $"./data/{uploadedFile.UploadedBy}/{uploadedFile}";
+                if (!System.IO.File.Exists(path))
+                {
+                    return NotFound($"Could not find file with id: {id}");
+                }
+                System.IO.File.Delete(path);
                 #endregion
             }
 
@@ -187,14 +178,12 @@ namespace imgrio_api.Controllers
                 else
                 {
                     #region delete from imgrio server
-                    var connectionInfo = _configuration.GetConnectionString("UploadServer")?.Split(':');
-                    using var client = new SftpClient(connectionInfo?[0], connectionInfo?[1], connectionInfo?[2]);
-                    client.Connect();
-
-                    var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
-                    client.DeleteFile($"{path}/{uploadedFile}");
-
-                    client.Disconnect();
+                    var path = $"./data/{uploadedFile.UploadedBy}/{uploadedFile}";
+                    if (!System.IO.File.Exists(path))
+                    {
+                        return NotFound($"Could not find file with id: {uploadedFile.id}");
+                    }
+                    System.IO.File.Delete(path);
                     #endregion
                 }
             }
