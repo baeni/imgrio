@@ -23,12 +23,10 @@ namespace imgrio_api.Controllers
     public class FilesController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
-        private readonly IConfiguration _configuration;
 
-        public FilesController(ImgrioDbContext dbContext, IConfiguration configuration)
+        public FilesController(ImgrioDbContext dbContext)
         {
             _dbContext = dbContext;
-            _configuration = configuration;
         }
 
         [HttpGet, AllowAnonymous]
@@ -181,7 +179,7 @@ namespace imgrio_api.Controllers
                     var path = $"./data/{uploadedFile.UploadedBy}/{uploadedFile}";
                     if (!System.IO.File.Exists(path))
                     {
-                        return NotFound($"Could not find file with id: {uploadedFile.id}");
+                        return NotFound($"Could not find file with id: {uploadedFile.Id}");
                     }
                     System.IO.File.Delete(path);
                     #endregion
