@@ -33,6 +33,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.section {
+  min-height: 100vh;
+}
+
 .section__container {
   color: #fff;
   display: flex;
@@ -41,11 +45,11 @@ onMounted(async () => {
   text-align: center;
   margin: 0 auto;
   vertical-align: middle;
-  min-height: 100vh;
 }
 
 .section__container-image img {
   max-width: 100%;
+  max-height: 83vh;
   margin-bottom: 2rem;
   background-color: var(--color-secondary2);
   background-repeat: no-repeat;
