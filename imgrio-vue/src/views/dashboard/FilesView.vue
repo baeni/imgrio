@@ -14,11 +14,11 @@ const userFiles = computed(() => userFilesStore.userFiles);
     <div class="section__container-title section__title">
       <h1>Meine Dateien</h1>
     </div>
-    <div>
+    <div v-if="userFiles">
       <div class="section__container-subtitle">
-        <p>22.07.2023</p>
+        <p>{{ userFiles?.length }}</p>
       </div>
-      <div class="section__container-list" v-if="userFiles">
+      <div class="section__container-list">
         <FileCard :file="file" v-for="file in userFiles" :key="file.id" />
       </div>
     </div>
