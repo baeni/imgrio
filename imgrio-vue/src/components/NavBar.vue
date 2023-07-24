@@ -20,8 +20,8 @@ function toggleMenu() {
         <img src="/logo.svg" alt="imgrio" />
       </a>
       <div class="navbar__container-links">
-        <a href="/sharex">ShareX</a>
-        <a href="/dashboard/files">Dashboard</a>
+        <RouterLink to="/sharex">ShareX</RouterLink>
+        <RouterLink to="/dashboard">Dashboard</RouterLink>
       </div>
       <div class="navbar__container-sign">
         <LogoutButton small transparent v-if="isAuthenticated" />
@@ -33,8 +33,8 @@ function toggleMenu() {
       </div>
     </div>
     <div class="navbar__menu" v-if="isMenuActive">
-      <a href="/sharex">ShareX</a>
-      <a href="/dashboard/files">Dashboard</a>
+      <RouterLink to="/sharex">ShareX</RouterLink>
+      <RouterLink to="/dashboard/files">Dashboard</RouterLink>
 
       <LogoutButton small transparent v-if="isAuthenticated" />
       <LoginButton small transparent v-else />
@@ -82,7 +82,7 @@ function toggleMenu() {
   font-size: 0.9rem;
   font-weight: 500;
   line-height: 25px;
-  color: #fff;
+  color: var(--color-light);
   text-align: center;
 }
 
@@ -102,8 +102,7 @@ function toggleMenu() {
   width: 100%;
   height: 100vh;
   padding: 3rem;
-  background: var(--color-darkest);
-  color: #fff;
+  background: var(--color-bg);
 }
 
 .navbar__menu a {
@@ -113,7 +112,11 @@ function toggleMenu() {
   font-size: 1.75rem;
   font-weight: 500;
   line-height: 35px;
-  color: #fff;
+  color: var(--color-light);
+}
+
+.router-link-active {
+  color: #fff !important;
 }
 
 @media screen and (max-width: 768px) {
