@@ -3,27 +3,21 @@ import { ref } from 'vue';
 
 import UploadPopup from '../components/UploadPopup.vue';
 
-let isUploadPopupVisible = ref(false);
-
-function toggleUploadPopup() {
-  isUploadPopupVisible.value = !isUploadPopupVisible.value;
-}
+let showModal = ref(false);
 </script>
 
 <template>
   <div class="subnavbar section--padding">
     <div class="subnavbar__links">
       <div class="subnavbar__links-container">
-        <p><a href="/dashboard/files">Meine Dateien</a></p>
-        <p><a @click="toggleUploadPopup">Datei Hochladen</a></p>
-        <p><a href="/dashboard/settings">Einstellungen</a></p>
+        <RouterLink to="./files">Meine Dateien</RouterLink>
+        <a @click="showModal = true">Datei Hochladen</a>
+        <RouterLink to="./settings">Einstellungen</RouterLink>
       </div>
     </div>
   </div>
 
-  <div class="overlay" @click="toggleUploadPopup" v-if="isUploadPopupVisible">
-    <UploadPopup @click.stop />
-  </div>
+  <UploadPopup v-show="showModal" @click="showModal = false" />
 </template>
 
 <style scoped>
@@ -50,16 +44,21 @@ function toggleUploadPopup() {
   white-space: nowrap;
 }
 
+.router-link-active {
+  font-weight: 900;
+  color: #fff;
+}
+
 .subnavbar__links-container {
   display: flex;
   flex: 1;
   align-items: center;
 }
 
-.subnavbar__links-container p,
+.subnavbar__links-container a,
 .subnavbar__sign p,
 .subnavbar__menu-container {
-  color: #fff;
+  color: var(--color-light);
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 0.8rem;
@@ -69,17 +68,7 @@ function toggleUploadPopup() {
   cursor: pointer;
 }
 
-.overlay {
-  display: flex;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  backdrop-filter: blur(5px);
-  z-index: 999;
+.router-link-active {
+  color: #fff !important;
 }
 </style>
