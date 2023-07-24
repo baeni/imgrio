@@ -38,7 +38,6 @@ async function postFile() {
 
     toast.success('Datei erfolgreich hochgeladen.');
     closeModal();
-    selectedFile.value = null;
   } catch {
     toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
     return;
@@ -47,6 +46,7 @@ async function postFile() {
 
 function closeModal() {
   document.getElementById('overlay')?.click();
+  selectedFile.value = null;
 }
 </script>
 
