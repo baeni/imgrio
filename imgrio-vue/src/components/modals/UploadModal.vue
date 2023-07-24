@@ -9,7 +9,7 @@ import { useToast } from 'vue-toastification';
 import Knob from '../Knob.vue';
 
 const toast = useToast();
-const selectedFile = ref<File>();
+const selectedFile = ref<File | null>();
 
 const userDetailsStore = useUserDetailsStore();
 const userDetails = computed(() => userDetailsStore.userDetails);
@@ -38,6 +38,7 @@ async function postFile() {
 
     toast.success('Datei erfolgreich hochgeladen.');
     closeModal();
+    selectedFile.value = null;
   } catch {
     toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
     return;
