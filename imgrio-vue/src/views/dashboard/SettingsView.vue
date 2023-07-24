@@ -14,7 +14,7 @@ const userDetails = computed(() => userDetailsStore.userDetails) as User;
 
 <template>
   <div class="section__container section--margin">
-    <div class="section__container-title section__title">
+    <div class="section__title">
       <h1>Einstellungen</h1>
     </div>
     <form class="section__container-form" v-if="userDetails">
@@ -73,12 +73,6 @@ const userDetails = computed(() => userDetailsStore.userDetails) as User;
 <style scoped>
 .section__container {
   color: #fff;
-}
-
-.section__container-title {
-  font-family: var(--font-family);
-  font-size: 1rem;
-  line-height: 55px;
 }
 
 .section__container-form {
