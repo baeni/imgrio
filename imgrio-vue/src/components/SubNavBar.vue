@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import UploadPopup from '../components/UploadPopup.vue';
+import UploadPopup from '../components/modals/UploadModal.vue';
 
 let showModal = ref(false);
 </script>
