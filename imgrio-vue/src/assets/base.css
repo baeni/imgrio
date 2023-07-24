@@ -20,10 +20,11 @@
   --color-darker: #161819;
   --color-darkest: #0d0f0f;
 
-  --color-light: #d1d5db;
+  --color-light: #c2c6cb;
   --color-lighter: #d1d5db;
+  --color-lightest: #eeeff2;
 
-  --color-bg: #070707;
+  --color-bg: #000;
   /* --color-footer: #031b34;
   --color-blog: #042c54;
   --color-text: #81afdd;
