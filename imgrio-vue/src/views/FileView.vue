@@ -3,25 +3,25 @@ import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { apiClient } from '@/axios';
 
-const file = ref();
+const userFile = ref();
 
 onMounted(async () => {
-  file.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
+  userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
 });
 </script>
 
 <template>
   <div class="section gradient__bg">
-    <div class="section__container section--padding" v-if="file">
+    <div class="section__container section--padding" v-if="userFile">
       <div class="section__container-image">
-        <img :src="file.url" />
+        <img :src="userFile.url" />
       </div>
       <div class="section__container-title">
-        <p>{{ file.title }}</p>
+        <p>{{ userFile.title }}</p>
       </div>
       <div class="section__container-date">
         {{
-          new Date(file.uploadedAt).toLocaleDateString('de-de', {
+          new Date(userFile.uploadedAt).toLocaleDateString('de-de', {
             day: '2-digit',
             month: 'long',
             year: 'numeric'
