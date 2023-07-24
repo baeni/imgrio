@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, reactive, onMounted } from 'vue';
 import { useUserFilesStore } from '@/stores/userFiles';
 
 import FileCard from '../../components/FileCard.vue';
+import type { UserFile } from '@/models/UserFile';
 
 const userFilesStore = useUserFilesStore();
-userFilesStore.fetchUserFiles();
-const userFiles = computed(() => userFilesStore.userFiles);
+const userFilesData = reactive<{ userFiles: UserFile[] }>({ userFiles: [] });
+
+onMounted(async () => {
+  await userFilesStore.fetchUserFiles();
+  userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
+});
+
+const userFiles = computed(() => userFilesData.userFiles);
 </script>
 
 <template>
