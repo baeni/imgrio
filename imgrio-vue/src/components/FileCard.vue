@@ -15,7 +15,7 @@ const props = defineProps({
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
-              {{ file.title.length > 20 ? file.title.substring(0, 17).concat('...') : file.title }}
+              {{ file.title.length > 17 ? file.title.substring(0, 15).concat('...') : file.title }}
             </p>
           </div>
           <div class="card__container-info-icon">
