@@ -8,9 +8,13 @@ import type { UserFile } from '@/models/UserFile';
 const userFilesStore = useUserFilesStore();
 const userFilesData = reactive<{ userFiles: UserFile[] }>({ userFiles: [] });
 
+let fetched = false;
+
 onMounted(async () => {
   await userFilesStore.fetchUserFiles();
   userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
+
+  fetched = true;
 });
 
 const userFiles = computed(() => userFilesData.userFiles);
@@ -21,13 +25,22 @@ const userFiles = computed(() => userFilesData.userFiles);
     <div class="section__title">
       <h1>Meine Dateien</h1>
     </div>
-    <div v-if="userFiles">
+
+    <div v-if="userFiles.length != 0 && fetched">
       <div class="section__container-subtitle">
         <p>Du teilst aktuell {{ userFiles?.length }} Dateien mit Imgrio</p>
       </div>
       <div class="section__container-list">
         <FileCard :file="file" v-for="file in userFiles" :key="file.id" />
       </div>
+    </div>
+
+    <div class="section__container-status" v-if="userFiles.length == 0 && !fetched">
+      <p>Wir entstauben gerade all deine Dateien. Einen Moment noch!</p>
+    </div>
+
+    <div class="section__container-status" v-if="userFiles.length == 0 && fetched">
+      <p>Du teilst aktuell keine Dateien mit imgrio. :[</p>
     </div>
   </div>
 </template>
@@ -49,6 +62,12 @@ const userFiles = computed(() => userFilesData.userFiles);
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 12px;
+}
+
+.section__container-status {
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  line-height: 25px;
 }
 
 @media screen and (max-width: 1600px) {
