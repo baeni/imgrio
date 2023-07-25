@@ -12,7 +12,6 @@ namespace imgrio_api.Models
             DateTime uploadedAt,
             Guid uploadedBy,
             string url,
-            string directUrl,
             bool isSelfHosted)
         {
             Id = id;
@@ -22,7 +21,6 @@ namespace imgrio_api.Models
             UploadedAt = uploadedAt;
             UploadedBy = uploadedBy;
             Url = url;
-            DirectUrl = directUrl;
             IsSelfHosted = isSelfHosted;
         }
 
@@ -33,7 +31,6 @@ namespace imgrio_api.Models
         public DateTime UploadedAt { get; private set; }
         public Guid UploadedBy { get; private set; }
         public string Url { get; private set; }
-        public string DirectUrl { get; private set; }
         public bool IsSelfHosted { get; private set; }
 
         public override string ToString()

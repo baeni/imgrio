@@ -81,7 +81,6 @@ namespace imgrio_api.Controllers
                 file.Length,
                 DateTime.UtcNow,
                 userId,
-                $"https://imgrio.com/v/{fileId}",
                 isUserSelfHosting ? "<notYetImplemented>" : $"https://data.imgrio.com/{userId}/{fileId}.{MimeTypesMap.GetExtension(fileType)}",
                 isUserSelfHosting);
 
