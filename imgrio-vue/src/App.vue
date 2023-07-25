@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
+import { inject } from '@vercel/analytics';
 
 import { useUserDetailsStore } from './stores/userDetails';
 import { useMsal } from './composition-api/useMsal';
@@ -9,6 +10,8 @@ import { watch } from 'vue';
 const userDetailsStore = useUserDetailsStore();
 const msal = useMsal();
 const accounts = msal.accounts.value;
+
+inject();
 
 onMounted(async () => {
   if (accounts.length !== 0) {
