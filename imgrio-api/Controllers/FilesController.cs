@@ -109,7 +109,7 @@ namespace imgrio_api.Controllers
             await _dbContext.SaveChangesAsync();
             #endregion
 
-            return Ok(new { userFile = uploadedFile , url = $"/v/{uploadedFile.Id}"});
+            return Ok(new { userFile = uploadedFile , url = $"https://imgrio.com/v/{uploadedFile.Id}"});
         }
 
         [HttpDelete("{id}")]
