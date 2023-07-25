@@ -18,10 +18,10 @@ app.use(msalPlugin, msalInstance);
 app.use(Toast, {
   transition: 'Vue-Toastification__fade',
   position: 'top-center',
-  hideProgressBar: true,
-  showCloseButtonOnHover: true,
+  closeButton: false,
+  draggable: false,
   maxToasts: 1,
-  timeout: 2000
+  timeout: 3000
 });
 
 app.mount('#app');
