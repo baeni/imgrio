@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
-import type { UserFile } from '@/models/UserFile';
+import type { UserFile } from '@/models';
 import { useUserDetailsStore } from './userDetails';
 import { apiClient } from '@/axios';
 

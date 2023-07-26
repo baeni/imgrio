@@ -3,7 +3,7 @@ import { computed, reactive, onMounted } from 'vue';
 import { useUserFilesStore } from '@/stores/userFiles';
 
 import FileCard from '../../components/FileCard.vue';
-import type { UserFile } from '@/models/UserFile';
+import type { UserFile } from '@/models';
 
 const userFilesStore = useUserFilesStore();
 const userFilesData = reactive<{ userFiles: UserFile[] }>({ userFiles: [] });
