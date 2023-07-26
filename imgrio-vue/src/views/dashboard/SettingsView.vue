@@ -1,17 +1,3 @@
-<script setup lang="ts">
-import { computed } from 'vue';
-import { useUserDetailsStore } from '@/stores/userDetails';
-import type { User } from '@microsoft/microsoft-graph-types';
-import { useToast } from 'vue-toastification';
-
-import Knob from '@/components/Knob.vue';
-
-const toast = useToast();
-
-const userDetailsStore = useUserDetailsStore();
-const userDetails = computed(() => userDetailsStore.userDetails) as User;
-</script>
-
 <template>
   <div class="section__container section--margin">
     <div class="section__title">
@@ -69,6 +55,20 @@ const userDetails = computed(() => userDetailsStore.userDetails) as User;
     <div class="section__container-loading" v-else>Lädt ...</div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useUserDetailsStore } from '@/stores/userDetails';
+import type { User } from '@microsoft/microsoft-graph-types';
+import { useToast } from 'vue-toastification';
+
+import Knob from '@/components/Knob.vue';
+
+const toast = useToast();
+
+const userDetailsStore = useUserDetailsStore();
+const userDetails = computed(() => userDetailsStore.userDetails) as User;
+</script>
 
 <style scoped>
 .section__container {

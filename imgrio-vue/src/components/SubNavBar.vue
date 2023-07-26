@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-import UploadPopup from '../components/modals/UploadModal.vue';
-
-let showModal = ref(false);
-</script>
-
 <template>
   <div class="subnavbar section--padding">
     <div class="subnavbar__links">
@@ -19,6 +11,14 @@ let showModal = ref(false);
 
   <UploadPopup v-show="showModal" @click="showModal = false" />
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+import UploadPopup from '../components/modals/UploadModal.vue';
+
+let showModal = ref(false);
+</script>
 
 <style scoped>
 .subnavbar {

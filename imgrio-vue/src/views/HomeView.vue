@@ -1,3 +1,30 @@
+<template>
+  <div class="section--center gradient__bg">
+    <div class="secion__container">
+      <div class="secion__container-slogan">
+        <p>Take. Give. <span class="secion__container-slogan--accent">Share.</span></p>
+      </div>
+      <div class="secion__container-description">
+        <p>
+          imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der vollumfängliche Zugriff
+          nur für ausgewählte Personen möglich.
+        </p>
+      </div>
+      <div class="secion__container-buttons">
+        <Knob text="Los gehts" href="/sharex" />
+        <Knob text="Dashboard" href="/dashboard" primary v-if="isAuthenticated" />
+        <LoginButton primary v-else />
+      </div>
+      <div class="secion__container-statistics">
+        <p>
+          <span class="secion__container-statistics--bold">{{ data.count }}</span> Dateien sind
+          aktuell dank imgrio im Umlauf!
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { useIsAuthenticated } from '@/composition-api/useIsAuthenticated';
 import { reactive } from 'vue';
@@ -25,33 +52,6 @@ const fetchData = async () => {
 
 fetchData();
 </script>
-
-<template>
-  <div class="section--center gradient__bg">
-    <div class="secion__container">
-      <div class="secion__container-slogan">
-        <p>Take. Give. <span class="secion__container-slogan--accent">Share.</span></p>
-      </div>
-      <div class="secion__container-description">
-        <p>
-          imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der vollumfängliche Zugriff
-          nur für ausgewählte Personen möglich.
-        </p>
-      </div>
-      <div class="secion__container-buttons">
-        <Knob text="Los gehts" href="/sharex" />
-        <Knob text="Dashboard" href="/dashboard" primary v-if="isAuthenticated" />
-        <LoginButton primary v-else />
-      </div>
-      <div class="secion__container-statistics">
-        <p>
-          <span class="secion__container-statistics--bold">{{ data.count }}</span> Dateien sind
-          aktuell dank imgrio im Umlauf!
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .secion__container {

@@ -1,3 +1,14 @@
+<template>
+  <a
+    :href="href"
+    :class="`btn ${primary ? 'btn--primary' : 'btn--secondary'}
+                 ${small ? 'btn--small' : 'btn--large'}
+                 ${transparent ? 'btn--transparent' : ''}
+                 ${hover ? 'btn--hover' : ''}`"
+    >{{ text }}</a
+  >
+</template>
+
 <script setup lang="ts">
 const props = defineProps({
   text: {
@@ -25,17 +36,6 @@ const props = defineProps({
   }
 });
 </script>
-
-<template>
-  <a
-    :href="href"
-    :class="`btn ${primary ? 'btn--primary' : 'btn--secondary'}
-                 ${small ? 'btn--small' : 'btn--large'}
-                 ${transparent ? 'btn--transparent' : ''}
-                 ${hover ? 'btn--hover' : ''}`"
-    >{{ text }}</a
-  >
-</template>
 
 <style scoped>
 .btn {

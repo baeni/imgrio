@@ -1,18 +1,3 @@
-<script setup lang="ts">
-import LoginButton from './LoginButton.vue';
-import LogoutButton from './LogoutButton.vue';
-import { useIsAuthenticated } from '@/composition-api/useIsAuthenticated';
-import { ref } from 'vue';
-
-const isAuthenticated = useIsAuthenticated();
-
-const isMenuActive = ref(false);
-
-function toggleMenu() {
-  isMenuActive.value = !isMenuActive.value;
-}
-</script>
-
 <template>
   <div class="navbar section--padding">
     <div class="navbar__container">
@@ -41,6 +26,21 @@ function toggleMenu() {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import LoginButton from './LoginButton.vue';
+import LogoutButton from './LogoutButton.vue';
+import { useIsAuthenticated } from '@/composition-api/useIsAuthenticated';
+import { ref } from 'vue';
+
+const isAuthenticated = useIsAuthenticated();
+
+const isMenuActive = ref(false);
+
+function toggleMenu() {
+  isMenuActive.value = !isMenuActive.value;
+}
+</script>
 
 <style scoped>
 .navbar {

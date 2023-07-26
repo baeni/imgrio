@@ -1,3 +1,7 @@
+<template>
+  <RouterView />
+</template>
+
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import { inject } from '@vercel/analytics';
@@ -28,7 +32,3 @@ watch(accounts, () => {
   userDetailsStore.fetchUserDetails();
 });
 </script>
-
-<template>
-  <RouterView />
-</template>

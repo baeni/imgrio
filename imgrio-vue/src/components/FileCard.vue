@@ -1,12 +1,3 @@
-<script setup lang="ts">
-const props = defineProps({
-  file: {
-    type: Object,
-    required: true
-  }
-});
-</script>
-
 <template>
   <a :href="`/v/${file.id}`">
     <div class="card">
@@ -30,6 +21,15 @@ const props = defineProps({
     </div>
   </a>
 </template>
+
+<script setup lang="ts">
+const props = defineProps({
+  file: {
+    type: Object,
+    required: true
+  }
+});
+</script>
 
 <style scoped>
 .card {

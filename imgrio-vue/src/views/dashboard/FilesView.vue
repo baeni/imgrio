@@ -1,25 +1,3 @@
-<script setup lang="ts">
-import { computed, reactive, onMounted } from 'vue';
-import { useUserFilesStore } from '@/stores/userFiles';
-
-import FileCard from '../../components/FileCard.vue';
-import type { UserFile } from '@/models';
-
-const userFilesStore = useUserFilesStore();
-const userFilesData = reactive<{ userFiles: UserFile[] }>({ userFiles: [] });
-
-let fetched = false;
-
-onMounted(async () => {
-  await userFilesStore.fetchUserFiles();
-  userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
-
-  fetched = true;
-});
-
-const userFiles = computed(() => userFilesData.userFiles);
-</script>
-
 <template>
   <div class="section__container section--margin">
     <div class="section__title">
@@ -44,6 +22,28 @@ const userFiles = computed(() => userFilesData.userFiles);
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed, reactive, onMounted } from 'vue';
+import { useUserFilesStore } from '@/stores/userFiles';
+
+import FileCard from '../../components/FileCard.vue';
+import type { UserFile } from '@/models';
+
+const userFilesStore = useUserFilesStore();
+const userFilesData = reactive<{ userFiles: UserFile[] }>({ userFiles: [] });
+
+let fetched = false;
+
+onMounted(async () => {
+  await userFilesStore.fetchUserFiles();
+  userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
+
+  fetched = true;
+});
+
+const userFiles = computed(() => userFilesData.userFiles);
+</script>
 
 <style scoped>
 .section__container {

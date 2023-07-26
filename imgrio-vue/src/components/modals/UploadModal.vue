@@ -1,3 +1,43 @@
+<template>
+  <div class="overlay" id="overlay">
+    <div class="section__container" @click.stop>
+      <div class="section__title">
+        <h1>Datei Hochladen</h1>
+      </div>
+
+      <form class="section__container-form">
+        <label class="section__container-form-drop-area" for="input">
+          <div class="section__container-form-drop-area-icon">
+            <img src="../../assets/icons/image.svg" />
+          </div>
+
+          <div class="section__container-form-drop-area-title">
+            <p>
+              Datei hierher ziehen <br />
+              oder auswählen
+            </p>
+          </div>
+
+          <div class="section__container-form-drop-area-file" v-if="selectedFile">
+            <p>{{ selectedFile.name }}</p>
+          </div>
+
+          <input
+            type="file"
+            accept="image/*"
+            id="input"
+            name="file"
+            @change="handleFileChange"
+            required
+            hidden
+          />
+        </label>
+        <Knob text="Gib mir einen Link!" :primary="!!selectedFile" @click="postFile" />
+      </form>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import { computed } from 'vue';
@@ -54,46 +94,6 @@ function copyToClipboard(url: string) {
   navigator.clipboard.writeText(url);
 }
 </script>
-
-<template>
-  <div class="overlay" id="overlay">
-    <div class="section__container" @click.stop>
-      <div class="section__title">
-        <h1>Datei Hochladen</h1>
-      </div>
-
-      <form class="section__container-form">
-        <label class="section__container-form-drop-area" for="input">
-          <div class="section__container-form-drop-area-icon">
-            <img src="../../assets/icons/image.svg" />
-          </div>
-
-          <div class="section__container-form-drop-area-title">
-            <p>
-              Datei hierher ziehen <br />
-              oder auswählen
-            </p>
-          </div>
-
-          <div class="section__container-form-drop-area-file" v-if="selectedFile">
-            <p>{{ selectedFile.name }}</p>
-          </div>
-
-          <input
-            type="file"
-            accept="image/*"
-            id="input"
-            name="file"
-            @change="handleFileChange"
-            required
-            hidden
-          />
-        </label>
-        <Knob text="Gib mir einen Link!" :primary="!!selectedFile" @click="postFile" />
-      </form>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .overlay {

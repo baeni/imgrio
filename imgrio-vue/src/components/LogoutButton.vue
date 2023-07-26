@@ -1,3 +1,13 @@
+<template>
+  <Knob
+    text="Abmelden"
+    @click="logoutRedirect"
+    :small="small"
+    :primary="primary"
+    :transparent="transparent"
+  />
+</template>
+
 <script setup lang="ts">
 import { useMsal } from '../composition-api/useMsal';
 
@@ -24,13 +34,3 @@ const logoutRedirect = () => {
   instance.logoutRedirect();
 };
 </script>
-
-<template>
-  <Knob
-    text="Abmelden"
-    @click="logoutRedirect"
-    :small="small"
-    :primary="primary"
-    :transparent="transparent"
-  />
-</template>

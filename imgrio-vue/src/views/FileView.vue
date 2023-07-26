@@ -1,15 +1,3 @@
-<script setup lang="ts">
-import { useRoute } from 'vue-router';
-import { onMounted, ref } from 'vue';
-import { apiClient } from '@/axios';
-
-const userFile = ref();
-
-onMounted(async () => {
-  userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
-});
-</script>
-
 <template>
   <div class="section gradient__bg">
     <div class="section__container section--padding" v-if="userFile">
@@ -31,6 +19,18 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { apiClient } from '@/axios';
+
+const userFile = ref();
+
+onMounted(async () => {
+  userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
+});
+</script>
 
 <style scoped>
 .section {

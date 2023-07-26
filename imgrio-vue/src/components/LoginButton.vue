@@ -1,3 +1,13 @@
+<template>
+  <Knob
+    text="Anmelden"
+    @click="loginRedirect"
+    :small="small"
+    :primary="primary"
+    :transparent="transparent"
+  />
+</template>
+
 <script setup lang="ts">
 import { useMsal } from '../composition-api/useMsal';
 import { loginRequest } from '../authConfig';
@@ -25,13 +35,3 @@ const loginRedirect = () => {
   instance.loginRedirect(loginRequest);
 };
 </script>
-
-<template>
-  <Knob
-    text="Anmelden"
-    @click="loginRedirect"
-    :small="small"
-    :primary="primary"
-    :transparent="transparent"
-  />
-</template>
