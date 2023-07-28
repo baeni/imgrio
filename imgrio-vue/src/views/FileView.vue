@@ -9,7 +9,7 @@
       </div>
       <div class="section__container-date">
         {{
-          new Date(userFile.uploadedAt).toLocaleDateString('de-de', {
+          new Date(userFile.dateOfCreation).toLocaleDateString('de-de', {
             day: '2-digit',
             month: 'long',
             year: 'numeric'
@@ -24,8 +24,9 @@
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { apiClient } from '@/axios';
+import type { UserFile } from '@/models';
 
-const userFile = ref();
+const userFile = ref<UserFile>();
 
 onMounted(async () => {
   userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
