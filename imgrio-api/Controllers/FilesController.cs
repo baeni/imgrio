@@ -36,7 +36,7 @@ namespace imgrio_api.Controllers
 
             var count = await set.CountAsync();
             var countToday = await set
-                .Select(x => x.UploadedAt.Day == DateTime.UtcNow.Day)
+                .Select(x => x.DateOfCreation.Day == DateTime.UtcNow.Day)
                 .CountAsync();
 
             return Ok(new {
@@ -62,7 +62,7 @@ namespace imgrio_api.Controllers
         public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
         {
             var uploadedFiles = await _dbContext.Set<UserFile>()
-                .Where(x => x.UploadedBy == userId).ToArrayAsync();
+                .Where(x => x.Author == userId).ToArrayAsync();
 
             return Ok(uploadedFiles);
         }
@@ -76,13 +76,13 @@ namespace imgrio_api.Controllers
 
             var uploadedFile = new UserFile(
                 fileId,
-                file.FileName,
+                userId,
+                Path.GetFileNameWithoutExtension(file.FileName),
                 fileType,
                 file.Length,
-                DateTime.UtcNow,
-                userId,
                 isUserSelfHosting ? "<notYetImplemented>" : $"https://data.imgrio.com/{userId}/{fileId}.{MimeTypesMap.GetExtension(fileType)}",
-                isUserSelfHosting);
+                isUserSelfHosting,
+                DateTime.UtcNow);
 
             if (uploadedFile.IsSelfHosted)
             {
@@ -94,7 +94,7 @@ namespace imgrio_api.Controllers
             else
             {
                 #region save to imgrio server
-                var path = $"./data/{uploadedFile.UploadedBy}";
+                var path = $"./data/{uploadedFile.Author}";
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -137,7 +137,7 @@ namespace imgrio_api.Controllers
             else
             {
                 #region delete from imgrio server
-                var path = $"./data/{uploadedFile.UploadedBy}/{uploadedFile}";
+                var path = $"./data/{uploadedFile.Author}/{uploadedFile}";
                 if (!System.IO.File.Exists(path))
                 {
                     return NotFound($"Could not find file with id: {id}");
@@ -152,7 +152,7 @@ namespace imgrio_api.Controllers
        [HttpDelete("users/{userId}")]
         public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
         {
-            var uploadedFiles = await _dbContext.Set<UserFile>().Where(x => x.UploadedBy == userId).ToArrayAsync();
+            var uploadedFiles = await _dbContext.Set<UserFile>().Where(x => x.Author == userId).ToArrayAsync();
 
             if (uploadedFiles == null || uploadedFiles.Length <= 0)
             {
@@ -176,7 +176,7 @@ namespace imgrio_api.Controllers
                 else
                 {
                     #region delete from imgrio server
-                    var path = $"./data/{uploadedFile.UploadedBy}/{uploadedFile}";
+                    var path = $"./data/{uploadedFile.Author}/{uploadedFile}";
                     if (!System.IO.File.Exists(path))
                     {
                         return NotFound($"Could not find file with id: {uploadedFile.Id}");
