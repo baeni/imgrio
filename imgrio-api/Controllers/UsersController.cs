@@ -26,10 +26,10 @@ namespace imgrio_api.Controllers
         {
             var set = _dbContext.Set<UserFile>();
 
-            var count = await set.Select(x => x.UploadedBy).Distinct().CountAsync();
+            var count = await set.Select(x => x.Author).Distinct().CountAsync();
             var countToday = await set
-                .Where(x => x.UploadedAt.Day == DateTime.UtcNow.Day)
-                .Select(x => x.UploadedBy)
+                .Where(x => x.DateOfCreation.Day == DateTime.UtcNow.Day)
+                .Select(x => x.Author)
                 .Distinct()
                 .CountAsync();
 
