@@ -6,32 +6,32 @@ namespace imgrio_api.Models
     {
         public UserFile(
             Guid id,
+            Guid author,
             string title,
             string type,
             long size,
-            DateTime uploadedAt,
-            Guid uploadedBy,
             string url,
-            bool isSelfHosted)
+            bool isSelfHosted,
+            DateTime dateOfCreation)
         {
             Id = id;
+            Author = author;
             Title = title;
             Type = type;
             Size = size;
-            UploadedAt = uploadedAt;
-            UploadedBy = uploadedBy;
             Url = url;
             IsSelfHosted = isSelfHosted;
+            DateOfCreation = dateOfCreation;
         }
 
         public Guid Id { get; private set; }
+        public Guid Author { get; private set; }
         public string Title { get; private set; }
         public string Type { get; private set; }
         public long Size { get; private set; }
-        public DateTime UploadedAt { get; private set; }
-        public Guid UploadedBy { get; private set; }
         public string Url { get; private set; }
         public bool IsSelfHosted { get; private set; }
+        public DateTime DateOfCreation { get; private set; }
 
         public override string ToString()
         {
