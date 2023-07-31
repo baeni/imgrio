@@ -30,7 +30,7 @@ import { useIsAuthenticated } from '@/composition-api/useIsAuthenticated';
 import { reactive } from 'vue';
 import { apiClient } from '@/axios';
 
-import Knob from '@/components/Knob.vue';
+import Knob from '@/components/inputs/Knob.vue';
 import LoginButton from '@/components/LoginButton.vue';
 
 const isAuthenticated = useIsAuthenticated();
