@@ -1,12 +1,19 @@
 <template>
-  <a
-    :href="href"
+  <a v-if="href" :href="href"
     :class="`btn ${primary ? 'btn--primary' : 'btn--secondary'}
                  ${small ? 'btn--small' : 'btn--large'}
                  ${transparent ? 'btn--transparent' : ''}
                  ${hover ? 'btn--hover' : ''}`"
-    >{{ text }}</a
-  >
+    >{{ text }}
+  </a>
+
+  <submit v-else
+    :class="`btn ${primary ? 'btn--primary' : 'btn--secondary'}
+                 ${small ? 'btn--small' : 'btn--large'}
+                 ${transparent ? 'btn--transparent' : ''}
+                 ${hover ? 'btn--hover' : ''}`"
+    >{{ text }}
+  </submit>
 </template>
 
 <script setup lang="ts">
@@ -16,7 +23,8 @@ const props = defineProps({
     required: true
   },
   href: {
-    type: String
+    type: String,
+    default: null
   },
   small: {
     type: Boolean,
