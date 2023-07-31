@@ -46,7 +46,7 @@ import { useUserDetailsStore } from '@/stores/userDetails';
 import { useUserFilesStore } from '@/stores/userFiles';
 import { useToast } from 'vue-toastification';
 
-import Knob from '../Knob.vue';
+import Knob from '../inputs/Knob.vue';
 
 const toast = useToast();
 const selectedFile = ref<File | null>();
@@ -76,7 +76,7 @@ async function postFile() {
 
     closeModal();
     copyToClipboard(response.url);
-    toast.success('Link in Zwischenablage gespeichert.');
+    toast.success('Link in Zwischenablage kopiert.');
 
     userFilesStore.userFiles?.push(response.userFile);
     selectedFile.value = null;
