@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { useMsal } from '../composition-api/useMsal';
 
-import Knob from './Knob.vue';
+import Knob from './inputs/Knob.vue';
 
 const { instance } = useMsal();
 

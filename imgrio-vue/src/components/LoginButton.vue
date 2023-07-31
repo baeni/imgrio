@@ -12,7 +12,7 @@
 import { useMsal } from '../composition-api/useMsal';
 import { loginRequest } from '../authConfig';
 
-import Knob from './Knob.vue';
+import Knob from './inputs/Knob.vue';
 
 const { instance } = useMsal();
 
