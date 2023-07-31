@@ -3,7 +3,7 @@
     <div class="subnavbar__links">
       <div class="subnavbar__links-container">
         <RouterLink to="./files">Meine Dateien</RouterLink>
-        <a @click="showModal = true">Datei Hochladen</a>
+        <a href="javascript:;" @click="showModal = true">Datei Hochladen</a>
         <RouterLink to="./settings">Einstellungen</RouterLink>
       </div>
     </div>
