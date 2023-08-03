@@ -1,5 +1,7 @@
 <template>
-  <a v-if="href" :href="href"
+  <a
+    v-if="href"
+    :href="href"
     :class="`btn ${primary ? 'btn--primary' : 'btn--secondary'}
                  ${small ? 'btn--small' : 'btn--large'}
                  ${transparent ? 'btn--transparent' : ''}
@@ -7,12 +9,14 @@
     >{{ text }}
   </a>
 
-  <submit v-else
+  <submit
+    v-else
     :class="`btn ${primary ? 'btn--primary' : 'btn--secondary'}
                  ${small ? 'btn--small' : 'btn--large'}
                  ${transparent ? 'btn--transparent' : ''}
                  ${hover ? 'btn--hover' : ''}`"
-    >{{ text }}
+  >
+    {{ text }}
   </submit>
 </template>
 
