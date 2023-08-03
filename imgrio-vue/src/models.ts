@@ -8,3 +8,8 @@ export interface UserFile {
   isSelfHosted: boolean;
   dateOfCreation: string;
 }
+
+export interface DropdownOption {
+  key: string;
+  value: string | boolean | number;
+}
