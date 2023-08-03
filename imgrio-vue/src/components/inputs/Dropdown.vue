@@ -9,9 +9,11 @@
 </template>
 
 <script setup lang="ts">
+import type { DropdownOption } from '@/models';
+
 const props = defineProps({
   options: {
-    type: Array<Object>,
+    type: Array<DropdownOption>,
     required: true
   },
   disabled: {
