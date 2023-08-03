@@ -1,20 +1,23 @@
 <template>
-  <div class="section gradient__bg">
-    <div class="section__container section--padding" v-if="userFile">
+  <div class="section gradient__bg" v-if="userFile">
+    <div class="section__container section--padding">
       <div class="section__container-image">
         <img :src="userFile.url" />
       </div>
       <div class="section__container-title">
         <p>{{ userFile.title }}</p>
       </div>
-      <div class="section__container-date">
-        {{
-          new Date(userFile.dateOfCreation).toLocaleDateString('de-de', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-          })
-        }}
+      <div class="section__container-subtitle">
+        <p class="section__container-subtitle-author">baeni</p>
+        <p class="section__container-subtitle-date">
+          {{
+            new Date(userFile.dateOfCreation).toLocaleDateString('de-de', {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric'
+            })
+          }}
+        </p>
       </div>
     </div>
   </div>
@@ -48,10 +51,15 @@ onMounted(async () => {
   vertical-align: middle;
 }
 
+.section__container-image {
+  margin-bottom: 2.5rem;
+}
+
 .section__container-image img {
   max-width: 100%;
-  max-height: 83vh;
+  max-height: 65vh;
   margin-bottom: 2rem;
+  margin: 0 auto;
   background-color: var(--color-secondary2);
   background-repeat: no-repeat;
   background-size: cover;
@@ -62,13 +70,25 @@ onMounted(async () => {
 
 .section__container-title {
   font-family: var(--font-family);
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 35px;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 40px;
   white-space: nowrap;
+  margin-bottom: 0.5rem;
 }
 
-.section__container-date {
+.section__container-subtitle {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.section__container-subtitle-author {
+  font-family: var(--font-family);
+  font-size: 1rem;
+}
+
+.section__container-subtitle-date {
   font-family: var(--font-family);
   font-size: 1rem;
 }
