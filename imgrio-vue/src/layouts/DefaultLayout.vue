@@ -2,7 +2,14 @@
   <NavBar />
 
   <router-view v-slot="{ Component, route }">
-    <transition>
+    <transition
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      enter-active-class="transition-opacity duration-500"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+      leave-active-class="transition-opacity duration-500"
+    >
       <component :is="Component" :key="route.path" />
     </transition>
   </router-view>
@@ -13,15 +20,3 @@ import { RouterView } from 'vue-router';
 
 import NavBar from '../components/NavBar.vue';
 </script>
-
-<style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-</style>
