@@ -18,6 +18,7 @@
             })
           }}
         </p>
+        <p @click="deleteFileAsync">Löschen</p>
       </div>
     </div>
   </div>
@@ -27,13 +28,34 @@
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { apiClient } from '@/axios';
-import type { UserFile } from '@/models';
+import { useUserDetailsStore } from '@/stores/userDetails';
+import type { UserDetails, UserFile } from '@/models';
+import { useToast } from 'vue-toastification';
+import router from '@/router';
 
+const userDetailsStore = useUserDetailsStore();
+
+const userDetails = ref<UserDetails>();
 const userFile = ref<UserFile>();
 
+const toast = useToast();
+
 onMounted(async () => {
+  userDetails.value = userDetailsStore.userDetails;
   userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
 });
+
+async function deleteFileAsync() {
+  try {
+    toast.success('Datei wird gelöscht...');
+    const response = (await apiClient.delete(`files/${userFile.value?.id}`)).data;
+
+    router.back();
+  } catch {
+    toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
+    return;
+  }
+}
 </script>
 
 <style scoped>
