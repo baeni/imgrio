@@ -32,7 +32,7 @@
             hidden
           />
         </label>
-        <Knob text="Gib mir einen Link!" :primary="!!selectedFile" @click="postFile" />
+        <Knob text="Gib mir einen Link!" :primary="!!selectedFile" @click="postFileAsync" />
       </form>
     </div>
   </div>
@@ -63,7 +63,7 @@ const handleFileChange = (event: Event) => {
   }
 };
 
-async function postFile() {
+async function postFileAsync() {
   try {
     if (!selectedFile.value) {
       toast.error('Du musst eine Datei auswählen!');
