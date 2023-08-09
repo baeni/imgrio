@@ -77,7 +77,7 @@ function playAnimation() {
   bottom: 0;
   padding: 1.5rem 1rem 0.25rem 1rem;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0) 100%);
 }
@@ -98,7 +98,6 @@ function playAnimation() {
 
 .icon {
   width: 1rem;
-  height: 1rem;
 }
 
 .jump {
