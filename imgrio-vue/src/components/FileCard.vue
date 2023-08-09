@@ -1,6 +1,6 @@
 <template>
   <a :href="`/v/${file.id}`">
-    <div class="card">
+    <div class="card" :class="{ jump: animationPlaying }" @mouseenter="playAnimation()">
       <div class="card__container">
         <div class="card__container-image" :style="`background-image: url(${file.url})`"></div>
         <div class="card__container-info">
@@ -23,12 +23,23 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
+const animationPlaying = ref(false);
+
 const props = defineProps({
   file: {
     type: Object,
     required: true
   }
 });
+
+function playAnimation() {
+  animationPlaying.value = true;
+  setTimeout(() => {
+    animationPlaying.value = false;
+  }, 300);
+}
 </script>
 
 <style scoped>
@@ -88,5 +99,21 @@ const props = defineProps({
 .icon {
   width: 1rem;
   height: 1rem;
+}
+
+.jump {
+  animation: jump 0.3s;
+}
+
+@keyframes jump {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: translateY(-0.25rem);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
