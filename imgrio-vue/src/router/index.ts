@@ -21,7 +21,8 @@ const router = createRouter({
         },
         {
           path: '/v/:id',
-          component: () => import('../views/FileView.vue')
+          component: () => import('../views/FileView.vue'),
+          meta: { transition: 'slide-right' }
         }
       ]
     },
