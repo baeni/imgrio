@@ -6,7 +6,7 @@
 
     <div v-if="userFiles.length != 0 && fetched">
       <div class="section__container-subtitle">
-        <p>Du teilst aktuell {{ userFiles?.length }} Dateien mit Imgrio</p>
+        <p>Du teilst aktuell {{ userFiles?.length }} Dateien mit imgrio</p>
       </div>
       <div class="section__container-list">
         <FileCard :file="file" v-for="file in userFiles" :key="file.id" />
