@@ -93,7 +93,7 @@ function playAnimation() {
 .card__container-info-icon {
   opacity: 0;
   transform: translateX(-20%);
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 .icon {
