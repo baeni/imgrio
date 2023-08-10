@@ -1,12 +1,19 @@
 <template>
-  <a :href="`/v/${file.id}`">
+  <a :href="`/v/${userFile.id}`">
     <div class="card" :class="{ jump: animationPlaying }" @mouseenter="playAnimation()">
       <div class="card__container">
-        <div class="card__container-image" :style="`background-image: url(${file.url})`"></div>
+        <div class="card__container-image" :style="`background-image: url(${userFile.url})`"></div>
+        <div class="card__container-delete" @click.prevent="deleteFileAsync">
+          <p>Löschen</p>
+        </div>
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
-              {{ file.title.length > 17 ? file.title.substring(0, 15).concat('...') : file.title }}
+              {{
+                userFile.title.length > 17
+                  ? userFile.title.substring(0, 15).concat('...')
+                  : userFile.title
+              }}
             </p>
           </div>
           <div class="card__container-info-icon">
@@ -24,11 +31,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { apiClient } from '@/axios';
+import type { UserFile } from '@/models';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const animationPlaying = ref(false);
 
 const props = defineProps({
-  file: {
+  userFile: {
     type: Object,
     required: true
   }
@@ -39,6 +51,16 @@ function playAnimation() {
   setTimeout(() => {
     animationPlaying.value = false;
   }, 300);
+}
+
+async function deleteFileAsync() {
+  try {
+    const response = (await apiClient.delete(`files/${(props.userFile as UserFile).id}`)).data;
+    toast.success('Datei wurde gelöscht.');
+  } catch {
+    toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
+    return;
+  }
 }
 </script>
 
@@ -66,6 +88,28 @@ function playAnimation() {
   background-position: center;
 }
 
+.card__container-delete {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  padding: 0.25rem 1rem 1.5rem 1rem;
+  display: flex;
+  font-size: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.25s ease-in-out;
+}
+
+.card:hover .card__container-delete {
+  opacity: 0.9;
+  transition-delay: 1s;
+}
+
+.card__container-delete a {
+  text-shadow: #000 0 1px 10px;
+}
+
 .card__container-info {
   position: absolute;
   width: 100%;
@@ -87,7 +131,7 @@ function playAnimation() {
 
 .card__container-info-icon {
   opacity: 0;
-  transform: translateX(-25%);
+  transform: translateX(-50%);
   transition: all 0.1s ease-in-out;
 }
 
