@@ -42,9 +42,9 @@ let data = reactive({
 
 const fetchData = async () => {
   try {
-    const response = await apiClient.get('files');
-    data.count = response.data.count;
-    data.countToday = response.data.countToday;
+    const response = (await apiClient.get('files')).data;
+    data.count = response.count;
+    data.countToday = response.countToday;
   } catch (error) {
     console.error('An error occurred while attempting to fetch data:', error);
   }
