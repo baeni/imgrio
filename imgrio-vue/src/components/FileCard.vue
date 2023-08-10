@@ -54,11 +54,6 @@ function playAnimation() {
   cursor: pointer;
 }
 
-.card:hover .card__container-info-icon {
-  opacity: 1;
-  transform: translateX(20%);
-}
-
 .card__container {
   position: relative;
   height: 100%;
@@ -94,6 +89,11 @@ function playAnimation() {
   opacity: 0;
   transform: translateX(-20%);
   transition: all 0.1s ease-in-out;
+}
+
+.card:hover .card__container-info-icon {
+  opacity: 1;
+  transform: translateX(20%);
 }
 
 .icon {
