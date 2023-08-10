@@ -87,13 +87,13 @@ function playAnimation() {
 
 .card__container-info-icon {
   opacity: 0;
-  transform: translateX(-20%);
+  transform: translateX(-25%);
   transition: all 0.1s ease-in-out;
 }
 
 .card:hover .card__container-info-icon {
   opacity: 1;
-  transform: translateX(20%);
+  transform: translateX(0);
 }
 
 .icon {
