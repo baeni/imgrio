@@ -78,7 +78,7 @@ async function postFileAsync() {
     copyToClipboard(response.url);
     toast.success('Link in Zwischenablage kopiert.');
 
-    userFilesStore.userFiles?.push(response.userFile);
+    userFilesStore.userFiles?.unshift(response.userFile);
     selectedFile.value = null;
   } catch {
     toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
