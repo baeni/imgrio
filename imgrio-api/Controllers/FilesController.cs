@@ -4,6 +4,7 @@ using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace imgrio_api.Controllers
 {
@@ -61,6 +62,12 @@ namespace imgrio_api.Controllers
         [HttpGet("users/{userId}")]
         public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
         {
+            var oid = Guid.Parse(User.FindFirstValue("oid"));
+            if (!oid.Equals(userId))
+            {
+                return BadRequest("Jwt oid and userId do not match.");
+            }
+
             var uploadedFiles = await _dbContext.Set<UserFile>()
                 .Where(x => x.Author == userId).ToArrayAsync();
 
@@ -70,6 +77,12 @@ namespace imgrio_api.Controllers
         [HttpPost("users/{userId}")]
         public async Task<IActionResult> PostFileByUserIdAsync(Guid userId, [FromForm] IFormFile file)
         {
+            var oid = Guid.Parse(User.FindFirstValue("oid"));
+            if (!oid.Equals(userId))
+            {
+                return BadRequest("Jwt oid and userId do not match.");
+            }
+
             var fileType = file.ContentType;
             var fileId = Guid.NewGuid();
             var isUserSelfHosting = false;
@@ -117,6 +130,12 @@ namespace imgrio_api.Controllers
         {
             var uploadedFile = await _dbContext.FindAsync<UserFile>(id);
 
+            var oid = Guid.Parse(User.FindFirstValue("oid"));
+            if (!oid.Equals(uploadedFile.Author))
+            {
+                return BadRequest("Jwt oid and author do not match.");
+            }
+
             if (uploadedFile == null)
             {
                 return NotFound();
@@ -149,9 +168,15 @@ namespace imgrio_api.Controllers
             return Ok($"Deleted file with id: {id}");
         }
 
-       [HttpDelete("users/{userId}")]
+        [HttpDelete("users/{userId}")]
         public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
         {
+            var oid = Guid.Parse(User.FindFirstValue("oid"));
+            if (!oid.Equals(userId))
+            {
+                return BadRequest("Jwt oid and userId do not match.");
+            }
+
             var uploadedFiles = await _dbContext.Set<UserFile>().Where(x => x.Author == userId).ToArrayAsync();
 
             if (uploadedFiles == null || uploadedFiles.Length <= 0)
