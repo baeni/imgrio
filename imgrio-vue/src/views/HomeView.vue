@@ -64,28 +64,31 @@ fetchData();
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 4rem;
-  line-height: 55px;
+  line-height: 115px;
 }
 
 .secion__container-slogan--accent {
   font-family: var(--font-family-brand);
-  font-size: 3.75rem;
+  font-size: 4.5rem;
   color: var(--color-primary);
 }
 
 .secion__container-description {
-  margin: 1.5rem 0;
   color: var(--color-text);
   font-family: var(--font-family);
   font-size: 1rem;
   line-height: 20px;
 }
 
+.secion__container-buttons {
+  margin-block: 2rem 0.75rem;
+}
+
 .secion__container-statistics {
-  margin: 3rem auto 0;
   font-family: var(--font-family);
   font-size: 0.75rem;
   color: var(--color-light);
+  opacity: 0.5;
 }
 
 .secion__container-statistics--bold {
