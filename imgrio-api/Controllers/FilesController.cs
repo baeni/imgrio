@@ -24,6 +24,7 @@ namespace imgrio_api.Controllers
     public class FilesController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
+        private readonly string _oidClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
 
         public FilesController(ImgrioDbContext dbContext)
         {
@@ -62,10 +63,10 @@ namespace imgrio_api.Controllers
         [HttpGet("users/{userId}")]
         public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
         {
-            var oid = Guid.Parse(User.FindFirstValue("oid"));
-            if (!oid.Equals(userId))
+            var oid = User.FindFirst(_oidClaim)?.Value;
+            if (oid == null || !Guid.Parse(oid).Equals(userId))
             {
-                return BadRequest("Jwt oid and userId do not match.");
+                return Unauthorized();
             }
 
             var uploadedFiles = await _dbContext.Set<UserFile>()
@@ -77,10 +78,10 @@ namespace imgrio_api.Controllers
         [HttpPost("users/{userId}")]
         public async Task<IActionResult> PostFileByUserIdAsync(Guid userId, [FromForm] IFormFile file)
         {
-            var oid = Guid.Parse(User.FindFirstValue("oid"));
-            if (!oid.Equals(userId))
+            var oid = User.FindFirst(_oidClaim)?.Value;
+            if (oid == null || !Guid.Parse(oid).Equals(userId))
             {
-                return BadRequest("Jwt oid and userId do not match.");
+                return Unauthorized();
             }
 
             var fileType = file.ContentType;
@@ -130,15 +131,15 @@ namespace imgrio_api.Controllers
         {
             var uploadedFile = await _dbContext.FindAsync<UserFile>(id);
 
-            var oid = Guid.Parse(User.FindFirstValue("oid"));
-            if (!oid.Equals(uploadedFile.Author))
-            {
-                return BadRequest("Jwt oid and author do not match.");
-            }
-
             if (uploadedFile == null)
             {
                 return NotFound();
+            }
+
+            var oid = User.FindFirst(_oidClaim)?.Value;
+            if (oid == null || !Guid.Parse(oid).Equals(uploadedFile.Author))
+            {
+                return Unauthorized();
             }
 
             #region delete from database
@@ -171,10 +172,10 @@ namespace imgrio_api.Controllers
         [HttpDelete("users/{userId}")]
         public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
         {
-            var oid = Guid.Parse(User.FindFirstValue("oid"));
-            if (!oid.Equals(userId))
+            var oid = User.FindFirst(_oidClaim)?.Value;
+            if (oid == null || !Guid.Parse(oid).Equals(userId))
             {
-                return BadRequest("Jwt oid and userId do not match.");
+                return Unauthorized();
             }
 
             var uploadedFiles = await _dbContext.Set<UserFile>().Where(x => x.Author == userId).ToArrayAsync();
