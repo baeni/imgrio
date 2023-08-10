@@ -11,7 +11,12 @@ export const useUserFilesStore = defineStore('userFilesStore', () => {
   async function fetchUserFiles() {
     const userDetailsStore = useUserDetailsStore();
 
-    userFiles.value = (await apiClient.get(`files/users/${userDetailsStore.userDetails.id}`)).data;
+    userFiles.value = (
+      await apiClient.get(`files/users/${userDetailsStore.userDetails.id}`)
+    ).data.sort(
+      (a: UserFile, b: UserFile) =>
+        new Date(b.dateOfCreation).getTime() - new Date(a.dateOfCreation).getTime()
+    );
   }
 
   return { fetchUserFiles, userFiles };
