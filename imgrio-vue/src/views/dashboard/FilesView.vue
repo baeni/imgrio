@@ -9,7 +9,7 @@
         <p>Du teilst aktuell {{ userFiles?.length }} Dateien mit imgrio</p>
       </div>
       <div class="section__container-list">
-        <FileCard :file="file" v-for="file in userFiles" :key="file.id" />
+        <FileCard :userFile="file" v-for="file in userFiles" :key="file.id" />
       </div>
     </div>
 
