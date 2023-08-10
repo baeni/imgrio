@@ -47,7 +47,6 @@ onMounted(async () => {
 
 async function deleteFileAsync() {
   try {
-    toast.success('Datei wird gelöscht...');
     const response = (await apiClient.delete(`files/${userFile.value?.id}`)).data;
 
     router.back();
