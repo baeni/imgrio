@@ -4,7 +4,15 @@
       <h1>Meine Dateien</h1>
     </div>
 
-    <div v-if="userFiles.length != 0 && fetched">
+    <div class="section__container-status grid place-items-center" v-if="!fetched">
+      <Loading />
+    </div>
+
+    <div class="section__container-status" v-else-if="userFiles.length == 0">
+      <p>Du teilst aktuell keine Dateien mit imgrio. :[</p>
+    </div>
+
+    <div v-else>
       <div class="section__container-subtitle">
         <p>Du teilst aktuell {{ userFiles?.length }} Dateien mit imgrio</p>
       </div>
@@ -12,34 +20,29 @@
         <FileCard :userFile="file" v-for="file in userFiles" :key="file.id" />
       </div>
     </div>
-
-    <div class="section__container-status" v-if="userFiles.length == 0 && !fetched">
-      <p>Wir entstauben gerade all deine Dateien. Einen Moment noch!</p>
-    </div>
-
-    <div class="section__container-status" v-if="userFiles.length == 0 && fetched">
-      <p>Du teilst aktuell keine Dateien mit imgrio. :[</p>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, onMounted } from 'vue';
+import { computed, ref, reactive, onMounted } from 'vue';
 import { useUserFilesStore } from '@/stores/userFiles';
 
+import Loading from '../../components/Loading.vue';
 import FileCard from '../../components/FileCard.vue';
 import type { UserFile } from '@/models';
 
 const userFilesStore = useUserFilesStore();
 const userFilesData = reactive<{ userFiles: UserFile[] }>({ userFiles: [] });
 
-let fetched = false;
+const fetched = ref(false);
 
 onMounted(async () => {
   await userFilesStore.fetchUserFiles();
   userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
 
-  fetched = true;
+  setTimeout(() => {
+    fetched.value = true;
+  }, 2000);
 });
 
 const userFiles = computed(() => userFilesData.userFiles);
