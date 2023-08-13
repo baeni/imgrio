@@ -3,9 +3,6 @@
     <div class="card" :class="{ jump: animationPlaying }" @mouseenter="playAnimation()">
       <div class="card__container">
         <div class="card__container-image" :style="`background-image: url(${userFile.url})`"></div>
-        <div class="card__container-delete" @click.prevent="deleteFileAsync">
-          <p>Löschen</p>
-        </div>
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
@@ -52,16 +49,6 @@ function playAnimation() {
     animationPlaying.value = false;
   }, 300);
 }
-
-async function deleteFileAsync() {
-  try {
-    const response = (await apiClient.delete(`files/${(props.userFile as UserFile).id}`)).data;
-    toast.success('Datei wurde gelöscht.');
-  } catch {
-    toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
-    return;
-  }
-}
 </script>
 
 <style scoped>
@@ -86,28 +73,6 @@ async function deleteFileAsync() {
   min-width: 100%;
   background-size: cover;
   background-position: center;
-}
-
-.card__container-delete {
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  padding: 0.25rem 1rem 1.5rem 1rem;
-  display: flex;
-  font-size: 0.75rem;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.25s ease-in-out;
-}
-
-.card:hover .card__container-delete {
-  opacity: 0.9;
-  transition-delay: 1s;
-}
-
-.card__container-delete a {
-  text-shadow: #000 0 1px 10px;
 }
 
 .card__container-info {
