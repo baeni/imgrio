@@ -1,9 +1,9 @@
 <template>
   <div class="navbar section--padding">
     <div class="navbar__container">
-      <a class="navbar__container-brand" href="/">
+      <RouterLink class="navbar__container-brand" to="/">
         <img src="/logo.svg" alt="imgrio" />
-      </a>
+      </RouterLink>
       <div class="navbar__container-links">
         <RouterLink to="/sharex">ShareX</RouterLink>
         <RouterLink to="/dashboard">Dashboard</RouterLink>
