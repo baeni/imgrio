@@ -2,7 +2,7 @@
   <a :href="`/v/${userFile.id}`">
     <div class="card" :class="{ jump: animationPlaying }" @mouseenter="playAnimation()">
       <div class="card__container">
-        <div class="card__container-image" :style="`background-image: url(${userFile.url})`"></div>
+        <VLazyImage class="card__container-image" :src="userFile.url" loading="lazy" />
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
@@ -31,6 +31,7 @@ import { ref } from 'vue';
 import { apiClient } from '@/axios';
 import type { UserFile } from '@/models';
 import { useToast } from 'vue-toastification';
+import VLazyImage from 'v-lazy-image';
 
 const toast = useToast();
 
@@ -69,10 +70,17 @@ function playAnimation() {
 }
 
 .card__container-image {
-  min-height: 100%;
-  min-width: 100%;
-  background-size: cover;
-  background-position: center;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.v-lazy-image {
+  filter: blur(100px);
+  transition: filter 0.7s;
+}
+.v-lazy-image-loaded {
+  filter: blur(0);
 }
 
 .card__container-info {
