@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+    <div class="triangle triangle-up"></div>
+    <div class="triangle triangle-down"></div>
+    <div class="triangle triangle-right"></div>
   </div>
   <p>{{ getRandomLoadingMessage() }}</p>
 </template>
@@ -37,24 +37,46 @@ function getRandomLoadingMessage() {
 </script>
 
 <style scoped>
-.dot {
-  width: 10px;
-  height: 10px;
-  border: 2px solid white;
-  border-radius: 50%;
+.triangle {
+  width: 0;
+  height: 0;
   float: left;
-  margin: 0 5px;
   transform: scale(0);
-  animation: fx 1000ms ease infinite 0ms;
+  animation: fx 1.5s ease infinite;
 }
-.dot:nth-child(2) {
-  animation: fx 1000ms ease infinite 300ms;
+
+.triangle-up {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 17.32px solid white; /* (10 * sqrt(3) / 2) */
 }
-.dot:nth-child(3) {
-  animation: fx 1000ms ease infinite 600ms;
+
+.triangle-down {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 17.32px solid white; /* (10 * sqrt(3) / 2) */
 }
+
+.triangle-right {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 17.32px solid white; /* (10 * sqrt(3) / 2) */
+}
+
+.triangle:nth-child(1) {
+  animation-delay: 0.25s;
+}
+
+.triangle:nth-child(2) {
+  animation-delay: 0.75s;
+}
+
+.triangle:nth-child(3) {
+  animation-delay: 1.25s;
+}
+
 @keyframes fx {
-  50% {
+  12.5% {
     transform: scale(1);
     opacity: 1;
   }
@@ -62,6 +84,7 @@ function getRandomLoadingMessage() {
     opacity: 0;
   }
 }
+
 p {
   padding-top: 1.5rem;
   color: var(--color-light);
