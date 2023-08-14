@@ -40,9 +40,7 @@ onMounted(async () => {
   await userFilesStore.fetchUserFiles();
   userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
 
-  setTimeout(() => {
-    fetched.value = true;
-  }, 2000);
+  fetched.value = true;
 });
 
 const userFiles = computed(() => userFilesData.userFiles);
