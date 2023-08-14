@@ -40,7 +40,18 @@ onMounted(async () => {
   await userFilesStore.fetchUserFiles();
   userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
 
-  fetched.value = true;
+  var fetchedAmount = 0;
+
+  userFilesData.userFiles.forEach((userFile) => {
+    const image = new Image();
+    image.onload = function () {
+      fetchedAmount++;
+      if (fetchedAmount == userFiles.value.length) {
+        fetched.value = true;
+      }
+    };
+    image.src = userFile.url;
+  });
 });
 
 const userFiles = computed(() => userFilesData.userFiles);
