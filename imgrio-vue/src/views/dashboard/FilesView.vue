@@ -47,7 +47,9 @@ onMounted(async () => {
     image.onload = function () {
       fetchedAmount++;
       if (fetchedAmount == userFiles.value.length) {
-        fetched.value = true;
+        setTimeout(() => {
+          fetched.value = true;
+        }, 1250);
       }
     };
     image.src = userFile.url;
