@@ -20,6 +20,11 @@
       </div>
 
       <div class="section__container-form-input-group">
+        <label for="userId">UserID</label>
+        <TextField id="firstName" :value="userDetails.id" disabled />
+      </div>
+
+      <div class="section__container-form-input-group">
         <label for="imageAnimation">Bild-Animation</label>
         <Dropdown
           id="imageAnimation"
@@ -74,7 +79,6 @@
 import { computed } from 'vue';
 import { apiClient } from '@/axios';
 import { useUserDetailsStore } from '@/stores/userDetails';
-import type { User } from '@microsoft/microsoft-graph-types';
 import { useToast } from 'vue-toastification';
 
 import TextField from '@/components/inputs/TextField.vue';
