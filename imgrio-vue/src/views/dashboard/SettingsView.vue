@@ -36,7 +36,7 @@
           id="externalHost"
           :options="[
             { key: 'imgrio', value: false },
-            { key: 'Eeigener', value: true }
+            { key: 'Eigener', value: true }
           ]"
         />
       </div>
@@ -54,11 +54,7 @@
 
       <div class="section__container-form-input-group">
         <label for="firstName">Access Token</label>
-        <Knob
-          text="Neu generieren"
-          small
-          @click="() => toast.success('Neuer Token in Zwischenablage kopiert')"
-        />
+        <Knob text="Neu generieren" small @click="() => getPermanentJwtAsync()" />
       </div>
 
       <div class="section__container-form-button">
@@ -76,6 +72,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { apiClient } from '@/axios';
 import { useUserDetailsStore } from '@/stores/userDetails';
 import type { User } from '@microsoft/microsoft-graph-types';
 import { useToast } from 'vue-toastification';
@@ -87,7 +84,23 @@ import Knob from '@/components/inputs/Knob.vue';
 const toast = useToast();
 
 const userDetailsStore = useUserDetailsStore();
-const userDetails = computed(() => userDetailsStore.userDetails) as User;
+const userDetails = computed(() => userDetailsStore.userDetails);
+
+async function getPermanentJwtAsync() {
+  try {
+    const response = (await apiClient.get(`users/${userDetails.value.id}`)).data;
+
+    copyToClipboard(response);
+    toast.success('Neuer Token in Zwischenablage kopiert');
+  } catch {
+    toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
+    return;
+  }
+}
+
+function copyToClipboard(text: string) {
+  navigator.clipboard.writeText(text);
+}
 </script>
 
 <style scoped>
