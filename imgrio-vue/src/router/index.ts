@@ -4,6 +4,12 @@ import { registerGuard } from './Guard';
 import DefaultLayout from '../layouts/DefaultLayout.vue';
 import DashboardLayout from '../layouts/DashboardLayout.vue';
 
+import HomeView from '../views/HomeView.vue';
+import ShareXView from '../views/ShareXView.vue';
+import FilesView from '../views/dashboard/FilesView.vue';
+import FavoritesView from '../views/dashboard/FavoritesView.vue';
+import SettingsView from '../views/dashboard/SettingsView.vue';
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -13,11 +19,11 @@ const router = createRouter({
       children: [
         {
           path: '',
-          component: () => import('../views/HomeView.vue')
+          component: HomeView
         },
         {
           path: 'sharex',
-          component: () => import('../views/ShareXView.vue')
+          component: ShareXView
         },
         {
           path: '/v/:id',
@@ -32,11 +38,15 @@ const router = createRouter({
       children: [
         {
           path: 'files',
-          component: () => import('../views/dashboard/FilesView.vue')
+          component: FilesView
+        },
+        {
+          path: 'favorites',
+          component: FavoritesView
         },
         {
           path: 'settings',
-          component: () => import('../views/dashboard/SettingsView.vue')
+          component: SettingsView
         }
       ],
       meta: {
