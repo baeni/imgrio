@@ -27,11 +27,27 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
+import { useHead } from '@vueuse/head';
 import { apiClient } from '@/axios';
 import { useUserDetailsStore } from '@/stores/userDetails';
 import type { UserDetails, UserFile } from '@/models';
 import { useToast } from 'vue-toastification';
 import router from '@/router';
+
+useHead({
+  meta: [
+    {
+      name: 'og:image',
+      content:
+        'https://images.unsplash.com/photo-1691893310317-c2c0769f7b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80'
+    },
+    {
+      name: 'twitter:image',
+      content:
+        'https://images.unsplash.com/photo-1691893310317-c2c0769f7b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80'
+    }
+  ]
+});
 
 const userDetailsStore = useUserDetailsStore();
 
