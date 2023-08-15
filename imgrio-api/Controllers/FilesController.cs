@@ -4,7 +4,6 @@ using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace imgrio_api.Controllers
 {
@@ -21,6 +20,7 @@ namespace imgrio_api.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "PermanentJwtPolicy")]
     public class FilesController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
