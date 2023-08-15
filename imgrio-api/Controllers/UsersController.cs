@@ -57,7 +57,8 @@ namespace imgrio_api.Controllers
             var claims = new List<Claim>()
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, userId.ToString())
+                new(JwtRegisteredClaimNames.Sub, "baeni.saa@gmail.com"),
+                new("oid", userId.ToString()),
             };
 
             var dateNow = DateTime.UtcNow;
