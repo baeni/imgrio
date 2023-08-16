@@ -1,0 +1,25 @@
+﻿/*
+*	Was machst du denn hier? ;)
+*
+*	Naja, wenn du schon hier bist, noch mal ein Extra-Reminder für dich:
+*
+*	Denke unbedingt daran, den Platzhalter in der RequestURL sowie im Authorization-Header
+*	mit deinen individuellen Werten zu ersetzen!
+*
+*	Deine UserID kannst du auf https://imgrio.com/dashboard/settings einsehen.
+*	An der selben Stelle kannst du auch einen AccessToken generieren lassen. Gehe damit aber sorgfältig um!
+*/
+
+{
+  "Version": "15.0.0",
+  "Name": "imgrio (UserId & AccessToken ersetzen)",
+  "DestinationType": "ImageUploader, TextUploader, FileUploader",
+  "RequestMethod": "POST",
+  "RequestURL": "https://api.imgrio.com/files/users/<deine UserID>",
+  "Headers": {
+    "Authorization": "Bearer <dein Access Token>"
+  },
+  "Body": "MultipartFormData",
+  "FileFormName": "file",
+  "URL": "{json:url}"
+}

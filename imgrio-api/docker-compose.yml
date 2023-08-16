@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bennysaa/imgrio:api-0.1.0
+    container_name: imgrio-api
+    ports:
+      - 443:443
+    restart: always
+    volumes:
+      - data:/app/data
+volumes:
+  data:

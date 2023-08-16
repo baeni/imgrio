@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using imgrio_api.Data;
@@ -11,9 +12,11 @@ using imgrio_api.Data;
 namespace imgrio_api.Migrations
 {
     [DbContext(typeof(ImgrioDbContext))]
-    partial class ImgrioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230722153410_RenameTableUserFiles")]
+    partial class RenameTableUserFiles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,12 +31,6 @@ namespace imgrio_api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Author")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("DateOfCreation")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<bool>("IsSelfHosted")
                         .HasColumnType("boolean");
 
@@ -47,6 +44,12 @@ namespace imgrio_api.Migrations
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UploadedBy")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Url")
                         .IsRequired()

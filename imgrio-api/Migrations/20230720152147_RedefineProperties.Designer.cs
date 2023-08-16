@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using imgrio_api.Data;
@@ -11,9 +12,11 @@ using imgrio_api.Data;
 namespace imgrio_api.Migrations
 {
     [DbContext(typeof(ImgrioDbContext))]
-    partial class ImgrioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230720152147_RedefineProperties")]
+    partial class RedefineProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,17 +25,11 @@ namespace imgrio_api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("imgrio_api.Models.UserFile", b =>
+            modelBuilder.Entity("imgrio_api.Models.UploadedFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<Guid>("Author")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("DateOfCreation")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsSelfHosted")
                         .HasColumnType("boolean");
@@ -48,13 +45,18 @@ namespace imgrio_api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UploadedBy")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserFiles");
+                    b.ToTable("UploadedFiles");
                 });
 #pragma warning restore 612, 618
         }

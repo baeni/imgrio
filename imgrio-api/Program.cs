@@ -1,7 +1,11 @@
 using imgrio_api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace imgrio_api
 {
@@ -11,31 +15,52 @@ namespace imgrio_api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+            {
+                policy.SetIsOriginAllowed(origin => origin.Equals("imgrio.com") || origin.EndsWith(".imgrio.com") || origin.Contains(""))
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            }));
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+                .AddJwtBearer(options =>
+                {
+                    builder.Configuration.Bind("AzureAd", options);
+                    options.Authority = $"{builder.Configuration["AzureAd:Instance"]}{builder.Configuration["AzureAd:TenantId"]}/v2.0";
+                    
+                    options.TokenValidationParameters.ValidateIssuer = false;
+                })
+                .AddJwtBearer("PermanentJwtPolicy", options =>
+                {
+                    options.IncludeErrorDetails = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                    };
+                });
 
             var connectionString = builder.Configuration.GetConnectionString("Postgres");
             builder.Services.AddDbContext<ImgrioDbContext>(options => options.UseNpgsql(connectionString));
 
             builder.Services.AddControllers();
-
-            builder.Services.AddCors(options => options.AddDefaultPolicy(options =>
-            {
-                options.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
+            builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
 
             app.UseHttpsRedirection();
 
+            app.UseCors();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
-
-            app.UseCors();
 
             app.Run();
         }

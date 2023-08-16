@@ -1,15 +1,14 @@
-﻿using imgrio_api.Data;
+﻿using HeyRed.Mime;
+using imgrio_api.Data;
 using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Renci.SshNet;
-using Renci.SshNet.Async;
 
 namespace imgrio_api.Controllers
 {
     /*
-     * Endpoint to managa files:
+     * Endpoint to manage files:
      * - Get information about all files
      * - Get a single file by its ID
      * - Get multiple files by a UserID
@@ -21,25 +20,25 @@ namespace imgrio_api.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "PermanentJwtPolicy")]
     public class FilesController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
-        private readonly IConfiguration _configuration;
+        private readonly string _oidClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
 
-        public FilesController(ImgrioDbContext dbContext, IConfiguration configuration)
+        public FilesController(ImgrioDbContext dbContext)
         {
             _dbContext = dbContext;
-            _configuration = configuration;
         }
 
         [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetAllFilesInfoAsync()
         {
-            var set = _dbContext.Set<UploadedFile>();
+            var set = _dbContext.Set<UserFile>();
 
             var count = await set.CountAsync();
             var countToday = await set
-                .Select(x => x.UploadedAt.Day == DateTime.UtcNow.Day)
+                .Select(x => x.DateOfCreation.Day == DateTime.UtcNow.Day)
                 .CountAsync();
 
             return Ok(new {
@@ -49,9 +48,9 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("{id}"), AllowAnonymous]
-        public async Task<IActionResult> GetFileInfoByIdAsync(Guid id)
+        public async Task<IActionResult> GetFileByIdAsync(Guid id)
         {
-            var uploadedFile = await _dbContext.FindAsync<UploadedFile>(id);
+            var uploadedFile = await _dbContext.FindAsync<UserFile>(id);
 
             if (uploadedFile == null)
             {
@@ -62,10 +61,16 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("users/{userId}")]
-        public async Task<IActionResult> GetFilesInfoByUserIdAsync(Guid userId)
+        public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
         {
-            var uploadedFiles = await _dbContext.Set<UploadedFile>()
-                .Where(x => x.UploadedBy == userId).ToArrayAsync();
+            var oid = User.FindFirst(_oidClaim)?.Value;
+            if (oid == null || !Guid.Parse(oid).Equals(userId))
+            {
+                return Unauthorized();
+            }
+
+            var uploadedFiles = await _dbContext.Set<UserFile>()
+                .Where(x => x.Author == userId).ToArrayAsync();
 
             return Ok(uploadedFiles);
         }
@@ -73,17 +78,27 @@ namespace imgrio_api.Controllers
         [HttpPost("users/{userId}")]
         public async Task<IActionResult> PostFileByUserIdAsync(Guid userId, [FromForm] IFormFile file)
         {
-            var uploadedFile = new UploadedFile(
-                Guid.NewGuid(),
-                file.FileName,
-                file.ContentType,
-                file.Length,
-                DateTime.UtcNow,
-                userId,
-                false,
-                null);
+            var oid = User.FindFirst(_oidClaim)?.Value;
+            if (oid == null || !Guid.Parse(oid).Equals(userId))
+            {
+                return Unauthorized();
+            }
 
-            if (uploadedFile.IsExternal)
+            var fileType = file.ContentType;
+            var fileId = Guid.NewGuid();
+            var isUserSelfHosting = false;
+
+            var uploadedFile = new UserFile(
+                fileId,
+                userId,
+                Path.GetFileNameWithoutExtension(file.FileName),
+                fileType,
+                file.Length,
+                isUserSelfHosting ? "<notYetImplemented>" : $"https://data.imgrio.com/{userId}/{fileId}.{MimeTypesMap.GetExtension(fileType)}",
+                isUserSelfHosting,
+                DateTime.UtcNow);
+
+            if (uploadedFile.IsSelfHosted)
             {
                 #region save to user server
                 // TODO
@@ -93,20 +108,13 @@ namespace imgrio_api.Controllers
             else
             {
                 #region save to imgrio server
-                using var client = new SftpClient(
-                        _configuration.GetValue<string>("UploadServer:Host")!,
-                        _configuration.GetValue<string>("UploadServer:User")!,
-                        _configuration.GetValue<string>("UploadServer:Password")!);
-                client.Connect();
-
-                var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
-                if (!client.Exists(path))
+                var path = $"./data/{uploadedFile.Author}";
+                if (!Directory.Exists(path))
                 {
-                    client.CreateDirectory(path);
+                    Directory.CreateDirectory(path);
                 }
-                await client.UploadAsync(file.OpenReadStream(), $"{path}/{uploadedFile.NameWithExtension}");
-
-                client.Disconnect();
+                using var stream = new FileStream($"{path}/{uploadedFile}", FileMode.Create);
+                await file.CopyToAsync(stream);
                 #endregion
             }
 
@@ -115,17 +123,23 @@ namespace imgrio_api.Controllers
             await _dbContext.SaveChangesAsync();
             #endregion
 
-            return Ok($"Successfully posted file '{uploadedFile.Name}' for user with id: {userId}");
+            return Ok(new { userFile = uploadedFile , url = $"https://imgrio.com/v/{uploadedFile.Id}"});
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFileByIdAsync(Guid id)
         {
-            var uploadedFile = await _dbContext.FindAsync<UploadedFile>(id);
+            var uploadedFile = await _dbContext.FindAsync<UserFile>(id);
 
             if (uploadedFile == null)
             {
                 return NotFound();
+            }
+
+            var oid = User.FindFirst(_oidClaim)?.Value;
+            if (oid == null || !Guid.Parse(oid).Equals(uploadedFile.Author))
+            {
+                return Unauthorized();
             }
 
             #region delete from database
@@ -133,7 +147,7 @@ namespace imgrio_api.Controllers
             await _dbContext.SaveChangesAsync();
             #endregion
 
-            if (uploadedFile.IsExternal)
+            if (uploadedFile.IsSelfHosted)
             {
                 #region delete from user server
                 // TODO
@@ -143,26 +157,28 @@ namespace imgrio_api.Controllers
             else
             {
                 #region delete from imgrio server
-                using var client = new SftpClient(
-                    _configuration.GetValue<string>("UploadServer:Host")!,
-                    _configuration.GetValue<string>("UploadServer:User")!,
-                    _configuration.GetValue<string>("UploadServer:Password")!);
-                client.Connect();
-
-                var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
-                client.DeleteFile($"{path}/{uploadedFile.NameWithExtension}");
-
-                client.Disconnect();
+                var path = $"./data/{uploadedFile.Author}/{uploadedFile}";
+                if (!System.IO.File.Exists(path))
+                {
+                    return NotFound($"Could not find file with id: {id}");
+                }
+                System.IO.File.Delete(path);
                 #endregion
             }
 
             return Ok($"Deleted file with id: {id}");
         }
 
-       [HttpDelete("users/{userId}")]
+        [HttpDelete("users/{userId}")]
         public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
         {
-            var uploadedFiles = await _dbContext.Set<UploadedFile>().Where(x => x.UploadedBy == userId).ToArrayAsync();
+            var oid = User.FindFirst(_oidClaim)?.Value;
+            if (oid == null || !Guid.Parse(oid).Equals(userId))
+            {
+                return Unauthorized();
+            }
+
+            var uploadedFiles = await _dbContext.Set<UserFile>().Where(x => x.Author == userId).ToArrayAsync();
 
             if (uploadedFiles == null || uploadedFiles.Length <= 0)
             {
@@ -176,7 +192,7 @@ namespace imgrio_api.Controllers
 
             foreach (var uploadedFile in uploadedFiles)
             {
-                if (uploadedFile.IsExternal)
+                if (uploadedFile.IsSelfHosted)
                 {
                     #region delete from user server
                     // TODO
@@ -186,16 +202,12 @@ namespace imgrio_api.Controllers
                 else
                 {
                     #region delete from imgrio server
-                    using var client = new SftpClient(
-                        _configuration.GetValue<string>("UploadServer:Host")!,
-                        _configuration.GetValue<string>("UploadServer:User")!,
-                        _configuration.GetValue<string>("UploadServer:Password")!);
-                    client.Connect();
-
-                    var path = $"{_configuration.GetValue<string>("UploadServer:FilePath")!}{uploadedFile.UploadedBy}";
-                    client.DeleteFile($"{path}/{uploadedFile.NameWithExtension}");
-
-                    client.Disconnect();
+                    var path = $"./data/{uploadedFile.Author}/{uploadedFile}";
+                    if (!System.IO.File.Exists(path))
+                    {
+                        return NotFound($"Could not find file with id: {uploadedFile.Id}");
+                    }
+                    System.IO.File.Delete(path);
                     #endregion
                 }
             }
