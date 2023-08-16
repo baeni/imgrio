@@ -2,7 +2,10 @@
   <div class="section__container section--margin">
     <div class="section__title">
       <h1>Meine Dateien</h1>
-      <Knob text="Favoriten" href="./favorites" small />
+      <div>
+        <Knob text="Verlauf" href="./history" small />
+        <Knob text="Favoriten" href="./favorites" small />
+      </div>
     </div>
 
     <div class="section__container-status grid place-items-center" v-if="!fetched">
