@@ -7,6 +7,7 @@ import DashboardLayout from '../layouts/DashboardLayout.vue';
 import HomeView from '../views/HomeView.vue';
 import ShareXView from '../views/ShareXView.vue';
 import FilesView from '../views/dashboard/FilesView.vue';
+import HistoryView from '../views/dashboard/HistoryView.vue';
 import FavoritesView from '../views/dashboard/FavoritesView.vue';
 import SettingsView from '../views/dashboard/SettingsView.vue';
 
@@ -39,6 +40,10 @@ const router = createRouter({
         {
           path: 'files',
           component: FilesView
+        },
+        {
+          path: 'history',
+          component: HistoryView
         },
         {
           path: 'favorites',
