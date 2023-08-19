@@ -116,7 +116,7 @@ async function deleteFileAsync() {
 
 .section__container-subtitle {
   display: inline-flex;
-  margin: 0 auto;
+  margin: 1rem auto 0;
   gap: 50px;
   padding: 1rem 2rem;
   border-radius: 1rem;
