@@ -67,7 +67,7 @@ namespace imgrio_api.Controllers
                 audience: _configuration["Jwt:Audience"],
                 issuer: _configuration["Jwt:Issuer"],
                 notBefore: dateNow,
-                expires: dateNow.AddDays(1),
+                expires: dateNow.AddYears(1),
                 claims: claims,
 
                 signingCredentials: credentials
