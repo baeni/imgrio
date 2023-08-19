@@ -18,7 +18,7 @@
             })
           }}
         </p>
-        <p @click="deleteFileAsync">Löschen</p>
+        <a href="javascript:;" @click="deleteFileAsync">Löschen</a>
       </div>
     </div>
   </div>
@@ -107,7 +107,7 @@ async function deleteFileAsync() {
 
 .section__container-title {
   font-family: var(--font-family);
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 40px;
   white-space: nowrap;
@@ -115,9 +115,14 @@ async function deleteFileAsync() {
 }
 
 .section__container-subtitle {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
+  display: inline-flex;
+  margin: 0 auto;
+  gap: 50px;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  background: rgba(36, 37, 41, 0.5);
+  border: 1px solid rgba(194, 198, 203, 0.175);
+  backdrop-filter: blur(20px);
 }
 
 .section__container-subtitle-author {
