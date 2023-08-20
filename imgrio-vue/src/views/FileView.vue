@@ -1,5 +1,6 @@
 <template>
-  <div class="section gradient__bg" v-if="userFile">
+  <div class="section" v-if="userFile">
+    <img class="section-background" :src="userFile.url" />
     <div class="section__container section--padding">
       <div class="section__container-image">
         <img :src="userFile.url" />
@@ -76,6 +77,15 @@ async function deleteFileAsync() {
 <style scoped>
 .section {
   min-height: 100vh;
+  position: relative;
+}
+
+.section-background {
+  position: absolute;
+  object-fit: cover;
+  height: 100%;
+  filter: blur(200px);
+  z-index: -1;
 }
 
 .section__container {
