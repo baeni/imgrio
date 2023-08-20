@@ -1,7 +1,7 @@
 <template>
   <div class="section__container section--margin">
     <div class="section__title">
-      <h1>Favoriten</h1>
+      <h1>Verlauf</h1>
     </div>
   </div>
 </template>
