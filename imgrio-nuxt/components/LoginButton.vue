@@ -1,7 +1,7 @@
 <template>
   <Knob
     text="Anmelden"
-    @click="loginRedirect"
+    @click="signInUser"
     :small="small"
     :primary="primary"
     :transparent="transparent"
@@ -9,12 +9,9 @@
 </template>
 
 <script setup lang="ts">
-// import { useMsal } from '../composition-api/useMsal';
-// import { loginRequest } from '../authConfig';
+import { signInUser } from "../composables/useFirebase";
 
-import Knob from './inputs/Knob.vue'
-
-// const { instance } = useMsal();
+import Knob from "./inputs/Knob.vue";
 
 const props = defineProps({
   small: {
@@ -29,9 +26,5 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
-
-const loginRedirect = () => {
-  // instance.loginRedirect(loginRequest);
-}
+});
 </script>

@@ -90,6 +90,10 @@ import TextField from "@/components/inputs/TextField.vue";
 import Dropdown from "@/components/inputs/Dropdown.vue";
 import Knob from "@/components/inputs/Knob.vue";
 
+definePageMeta({
+  middleware: ["auth"],
+});
+
 // const toast = useToast()
 
 const userDetailsStore = useUserDetailsStore();

@@ -36,6 +36,10 @@ import Loading from "../../components/Loading.vue";
 import FileCard from "../../components/FileCard.vue";
 import type { UserFile } from "@/models";
 
+definePageMeta({
+  middleware: ["auth"],
+});
+
 const userFilesStore = useUserFilesStore();
 const userFilesData = reactive<{ userFiles: UserFile[] }>({ userFiles: [] });
 

@@ -1,7 +1,7 @@
 <template>
   <Knob
     text="Abmelden"
-    @click="logoutRedirect"
+    @click="signOutUser"
     :small="small"
     :primary="primary"
     :transparent="transparent"
@@ -9,11 +9,9 @@
 </template>
 
 <script setup lang="ts">
-// import { useMsal } from '../composition-api/useMsal';
+import { signOutUser } from "../composables/useFirebase";
 
-import Knob from './inputs/Knob.vue'
-
-// const { instance } = useMsal()
+import Knob from "./inputs/Knob.vue";
 
 const props = defineProps({
   small: {
@@ -28,9 +26,5 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
-
-const logoutRedirect = () => {
-  // instance.logoutRedirect()
-}
+});
 </script>

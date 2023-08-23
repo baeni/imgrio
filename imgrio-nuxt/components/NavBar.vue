@@ -9,9 +9,17 @@
         <NuxtLink to="/dashboard/files">Dashboard</NuxtLink>
       </div>
       <div class="navbar__container-sign">
-        <!-- <LogoutButton small transparent v-if="isAuthenticated" /> -->
-        <!-- <LoginButton small transparent v-else /> -->
-        <LoginButton small transparent />
+        <LogoutButton small transparent v-if="user" />
+        <NuxtLink to="/dashboard/settings" v-if="user">
+          <img
+            :src="
+              user.photoURL
+                ? user.photoURL
+                : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'
+            "
+          />
+        </NuxtLink>
+        <LoginButton small transparent v-else />
       </div>
       <div class="navbar__container-burger" @click="toggleMenu">
         <img src="../assets/icons/burger-open.svg" v-if="!isMenuActive" />
@@ -22,20 +30,20 @@
       <NuxtLink to="/sharex">ShareX</NuxtLink>
       <NuxtLink to="/dashboard/files">Dashboard</NuxtLink>
 
-      <!-- <LogoutButton small transparent v-if="isAuthenticated" /> -->
-      <!-- <LoginButton small transparent v-else /> -->
+      <LogoutButton small transparent v-if="user" />
+      <LoginButton small transparent v-else />
       <LoginButton small transparent />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import LoginButton from './LoginButton.vue';
-import LogoutButton from './LogoutButton.vue';
-// import { useIsAuthenticated } from '@/composition-api/useIsAuthenticated';
-import { ref } from 'vue';
+import { ref } from "vue";
 
-// const isAuthenticated = useIsAuthenticated()
+import LoginButton from "./LoginButton.vue";
+import LogoutButton from "./LogoutButton.vue";
+
+const user = useCurrentUser();
 
 const isMenuActive = ref(false);
 
@@ -69,7 +77,16 @@ function toggleMenu() {
 }
 
 .navbar__container-sign {
+  display: flex;
   text-align: right;
+  justify-content: right;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar__container-sign a img {
+  width: 2rem;
+  border-radius: 10px;
 }
 
 .navbar__container-brand,

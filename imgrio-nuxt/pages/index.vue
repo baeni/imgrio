@@ -9,24 +9,20 @@
       </div>
       <div class="secion__container-description">
         <p>
-          imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der vollumfängliche Zugriff
-          nur für ausgewählte Personen möglich.
+          imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der
+          vollumfängliche Zugriff nur für ausgewählte Personen möglich.
         </p>
       </div>
       <div class="secion__container-buttons">
         <Knob text="Los gehts" href="/sharex" />
-        <!-- <Knob
-          text="Dashboard"
-          href="/dashboard/files"
-          primary
-          v-if="isAuthenticated"
-        /> -->
-        <!-- <LoginButton primary v-else /> -->
-        <LoginButton primary />
+        <Knob text="Dashboard" href="/dashboard/files" primary v-if="user" />
+        <LoginButton primary v-else />
       </div>
       <div class="secion__container-statistics">
         <p>
-          <span class="secion__container-statistics--bold">{{ data.count }}</span>
+          <span class="secion__container-statistics--bold">{{
+            data.count
+          }}</span>
           Dateien sind aktuell dank imgrio im Umlauf!
         </p>
       </div>
@@ -35,18 +31,16 @@
 </template>
 
 <script setup lang="ts">
-// import { useIsAuthenticated } from '@/composition-api/useIsAuthenticated'
-import { reactive } from 'vue';
-// import { apiClient } from '@/axios'
+import { reactive } from "vue";
 
-import Knob from '@/components/inputs/Knob.vue';
-import LoginButton from '@/components/LoginButton.vue';
+import Knob from "@/components/inputs/Knob.vue";
+import LoginButton from "@/components/LoginButton.vue";
 
-// const isAuthenticated = useIsAuthenticated()
+const user = useCurrentUser();
 
 let data = reactive({
   count: 0,
-  countToday: 0
+  countToday: 0,
 });
 
 // const fetchData = async () => {
