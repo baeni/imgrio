@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  modules: ["@pinia/nuxt", "nuxt-vuefire"],
+  modules: ["@pinia/nuxt", "nuxt-vuefire", "@nuxtjs/i18n"],
 
   runtimeConfig: {
     public: {
@@ -21,5 +21,17 @@ export default defineNuxtConfig({
       measurementId: "G-WNEXEH32BG",
     },
     auth: true,
+  },
+
+  i18n: {
+    // https://i18n.nuxtjs.org/options-reference/
+    vueI18n: "./i18n.conf.ts",
+    detectBrowserLanguage: false, // temporarily disabled
+    locales: [
+      { code: "de", iso: "de", file: "de.json" },
+      { code: "en", iso: "en", file: "en.json" },
+    ],
+    langDir: "./locales",
+    strategy: "no_prefix",
   },
 });

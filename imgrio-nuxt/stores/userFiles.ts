@@ -2,21 +2,21 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 
 import type { UserFile } from "@/models";
-import { useUserDetailsStore } from "./userDetails";
-// import { apiClient } from '@/axios';
+import { apiClient } from "@/axios.config";
 
 export const useUserFilesStore = defineStore("userFilesStore", () => {
   const userFiles = ref<UserFile[]>();
 
   async function fetchUserFiles() {
-    const userDetailsStore = useUserDetailsStore();
+    const currentUser = useCurrentUser();
 
-    // userFiles.value = (
-    //   await apiClient.get(`files/users/${userDetailsStore.userDetails.id}`)
-    // ).data.sort(
-    //   (a: UserFile, b: UserFile) =>
-    //     new Date(b.dateOfCreation).getTime() - new Date(a.dateOfCreation).getTime()
-    // );
+    userFiles.value = (
+      await apiClient.get(`files/users/${currentUser.value?.uid}`)
+    ).data.sort(
+      (a: UserFile, b: UserFile) =>
+        new Date(b.dateOfCreation).getTime() -
+        new Date(a.dateOfCreation).getTime()
+    );
   }
 
   return { fetchUserFiles, userFiles };

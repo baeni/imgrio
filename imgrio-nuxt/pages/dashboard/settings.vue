@@ -6,22 +6,22 @@
     <!-- <form class="section__container-form" v-if="userDetails">
       <div class="section__container-form-input-group">
         <label for="firstName">Vorname</label>
-        <TextField id="firstName" :value="userDetails.givenName" disabled />
+        <Textfield id="firstName" :value="userDetails.givenName" disabled />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="lastName">Nachname</label>
-        <TextField id="lastName" :value="userDetails.surname" disabled />
+        <Textfield id="lastName" :value="userDetails.surname" disabled />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="email">Email</label>
-        <TextField id="email" :value="userDetails.mail" type="email" disabled />
+        <Textfield id="email" :value="userDetails.mail" type="email" disabled />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="userId">UserID</label>
-        <TextField id="firstName" :value="userDetails.id" disabled />
+        <Textfield id="firstName" :value="userDetails.id" disabled />
       </div>
 
       <div class="section__container-form-input-group">
@@ -83,10 +83,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 // import { apiClient } from '@/axios'
-import { useUserDetailsStore } from "@/stores/userDetails";
+// import { useUserDetailsStore } from "@/stores/userDetails";
 // import { useToast } from 'vue-toastification'
 
-import TextField from "@/components/inputs/TextField.vue";
+import Textfield from "@/components/inputs/Textfield.vue";
 import Dropdown from "@/components/inputs/Dropdown.vue";
 import Knob from "@/components/inputs/Knob.vue";
 
@@ -96,8 +96,8 @@ definePageMeta({
 
 // const toast = useToast()
 
-const userDetailsStore = useUserDetailsStore();
-const userDetails = computed(() => userDetailsStore.userDetails);
+// const userDetailsStore = useUserDetailsStore();
+// const userDetails = computed(() => userDetailsStore.userDetails);
 
 // async function getPermanentJwtAsync() {
 //   try {

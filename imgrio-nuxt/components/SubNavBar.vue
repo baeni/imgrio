@@ -2,22 +2,22 @@
   <div class="subnavbar section--padding">
     <div class="subnavbar__links">
       <div class="subnavbar__links-container">
-        <NuxtLink to="./files">Meine Dateien</NuxtLink>
+        <NuxtLink to="/dashboard/files">Meine Dateien</NuxtLink>
         <a href="javascript:;" @click="showModal = true">Datei Hochladen</a>
-        <NuxtLink to="./settings">Einstellungen</NuxtLink>
+        <NuxtLink to="/dashboard/settings">Einstellungen</NuxtLink>
       </div>
     </div>
   </div>
 
-  <!-- <UploadPopup v-show="showModal" @click="showModal = false" /> -->
+  <UploadPopup v-show="showModal" @click="showModal = false" />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-import UploadPopup from '../components/modals/UploadModal.vue'
+import UploadPopup from "../components/modals/UploadModal.vue";
 
-let showModal = ref(false)
+let showModal = ref(false);
 </script>
 
 <style scoped>

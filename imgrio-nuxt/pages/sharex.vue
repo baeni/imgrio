@@ -38,7 +38,7 @@
         zur folgenden Einstellung:
       </p>
 
-      <TextField
+      <Textfield
         class="my-7"
         value="Ziele > Benutzerdefinierte Uploader-Einstellungen..."
         disabled
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import TextField from '@/components/inputs/TextField.vue'
+import Textfield from "@/components/inputs/Textfield.vue";
 </script>
 
 <style scoped>

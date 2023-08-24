@@ -1,6 +1,6 @@
 <template>
   <Knob
-    text="Abmelden"
+    :text="$t('components.inputs.knob.signOut')"
     @click="signOutUser"
     :small="small"
     :primary="primary"

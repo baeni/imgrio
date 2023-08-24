@@ -1,0 +1,9 @@
+{
+  "pages": {
+    "index": {
+      "slogan": "Take. Give. Share",
+      "description": "imgrio is a platform for sharing files. Currently the fill access is limited to choosen users.",
+      "statistics": "files are currently being shared thanks to imgrio!"
+    }
+  }
+}

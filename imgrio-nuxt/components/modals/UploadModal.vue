@@ -2,7 +2,7 @@
   <div class="overlay" id="overlay">
     <div class="section__container" @click.stop>
       <div class="section__title">
-        <h1>Datei Hochladen</h1>
+        <h1>{{ $t("components.modals.uploadModal.title") }}</h1>
       </div>
 
       <form class="section__container-form">
@@ -12,10 +12,7 @@
           </div>
 
           <div class="section__container-form-drop-area-title">
-            <p>
-              Datei hierher ziehen <br />
-              oder auswählen
-            </p>
+            <p>{{ $t("components.modals.uploadModal.description") }}</p>
           </div>
 
           <div
@@ -46,61 +43,57 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { computed } from 'vue'
-// import { apiClient } from '@/axios';
-// import { useUserDetailsStore } from '@/stores/userDetails';
-// import { useUserFilesStore } from '@/stores/userFiles';
+import { ref } from "vue";
+import { apiClient } from "@/axios.config";
+import { useUserFilesStore } from "@/stores/userFiles";
 // import { useToast } from 'vue-toastification';
 
-import Knob from '../inputs/Knob.vue'
+import Knob from "../inputs/Knob.vue";
 
 // const toast = useToast()
-const selectedFile = ref<File | null>()
-
-// const userDetailsStore = useUserDetailsStore()
-// const userDetails = computed(() => userDetailsStore.userDetails)
-
-// const userFilesStore = useUserFilesStore()
+const selectedFile = ref<File | null>();
+const userFilesStore = useUserFilesStore();
 
 const handleFileChange = (event: Event) => {
-  const input = event.target as HTMLInputElement
+  const input = event.target as HTMLInputElement;
   if (input.files && input.files.length > 0) {
-    selectedFile.value = input.files[0]
+    selectedFile.value = input.files[0];
   }
-}
+};
 
 async function postFileAsync() {
   try {
     if (!selectedFile.value) {
       // toast.error('Du musst eine Datei auswählen!')
-      return
+      return;
     }
 
-    const formData = new FormData()
-    formData.append('file', selectedFile.value)
-    // const response = (
-    //   await apiClient.post(`files/users/${userDetails.value.id}`, formData)
-    // ).data
+    const currentUser = useCurrentUser();
 
-    closeModal()
-    // copyToClipboard(response.url)
+    const formData = new FormData();
+    formData.append("file", selectedFile.value);
+    const response = (
+      await apiClient.post(`files/users/${currentUser.value?.uid}`, formData)
+    ).data;
+
+    closeModal();
+    copyToClipboard(response.url);
     // toast.success('Link in Zwischenablage kopiert.')
 
-    // userFilesStore.userFiles?.unshift(response.userFile)
-    selectedFile.value = null
+    userFilesStore.userFiles?.unshift(response.userFile);
+    selectedFile.value = null;
   } catch {
     // toast.error('Ein Fehler ist aufgetreten, versuche es erneut.')
-    return
+    return;
   }
 }
 
 function closeModal() {
-  document.getElementById('overlay')?.click()
+  document.getElementById("overlay")?.click();
 }
 
 function copyToClipboard(url: string) {
-  navigator.clipboard.writeText(url)
+  navigator.clipboard.writeText(url);
 }
 </script>
 

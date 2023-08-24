@@ -1,6 +1,6 @@
 <template>
   <Knob
-    text="Anmelden"
+    :text="$t('components.inputs.knob.signIn')"
     @click="signInUser"
     :small="small"
     :primary="primary"

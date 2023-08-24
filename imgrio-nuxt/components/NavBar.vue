@@ -5,20 +5,14 @@
         <img src="/logo.svg" alt="imgrio" />
       </NuxtLink>
       <div class="navbar__container-links">
-        <NuxtLink to="/sharex">ShareX</NuxtLink>
-        <NuxtLink to="/dashboard/files">Dashboard</NuxtLink>
+        <NuxtLink to="/sharex">{{ $t("pages.sharex.title") }}</NuxtLink>
+        <NuxtLink to="/dashboard/files">{{
+          $t("pages.dashboard.title")
+        }}</NuxtLink>
       </div>
       <div class="navbar__container-sign">
         <LogoutButton small transparent v-if="user" />
-        <NuxtLink to="/dashboard/settings" v-if="user">
-          <img
-            :src="
-              user.photoURL
-                ? user.photoURL
-                : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'
-            "
-          />
-        </NuxtLink>
+        <Avatar :user="user" v-if="user" />
         <LoginButton small transparent v-else />
       </div>
       <div class="navbar__container-burger" @click="toggleMenu">
@@ -27,8 +21,10 @@
       </div>
     </div>
     <div class="navbar__menu" v-if="isMenuActive">
-      <NuxtLink to="/sharex">ShareX</NuxtLink>
-      <NuxtLink to="/dashboard/files">Dashboard</NuxtLink>
+      <NuxtLink to="/sharex">{{ $t("pages.sharex.title") }}</NuxtLink>
+      <NuxtLink to="/dashboard/files">{{
+        $t("pages.dashboard.title")
+      }}</NuxtLink>
 
       <LogoutButton small transparent v-if="user" />
       <LoginButton small transparent v-else />
@@ -42,6 +38,7 @@ import { ref } from "vue";
 
 import LoginButton from "./LoginButton.vue";
 import LogoutButton from "./LogoutButton.vue";
+import Avatar from "./Avatar.vue";
 
 const user = useCurrentUser();
 
@@ -82,11 +79,6 @@ function toggleMenu() {
   justify-content: right;
   align-items: center;
   gap: 10px;
-}
-
-.navbar__container-sign a img {
-  width: 2rem;
-  border-radius: 10px;
 }
 
 .navbar__container-brand,

@@ -3,19 +3,24 @@
     <div class="secion__container">
       <div class="secion__container-slogan">
         <p>
-          Take. Give.
-          <span class="secion__container-slogan--accent">Share.</span>
+          {{ $t("pages.index.slogan") }}
+          <!-- Take. Give.
+          <span class="secion__container-slogan--accent">Share.</span> -->
         </p>
       </div>
       <div class="secion__container-description">
         <p>
-          imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der
-          vollumfängliche Zugriff nur für ausgewählte Personen möglich.
+          {{ $t("pages.index.description") }}
         </p>
       </div>
       <div class="secion__container-buttons">
-        <Knob text="Los gehts" href="/sharex" />
-        <Knob text="Dashboard" href="/dashboard/files" primary v-if="user" />
+        <Knob :text="$t('components.inputs.knob.go')" href="/sharex" />
+        <Knob
+          :text="$t('components.inputs.knob.dashboard')"
+          href="/dashboard/files"
+          primary
+          v-if="user"
+        />
         <LoginButton primary v-else />
       </div>
       <div class="secion__container-statistics">
@@ -23,7 +28,7 @@
           <span class="secion__container-statistics--bold">{{
             data.count
           }}</span>
-          Dateien sind aktuell dank imgrio im Umlauf!
+          {{ $t("pages.index.statistics") }}
         </p>
       </div>
     </div>
@@ -32,6 +37,7 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
+import { apiClient } from "@/axios.config";
 
 import Knob from "@/components/inputs/Knob.vue";
 import LoginButton from "@/components/LoginButton.vue";
@@ -43,17 +49,17 @@ let data = reactive({
   countToday: 0,
 });
 
-// const fetchData = async () => {
-//   try {
-//     const response = (await apiClient.get('files')).data
-//     data.count = response.count
-//     data.countToday = response.countToday
-//   } catch (error) {
-//     console.error('An error occurred while attempting to fetch data:', error)
-//   }
-// }
+const fetchData = async () => {
+  try {
+    const response = (await apiClient.get("files")).data;
+    data.count = response.count;
+    data.countToday = response.countToday;
+  } catch (error) {
+    console.error("An error occurred while attempting to fetch data:", error);
+  }
+};
 
-// fetchData()
+fetchData();
 </script>
 
 <style scoped>

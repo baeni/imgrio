@@ -9,13 +9,13 @@ const props = defineProps({
   },
   type: {
     type: String,
-    default: 'text',
+    default: "text",
   },
   disabled: {
     type: Boolean,
     default: false,
   },
-})
+});
 </script>
 
 <style scoped>
