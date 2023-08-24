@@ -12,7 +12,7 @@
             <p>
               {{
                 userFile.title.length > 17
-                  ? userFile.title.substring(0, 15).concat('...')
+                  ? userFile.title.substring(0, 15).concat("...")
                   : userFile.title
               }}
             </p>
@@ -37,29 +37,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 // import { useToast } from 'vue-toastification';
 
 // const toast = useToast();
 
-const animationPlaying = ref(false)
+const animationPlaying = ref(false);
 
 const props = defineProps({
   userFile: {
     type: Object,
     required: true,
   },
-})
+});
 
 function playAnimation() {
-  animationPlaying.value = true
+  animationPlaying.value = true;
   setTimeout(() => {
-    animationPlaying.value = false
-  }, 300)
+    animationPlaying.value = false;
+  }, 300);
 }
 
 function copyToClipboard(text: string) {
-  navigator.clipboard.writeText(text)
+  navigator.clipboard.writeText(text);
   // toast.success('Link in Zwischenablage kopiert.')
 }
 </script>
