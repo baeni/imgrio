@@ -31,16 +31,33 @@ namespace imgrio_api
                     
                     options.TokenValidationParameters.ValidateIssuer = false;
                 })
+                .AddJwtBearer("FirebaseJwtPolicy", options =>
+                {
+                    options.IncludeErrorDetails = true;
+                    options.Authority = "https://securetoken.google.com/imgrio-b1ddc";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://securetoken.google.com/imgrio-b1ddc",
+
+                        ValidateAudience = true,
+                        ValidAudience = "imgrio-b1ddc",
+
+                        ValidateLifetime = true
+                    };
+                })
                 .AddJwtBearer("PermanentJwtPolicy", options =>
                 {
                     options.IncludeErrorDetails = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+                        ValidateAudience = true,
                         ValidAudience = builder.Configuration["Jwt:Audience"],
+
+                        ValidateLifetime = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
                     };
                 });
