@@ -3,25 +3,20 @@
     <div class="section__title">
       <h1>Einstellungen</h1>
     </div>
-    <!-- <form class="section__container-form" v-if="userDetails">
+    <form class="section__container-form" v-if="user">
       <div class="section__container-form-input-group">
-        <label for="firstName">Vorname</label>
-        <Textfield id="firstName" :value="userDetails.givenName" disabled />
-      </div>
-
-      <div class="section__container-form-input-group">
-        <label for="lastName">Nachname</label>
-        <Textfield id="lastName" :value="userDetails.surname" disabled />
+        <label for="userName">Nutzername</label>
+        <Textfield id="userName" :value="user.displayName" disabled />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="email">Email</label>
-        <Textfield id="email" :value="userDetails.mail" type="email" disabled />
+        <Textfield id="email" :value="user.email" type="email" disabled />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="userId">UserID</label>
-        <Textfield id="firstName" :value="userDetails.id" disabled />
+        <Textfield id="userId" :value="user.uid" disabled />
       </div>
 
       <div class="section__container-form-input-group">
@@ -58,7 +53,7 @@
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="firstName">Access Token</label>
+        <label>Access Token</label>
         <Knob
           text="Neu generieren"
           small
@@ -67,23 +62,30 @@
       </div>
 
       <div class="section__container-form-button">
-        <Knob
+        <!-- <Knob
           text="Änderungen speichern"
           small
           transparent
           @click="() => toast.success('Änderungen gespeichert.')"
+        /> -->
+        <Knob
+          text="Änderungen speichern"
+          small
+          transparent
         />
       </div>
-    </form> -->
-    <!-- <div class="section__container-loading" v-else>Lädt ...</div> -->
-    <div class="section__container-loading">Lädt ...</div>
+    </form>
+    <div
+      class="section__container-loading grid place-items-center"
+      v-else
+    >
+      <Loading />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-// import { apiClient } from '@/axios'
-// import { useUserDetailsStore } from "@/stores/userDetails";
+import { apiClient } from '@/axios.conf'
 // import { useToast } from 'vue-toastification'
 
 import Textfield from "@/components/inputs/Textfield.vue";
@@ -94,22 +96,21 @@ definePageMeta({
   middleware: ["auth"],
 });
 
+const user = useCurrentUser();
+const locale = useI18n();
 // const toast = useToast()
 
-// const userDetailsStore = useUserDetailsStore();
-// const userDetails = computed(() => userDetailsStore.userDetails);
+async function getPermanentJwtAsync() {
+  try {
+    const response = (await apiClient.get(`users/${user.value?.uid}`)).data
 
-// async function getPermanentJwtAsync() {
-//   try {
-//     const response = (await apiClient.get(`users/${userDetails.value.id}`)).data
-
-//     copyToClipboard(response)
-//     toast.success('Neuer Token in Zwischenablage kopiert')
-//   } catch {
-//     toast.error('Ein Fehler ist aufgetreten, versuche es erneut.')
-//     return
-//   }
-// }
+    copyToClipboard(response)
+    // toast.success('Neuer Token in Zwischenablage kopiert')
+  } catch {
+    // toast.error('Ein Fehler ist aufgetreten, versuche es erneut.')
+    return
+  }
+}
 
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
