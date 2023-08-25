@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
-import { apiClient } from "@/axios.config";
+import { apiClient } from "@/axios.conf";
 
 import Knob from "@/components/inputs/Knob.vue";
 import LoginButton from "@/components/LoginButton.vue";

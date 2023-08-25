@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 
 import type { UserFile } from "@/models";
-import { apiClient } from "@/axios.config";
+import { apiClient } from "@/axios.conf";
 
 export const useUserFilesStore = defineStore("userFilesStore", () => {
   const userFiles = ref<UserFile[]>();

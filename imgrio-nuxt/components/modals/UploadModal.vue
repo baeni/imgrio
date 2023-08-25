@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { apiClient } from "@/axios.config";
+import { apiClient } from "@/axios.conf";
 import { useUserFilesStore } from "@/stores/userFiles";
 // import { useToast } from 'vue-toastification';
 
