@@ -2,6 +2,14 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
+  css: ["@/assets/main.css", "@fortawesome/fontawesome-svg-core/styles.css"],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
+
   modules: ["@pinia/nuxt", "nuxt-vuefire", "@nuxtjs/i18n"],
 
   runtimeConfig: {
