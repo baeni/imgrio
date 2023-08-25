@@ -21,8 +21,8 @@
     "inputs": {
       "dropdown": {},
       "knob": {
-        "signIn": "Anmelden",
-        "signOut": "Abmelden",
+        "signIn": "Login",
+        "signOut": "Logout",
         "sharex": "ShareX",
         "dashboard": "Dashboard",
         "go": "Los gehts"
