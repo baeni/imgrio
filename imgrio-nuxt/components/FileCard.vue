@@ -34,9 +34,9 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-// import { useToast } from 'vue-toastification';
+import { useToast } from "vue-toastification";
 
-// const toast = useToast();
+const toast = useToast();
 
 const animationPlaying = ref(false);
 
@@ -56,7 +56,7 @@ function playAnimation() {
 
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
-  // toast.success('Link in Zwischenablage kopiert.')
+  toast.success("Link in Zwischenablage kopiert.");
 }
 </script>
 

@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   },
 
   modules: ["@pinia/nuxt", "nuxt-vuefire", "@nuxtjs/i18n"],
+  build: { transpile: ["vue-toastification"] },
 
   runtimeConfig: {
     public: {

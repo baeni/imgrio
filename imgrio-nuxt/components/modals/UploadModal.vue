@@ -46,11 +46,12 @@
 import { ref } from "vue";
 import { apiClient } from "@/axios.conf";
 import { useUserFilesStore } from "@/stores/userFiles";
-// import { useToast } from 'vue-toastification';
+import { useToast } from "vue-toastification";
 
 import Knob from "../inputs/Knob.vue";
 
-// const toast = useToast()
+const toast = useToast();
+
 const selectedFile = ref<File | null>();
 const userFilesStore = useUserFilesStore();
 
@@ -64,7 +65,7 @@ const handleFileChange = (event: Event) => {
 async function postFileAsync() {
   try {
     if (!selectedFile.value) {
-      // toast.error('Du musst eine Datei auswählen!')
+      toast.error("Du musst eine Datei auswählen!");
       return;
     }
 
@@ -78,12 +79,12 @@ async function postFileAsync() {
 
     closeModal();
     copyToClipboard(response.url);
-    // toast.success('Link in Zwischenablage kopiert.')
+    toast.success("Link in Zwischenablage kopiert.");
 
     userFilesStore.userFiles?.unshift(response.userFile);
     selectedFile.value = null;
   } catch {
-    // toast.error('Ein Fehler ist aufgetreten, versuche es erneut.')
+    toast.error("Ein Fehler ist aufgetreten, versuche es erneut.");
     return;
   }
 }
