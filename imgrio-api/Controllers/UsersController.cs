@@ -18,7 +18,7 @@ namespace imgrio_api.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
-    [Authorize(AuthenticationSchemes = "FirebaseJwtPolicy")]
+    [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
     public class UsersController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
