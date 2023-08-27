@@ -79,7 +79,6 @@
 
 <script setup lang="ts">
 import { apiClient } from "@/axios.conf";
-import { getAuth } from "firebase/auth";
 // import { useToast } from 'vue-toastification'
 
 import Textfield from "@/components/inputs/Textfield.vue";
@@ -90,17 +89,17 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const user = getAuth().currentUser;
+const user = useCurrentUser();
 const locale = useI18n();
 // const toast = useToast()
 
 async function getPermanentJwtAsync() {
-  if (!user) {
+  if (!user.value) {
     return new Error("Not authenticated");
   }
 
   try {
-    const response = (await apiClient.get(`users/${user.uid}`)).data;
+    const response = (await apiClient.get(`users/${user.value.uid}`)).data;
 
     copyToClipboard(response);
     // toast.success('Neuer Token in Zwischenablage kopiert')

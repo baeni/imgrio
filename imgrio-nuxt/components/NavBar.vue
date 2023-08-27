@@ -37,13 +37,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { getAuth } from "firebase/auth";
 
 import LoginButton from "./LoginButton.vue";
 import LogoutButton from "./LogoutButton.vue";
 import Avatar from "./Avatar.vue";
 
-const user = getAuth().currentUser;
+const user = useCurrentUser();
 
 const isMenuActive = ref(false);
 

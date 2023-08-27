@@ -1,5 +1,4 @@
 // https://firebase.google.com/docs/auth/web/start
-
 import {
   getAuth,
   GoogleAuthProvider,
@@ -7,14 +6,12 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { useRouter } from "vue-router";
 
 export const signInUser = async () => {
   const auth = getAuth();
   auth.useDeviceLanguage();
 
   const provider = new GoogleAuthProvider();
-  // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
   provider.setCustomParameters({
     prompt: "select_account",
   });
@@ -46,13 +43,16 @@ export const signOutUser = async () => {
 
 export const initUser = async () => {
   const auth = getAuth();
-  const router = useRouter();
+  const userRef = useCurrentUser();
+  userRef.value = auth.currentUser;
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      router.push("/dashboard/files");
+  onAuthStateChanged(auth, () => {
+    if (auth.currentUser) {
+      console.log("auth state changed -> authed");
     } else {
-      router.push("/");
+      console.log("auth state changed -> unauthed");
     }
+
+    userRef.value = auth.currentUser;
   });
 };

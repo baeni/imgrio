@@ -38,12 +38,11 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { apiClient } from "@/axios.conf";
-import { getAuth } from "firebase/auth";
 
 import Knob from "@/components/inputs/Knob.vue";
 import LoginButton from "@/components/LoginButton.vue";
 
-const user = getAuth().currentUser;
+const user = useCurrentUser();
 
 let data = reactive({
   count: 0,
