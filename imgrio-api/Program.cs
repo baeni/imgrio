@@ -31,17 +31,17 @@ namespace imgrio_api
                     
                     options.TokenValidationParameters.ValidateIssuer = false;
                 })
-                .AddJwtBearer("FirebaseJwtPolicy", options =>
+                .AddJwtBearer("SupabaseJwtPolicy", options =>
                 {
                     options.IncludeErrorDetails = true;
-                    options.Authority = "https://securetoken.google.com/imgrio-b1ddc";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/imgrio-b1ddc",
+                        ValidIssuer = "https://zaueriqlkxufzmvvzynq.supabase.co/auth/v1",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("")),
 
                         ValidateAudience = true,
-                        ValidAudience = "imgrio-b1ddc",
+                        ValidAudience = "authenticated",
 
                         ValidateLifetime = true
                     };
