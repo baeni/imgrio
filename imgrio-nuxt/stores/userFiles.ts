@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { getAuth } from "firebase/auth";
 import { defineStore } from "pinia";
 
 import type { UserFile } from "@/models";
@@ -8,10 +9,14 @@ export const useUserFilesStore = defineStore("userFilesStore", () => {
   const userFiles = ref<UserFile[]>();
 
   async function fetchUserFiles() {
-    const currentUser = useCurrentUser();
+    const currentUser = getAuth().currentUser;
+
+    if (!currentUser) {
+      return new Error("Not authenticated");
+    }
 
     userFiles.value = (
-      await apiClient.get(`files/users/${currentUser.value?.uid}`)
+      await apiClient.get(`files/users/${currentUser.uid}`)
     ).data.sort(
       (a: UserFile, b: UserFile) =>
         new Date(b.dateOfCreation).getTime() -
