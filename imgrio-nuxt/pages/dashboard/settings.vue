@@ -68,24 +68,18 @@
           transparent
           @click="() => toast.success('Änderungen gespeichert.')"
         /> -->
-        <Knob
-          text="Änderungen speichern"
-          small
-          transparent
-        />
+        <Knob text="Änderungen speichern" small transparent />
       </div>
     </form>
-    <div
-      class="section__container-loading grid place-items-center"
-      v-else
-    >
+    <div class="section__container-loading grid place-items-center" v-else>
       <Loading />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { apiClient } from '@/axios.conf'
+import { apiClient } from "@/axios.conf";
+import { getAuth } from "firebase/auth";
 // import { useToast } from 'vue-toastification'
 
 import Textfield from "@/components/inputs/Textfield.vue";
@@ -96,19 +90,23 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const user = useCurrentUser();
+const user = getAuth().currentUser;
 const locale = useI18n();
 // const toast = useToast()
 
 async function getPermanentJwtAsync() {
-  try {
-    const response = (await apiClient.get(`users/${user.value?.uid}`)).data
+  if (!user) {
+    return new Error("Not authenticated");
+  }
 
-    copyToClipboard(response)
+  try {
+    const response = (await apiClient.get(`users/${user.uid}`)).data;
+
+    copyToClipboard(response);
     // toast.success('Neuer Token in Zwischenablage kopiert')
   } catch {
     // toast.error('Ein Fehler ist aufgetreten, versuche es erneut.')
-    return
+    return;
   }
 }
 
