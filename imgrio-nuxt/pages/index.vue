@@ -42,7 +42,7 @@ import { apiClient } from "@/axios.conf";
 import Knob from "@/components/inputs/Knob.vue";
 import LoginButton from "@/components/LoginButton.vue";
 
-const user = useCurrentUser();
+const user = useSupabaseUser();
 
 let data = reactive({
   count: 0,

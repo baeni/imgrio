@@ -42,7 +42,7 @@ import LoginButton from "./LoginButton.vue";
 import LogoutButton from "./LogoutButton.vue";
 import Avatar from "./Avatar.vue";
 
-const user = useCurrentUser();
+const user = useSupabaseUser();
 
 const isMenuActive = ref(false);
 

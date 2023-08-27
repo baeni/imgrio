@@ -6,7 +6,11 @@
     <form class="section__container-form" v-if="user">
       <div class="section__container-form-input-group">
         <label for="userName">Nutzername</label>
-        <Textfield id="userName" :value="user.displayName" disabled />
+        <Textfield
+          id="userName"
+          :value="user.user_metadata.full_name"
+          disabled
+        />
       </div>
 
       <div class="section__container-form-input-group">
@@ -16,7 +20,7 @@
 
       <div class="section__container-form-input-group">
         <label for="userId">UserID</label>
-        <Textfield id="userId" :value="user.uid" disabled />
+        <Textfield id="userId" :value="user.id" disabled />
       </div>
 
       <div class="section__container-form-input-group">
@@ -89,17 +93,17 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const user = useCurrentUser();
+const user = useSupabaseUser();
 const locale = useI18n();
 // const toast = useToast()
 
 async function getPermanentJwtAsync() {
-  if (!user.value) {
+  if (!user) {
     return new Error("Not authenticated");
   }
 
   try {
-    const response = (await apiClient.get(`users/${user.value.uid}`)).data;
+    const response = (await apiClient.get(`users/${user.uid}`)).data;
 
     copyToClipboard(response);
     // toast.success('Neuer Token in Zwischenablage kopiert')

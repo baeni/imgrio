@@ -8,14 +8,14 @@ export const useUserFilesStore = defineStore("userFilesStore", () => {
   const userFiles = ref<UserFile[]>();
 
   async function fetchUserFiles() {
-    const user = useUser().value;
+    const user = useSupabaseUser();
 
     if (!user) {
       return new Error("Not authenticated");
     }
 
     userFiles.value = (
-      await apiClient.get(`files/users/${user.uid}`)
+      await apiClient.get(`files/users/${user.value.id}`)
     ).data.sort(
       (a: UserFile, b: UserFile) =>
         new Date(b.dateOfCreation).getTime() -

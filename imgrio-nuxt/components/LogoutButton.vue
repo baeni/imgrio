@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { signOutUser } from "../composables/useFirebase";
+import { signOutUser } from "../composables/useSupabase";
 
 import Knob from "./inputs/Knob.vue";
 

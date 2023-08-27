@@ -1,20 +1,19 @@
 import axios from "axios";
-import { getAuth } from "firebase/auth";
 
 const apiClient = axios.create({
   baseURL: "https://api.imgrio.com",
 });
 
 apiClient.interceptors.request.use(async (config) => {
-  const currentUser = getAuth().currentUser;
+  const supabase = useSupabaseClient();
 
-  if (!currentUser) {
+  const token = (await supabase.auth.getSession()).data.session?.access_token;
+
+  if (!token) {
     return config;
   }
 
   try {
-    const token = await currentUser.getIdToken();
-
     config.headers.Authorization = `Bearer ${token}`;
     return config;
   } catch (error) {

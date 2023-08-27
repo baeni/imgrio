@@ -69,7 +69,7 @@ async function postFileAsync() {
       return;
     }
 
-    const currentUser = useCurrentUser();
+    const currentUser = useSupabaseUser();
 
     const formData = new FormData();
     formData.append("file", selectedFile.value);
