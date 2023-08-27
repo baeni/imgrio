@@ -10,6 +10,7 @@ apiClient.interceptors.request.use(
     const currentUser = getAuth().currentUser;
 
     if (!currentUser) {
+      console.log("Nobody");
       return config;
     }
 
@@ -17,11 +18,11 @@ apiClient.interceptors.request.use(
       const token = await currentUser.getIdToken();
 
       config.headers.Authorization = `Bearer ${token}`;
+      return config;
     } catch (error) {
       console.error(error);
+      return Promise.reject(error);
     }
-
-    return config;
   },
   (error) => Promise.reject(error)
 );
