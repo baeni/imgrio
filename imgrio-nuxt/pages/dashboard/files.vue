@@ -10,7 +10,7 @@
 
     <div
       class="section__container-status grid place-items-center"
-      v-if="!fetched"
+      v-if="!userFiles"
     >
       <Loading />
     </div>
@@ -41,26 +41,13 @@ definePageMeta({
 });
 
 const userFilesStore = useUserFilesStore();
-const userFilesData = reactive<{ userFiles: UserFile[] }>({ userFiles: [] });
-
-const fetched = ref(false);
+const userFilesData = reactive<{ userFiles: UserFile[] | null }>({
+  userFiles: null,
+});
 
 onMounted(async () => {
   await userFilesStore.fetchUserFiles();
   userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
-
-  var fetchedAmount = 0;
-
-  userFilesData.userFiles.forEach((userFile) => {
-    const image = new Image();
-    image.onload = function () {
-      fetchedAmount++;
-      if (fetchedAmount == userFiles.value.length) {
-        fetched.value = true;
-      }
-    };
-    image.src = userFile.url;
-  });
 });
 
 const userFiles = computed(() => userFilesData.userFiles);
