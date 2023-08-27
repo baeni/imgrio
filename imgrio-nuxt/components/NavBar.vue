@@ -11,8 +11,10 @@
         }}</NuxtLink>
       </div>
       <div class="navbar__container-sign">
-        <LogoutButton small transparent v-if="user" />
-        <Avatar :user="user" v-if="user" />
+        <div v-if="user">
+          <LogoutButton small transparent />
+          <Avatar :user="user" />
+        </div>
         <LoginButton small transparent v-else />
       </div>
       <div class="navbar__container-burger" @click="toggleMenu">
@@ -35,12 +37,13 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { getAuth } from "firebase/auth";
 
 import LoginButton from "./LoginButton.vue";
 import LogoutButton from "./LogoutButton.vue";
 import Avatar from "./Avatar.vue";
 
-const user = useCurrentUser();
+const user = getAuth().currentUser;
 
 const isMenuActive = ref(false);
 
@@ -73,7 +76,8 @@ function toggleMenu() {
   width: 3.5rem;
 }
 
-.navbar__container-sign {
+.navbar__container-sign,
+.navbar__container-sign div {
   display: flex;
   text-align: right;
   justify-content: right;
