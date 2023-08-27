@@ -9,7 +9,6 @@ apiClient.interceptors.request.use(async (config) => {
   const currentUser = getAuth().currentUser;
 
   if (!currentUser) {
-    console.log("Nobody");
     return config;
   }
 
