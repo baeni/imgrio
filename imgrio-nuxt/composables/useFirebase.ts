@@ -7,6 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
+import { useRouter } from "vue-router";
 
 export const signInUser = async () => {
   const auth = getAuth();
@@ -15,7 +16,7 @@ export const signInUser = async () => {
   const provider = new GoogleAuthProvider();
   // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
   provider.setCustomParameters({
-    prompt: 'select_account'
+    prompt: "select_account",
   });
 
   signInWithPopup(auth, provider)
@@ -45,13 +46,13 @@ export const signOutUser = async () => {
 
 export const initUser = async () => {
   const auth = getAuth();
+  const router = useRouter();
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const uid = user.uid;
-      console.log(`It seems, user with id ${uid} signed in.`);
+      router.push("/dashboard/files");
     } else {
-      console.log("It seems, the user signed out.");
+      router.push("/");
     }
   });
 };
