@@ -17,7 +17,6 @@ namespace imgrio_api.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    [Authorize(AuthenticationSchemes = "Bearer")]
     [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
     public class UsersController : ControllerBase
     {
