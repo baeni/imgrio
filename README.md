@@ -81,4 +81,4 @@ Congratulations! - The imgrio-api is now running and accessible from https://api
 
 ## imgrio-nuxt
 
-For Nuxt, the only thing to keep in mind that as the authentication is handles through firebase, the application needs to include a "firebase.json" file. This file has to contain the service-account-credentials which can be obtained from within the firebase console at Settings > Service Accounts.
+For Nuxt, the only thing to keep in mind is that the environment running the application has to have an environment variable called "SITE_URL" including the url to redirect to after a successfull authentication. This is only necessary when the url should NOT be "https://imgrio.com". This is useful to allow authentication to work properly in dev or beta environments.
