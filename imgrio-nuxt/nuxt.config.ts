@@ -14,7 +14,9 @@ export default defineNuxtConfig({
   build: { transpile: ["vue-toastification"] },
 
   runtimeConfig: {
-    public: {},
+    public: {
+      siteUrl: process.env.SITE_URL,
+    },
   },
 
   i18n: {
@@ -32,8 +34,8 @@ export default defineNuxtConfig({
   supabase: {
     redirectOptions: {
       login: "/login",
-      callback: "/",
-      exclude: ["/sharex", "/v/*"],
+      callback: "/hallo",
+      exclude: ["/", "/sharex", "/v/*"],
     },
   },
 });
