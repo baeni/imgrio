@@ -30,7 +30,6 @@
 
       <LogoutButton small transparent v-if="user" />
       <LoginButton small transparent v-else />
-      <LoginButton small transparent />
     </div>
   </div>
 </template>
