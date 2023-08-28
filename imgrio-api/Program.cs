@@ -1,9 +1,6 @@
 using imgrio_api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -24,24 +21,17 @@ namespace imgrio_api
             }));
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    builder.Configuration.Bind("AzureAd", options);
-                    options.Authority = $"{builder.Configuration["AzureAd:Instance"]}{builder.Configuration["AzureAd:TenantId"]}/v2.0";
-                    
-                    options.TokenValidationParameters.ValidateIssuer = false;
-                })
                 .AddJwtBearer("SupabaseJwtPolicy", options =>
                 {
                     options.IncludeErrorDetails = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://zaueriqlkxufzmvvzynq.supabase.co/auth/v1",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("")),
+                        ValidIssuer = builder.Configuration["SupabaseJwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["SupabaseJwt:Key"]!)),
 
                         ValidateAudience = true,
-                        ValidAudience = "authenticated",
+                        ValidAudience = builder.Configuration["SupabaseJwt:Key"]!,
 
                         ValidateLifetime = true
                     };
@@ -52,13 +42,13 @@ namespace imgrio_api
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidIssuer = builder.Configuration["PermanentJwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["PermanentJwt:Key"]!))
 
                         ValidateAudience = true,
-                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        ValidAudience = builder.Configuration["PermanentJwt:Audience"],
 
                         ValidateLifetime = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
                     };
                 });
 
