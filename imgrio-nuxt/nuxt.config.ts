@@ -19,6 +19,12 @@ export default defineNuxtConfig({
     },
   },
 
+  app: {
+    head: {
+      title: "imgrio",
+    },
+  },
+
   i18n: {
     // https://i18n.nuxtjs.org/options-reference/
     vueI18n: "./i18n.conf.ts",
