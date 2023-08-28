@@ -43,12 +43,12 @@ namespace imgrio_api
                     {
                         ValidateIssuer = true,
                         ValidIssuer = builder.Configuration["PermanentJwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["PermanentJwt:Key"]!))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["PermanentJwt:Key"]!)),
 
                         ValidateAudience = true,
                         ValidAudience = builder.Configuration["PermanentJwt:Audience"],
 
-                        ValidateLifetime = true,
+                        ValidateLifetime = true
                     };
                 });
 
