@@ -28,9 +28,8 @@ namespace imgrio_api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("Author")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("timestamp with time zone");

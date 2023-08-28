@@ -12,19 +12,21 @@ namespace imgrio_api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UploadedFiles",
+                name: "UserFiles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Author = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: false),
                     Type = table.Column<string>(type: "text", nullable: false),
                     Size = table.Column<long>(type: "bigint", nullable: false),
-                    UploadedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UploadedBy = table.Column<Guid>(type: "uuid", nullable: false)
+                    Url = table.Column<string>(type: "text", nullable: false),
+                    IsSelfHosted = table.Column<bool>(type: "boolean", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UploadedFiles", x => x.Id);
+                    table.PrimaryKey("PK_UserFiles", x => x.Id);
                 });
         }
 
@@ -32,7 +34,7 @@ namespace imgrio_api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UploadedFiles");
+                name: "UserFiles");
         }
     }
 }
