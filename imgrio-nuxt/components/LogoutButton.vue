@@ -1,7 +1,7 @@
 <template>
   <Knob
     :text="$t('components.inputs.knob.signOut')"
-    @click="signOutUser"
+    @click="navigateTo('/logout')"
     :small="small"
     :primary="primary"
     :transparent="transparent"
@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { signOutUser } from "../composables/useSupabase";
-
 import Knob from "./inputs/Knob.vue";
 
 const props = defineProps({
