@@ -1,0 +1,214 @@
+@import "./base.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+.gradient__bg {
+  background: -moz-linear-gradient(
+    342deg,
+    rgba(23, 41, 74, 1) 0%,
+    rgba(15, 31, 65, 1) 17%,
+    rgba(11, 26, 61, 1) 28%,
+    rgba(7, 25, 62, 1) 38%,
+    rgba(14, 44, 94, 1) 66%,
+    rgba(15, 49, 99, 1) 77%,
+    rgba(18, 48, 97, 1) 86%,
+    rgba(18, 40, 73, 1) 100%
+  );
+
+  /* safari 5.1+,chrome 10+ */
+  background: -webkit-linear-gradient(
+    342deg,
+    rgba(23, 41, 74, 1) 0%,
+    rgba(15, 31, 65, 1) 17%,
+    rgba(11, 26, 61, 1) 28%,
+    rgba(7, 25, 62, 1) 38%,
+    rgba(14, 44, 94, 1) 66%,
+    rgba(15, 49, 99, 1) 77%,
+    rgba(18, 48, 97, 1) 86%,
+    rgba(18, 40, 73, 1) 100%
+  );
+
+  /* opera 11.10+ */
+  background: -o-linear-gradient(
+    342deg,
+    rgba(23, 41, 74, 1) 0%,
+    rgba(15, 31, 65, 1) 17%,
+    rgba(11, 26, 61, 1) 28%,
+    rgba(7, 25, 62, 1) 38%,
+    rgba(14, 44, 94, 1) 66%,
+    rgba(15, 49, 99, 1) 77%,
+    rgba(18, 48, 97, 1) 86%,
+    rgba(18, 40, 73, 1) 100%
+  );
+
+  /* ie 10+ */
+  background: -ms-linear-gradient(
+    342deg,
+    rgba(23, 41, 74, 1) 0%,
+    rgba(15, 31, 65, 1) 17%,
+    rgba(11, 26, 61, 1) 28%,
+    rgba(7, 25, 62, 1) 38%,
+    rgba(14, 44, 94, 1) 66%,
+    rgba(15, 49, 99, 1) 77%,
+    rgba(18, 48, 97, 1) 86%,
+    rgba(18, 40, 73, 1) 100%
+  );
+
+  /* global 92%+ browsers support */
+  background: linear-gradient(
+    342deg,
+    rgba(23, 41, 74, 1) 0%,
+    rgba(15, 31, 65, 1) 17%,
+    rgba(11, 26, 61, 1) 28%,
+    rgba(7, 25, 62, 1) 38%,
+    rgba(14, 44, 94, 1) 66%,
+    rgba(15, 49, 99, 1) 77%,
+    rgba(18, 48, 97, 1) 86%,
+    rgba(18, 40, 73, 1) 100%
+  );
+}
+
+.gradient__text {
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section--center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.section--padding {
+  padding: 8rem 35rem;
+}
+
+.section--margin {
+  margin: 8rem 35rem;
+}
+
+.section__title {
+  margin-bottom: 2rem;
+  font-family: var(--font-family);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 55px;
+}
+
+.scale-up-center {
+  -webkit-animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1)
+    both;
+  animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 1920px) {
+  .section--padding {
+    padding: 8rem 25rem;
+  }
+
+  .section--margin {
+    margin: 8rem 25rem;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .section--padding {
+    padding: 8rem 20rem;
+  }
+
+  .section--margin {
+    margin: 8rem 20rem;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .section--padding {
+    padding: 8rem 15rem;
+  }
+
+  .section--margin {
+    margin: 8rem 15rem;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .section--padding {
+    padding: 8rem 10rem;
+  }
+
+  .section--margin {
+    margin: 8rem 10rem;
+  }
+}
+
+@media screen and (max-width: 962px) {
+  .section--padding {
+    padding: 8rem 5rem;
+  }
+
+  .section--margin {
+    margin: 8rem 5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section--padding {
+    padding: 8rem 2rem;
+  }
+
+  .section--margin {
+    margin: 8rem 2rem;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .section--padding {
+    padding: 8rem 1rem;
+  }
+
+  .section--margin {
+    margin: 8rem 1rem;
+  }
+}

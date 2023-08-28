@@ -20,11 +20,11 @@ namespace imgrio_api.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
     [Authorize(AuthenticationSchemes = "PermanentJwtPolicy")]
     public class FilesController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
-        private readonly string _oidClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
 
         public FilesController(ImgrioDbContext dbContext)
         {
@@ -61,13 +61,13 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("users/{userId}")]
-        public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
+        public async Task<IActionResult> GetFilesByUserIdAsync(string userId)
         {
-            var oid = User.FindFirst(_oidClaim)?.Value;
-            if (oid == null || !Guid.Parse(oid).Equals(userId))
-            {
-                return Unauthorized();
-            }
+            //var sub = User.FindFirstValue("sub");
+            //if (sub == null || !sub.Equals(userId))
+            //{
+            //    return Unauthorized("Cannot access other users ressources. sub is " + User);
+            //}
 
             var uploadedFiles = await _dbContext.Set<UserFile>()
                 .Where(x => x.Author == userId).ToArrayAsync();
@@ -76,13 +76,13 @@ namespace imgrio_api.Controllers
         }
 
         [HttpPost("users/{userId}")]
-        public async Task<IActionResult> PostFileByUserIdAsync(Guid userId, [FromForm] IFormFile file)
+        public async Task<IActionResult> PostFileByUserIdAsync(string userId, [FromForm] IFormFile file)
         {
-            var oid = User.FindFirst(_oidClaim)?.Value;
-            if (oid == null || !Guid.Parse(oid).Equals(userId))
-            {
-                return Unauthorized();
-            }
+            //var sub = User.FindFirstValue("sub");
+            //if (sub == null || !sub.Equals(userId))
+            //{
+            //    return Unauthorized("Cannot access other users ressources.");
+            //}
 
             var fileType = file.ContentType;
             var fileId = Guid.NewGuid();
@@ -136,11 +136,11 @@ namespace imgrio_api.Controllers
                 return NotFound();
             }
 
-            var oid = User.FindFirst(_oidClaim)?.Value;
-            if (oid == null || !Guid.Parse(oid).Equals(uploadedFile.Author))
-            {
-                return Unauthorized();
-            }
+            //var sub = User.FindFirstValue("sub");
+            //if (sub == null || !sub.Equals(uploadedFile.Author))
+            //{
+            //    return Unauthorized("Cannot access other users ressources.");
+            //}
 
             #region delete from database
             _dbContext.Remove(uploadedFile);
@@ -170,13 +170,13 @@ namespace imgrio_api.Controllers
         }
 
         [HttpDelete("users/{userId}")]
-        public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
+        public async Task<IActionResult> DeleteFilesByUserIdAsync(string userId)
         {
-            var oid = User.FindFirst(_oidClaim)?.Value;
-            if (oid == null || !Guid.Parse(oid).Equals(userId))
-            {
-                return Unauthorized();
-            }
+            //var sub = User.FindFirstValue("sub");
+            //if (sub == null || !sub.Equals(userId))
+            //{
+            //    return Unauthorized("Cannot access other users ressources.");
+            //}
 
             var uploadedFiles = await _dbContext.Set<UserFile>().Where(x => x.Author == userId).ToArrayAsync();
 

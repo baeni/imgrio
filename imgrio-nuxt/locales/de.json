@@ -1,0 +1,40 @@
+{
+  "pages": {
+    "index": {
+      "slogan": "Take. Give. Share",
+      "description": "imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der vollumfängliche Zugriff nur für ausgewählte Personen möglich.",
+      "statistics": "Dateien sind aktuell dank imgrio im Umlauf!"
+    },
+    "sharex": {
+      "title": "ShareX"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "files": {},
+      "favorites": {},
+      "history": {},
+      "settings": {}
+    }
+  },
+
+  "components": {
+    "inputs": {
+      "dropdown": {},
+      "knob": {
+        "signIn": "Login",
+        "signOut": "Logout",
+        "sharex": "ShareX",
+        "dashboard": "Dashboard",
+        "go": "Los gehts"
+      },
+      "textfield": {}
+    },
+    "modals": {
+      "uploadModal": {
+        "title": "Datei Hochladen",
+        "description": "Datei hierher ziehen\roder auswählen"
+      }
+    },
+    "loading": {}
+  }
+}

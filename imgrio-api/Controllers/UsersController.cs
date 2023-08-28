@@ -18,6 +18,7 @@ namespace imgrio_api.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
     public class UsersController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
@@ -49,7 +50,7 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("{userId}")]
-        public IActionResult GetPermanentJwt(Guid userId)
+        public IActionResult GetPermanentJwt(string userId)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -57,7 +58,7 @@ namespace imgrio_api.Controllers
             var claims = new List<Claim>()
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, "baeni.saa@gmail.com"),
+                new(JwtRegisteredClaimNames.Sub, userId),
                 new("oid", userId.ToString()),
             };
 
