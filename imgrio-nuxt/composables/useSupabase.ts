@@ -9,6 +9,7 @@ export const signInUser = async () => {
           access_type: "offline",
           prompt: "select_account",
         },
+        redirectTo: process.env.SITE_URL,
       },
     });
     if (error) throw error;
