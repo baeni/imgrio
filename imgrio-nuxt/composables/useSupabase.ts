@@ -1,3 +1,5 @@
+const config = useRuntimeConfig();
+
 export const signInUser = async () => {
   const supabase = useSupabaseClient();
 
@@ -9,7 +11,7 @@ export const signInUser = async () => {
           access_type: "offline",
           prompt: "select_account",
         },
-        redirectTo: process.env.SITE_URL,
+        redirectTo: config.public.siteUrl,
       },
     });
     if (error) throw error;
