@@ -74,7 +74,7 @@ async function postFileAsync() {
     const formData = new FormData();
     formData.append("file", selectedFile.value);
     const response = (
-      await apiClient.post(`files/users/${currentUser.value?.uid}`, formData)
+      await apiClient.post(`files/users/${currentUser.value.uid}`, formData)
     ).data;
 
     closeModal();
