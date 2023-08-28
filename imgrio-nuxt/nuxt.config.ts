@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@pinia/nuxt", "@nuxtjs/i18n", "@nuxtjs/supabase"],
+  modules: ["@pinia/nuxt", "@nuxtjs/i18n", "@nuxtjs/supabase", "@nuxt/image"],
   build: { transpile: ["vue-toastification"] },
 
   runtimeConfig: {
