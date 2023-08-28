@@ -23,5 +23,11 @@ export const signInUser = async () => {
 export const signOutUser = async () => {
   const supabase = useSupabaseClient();
 
-  const { error } = await supabase.auth.signOut();
+  try {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw error;
+  } catch (error) {
+    console.log(error);
+  }
 };
