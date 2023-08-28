@@ -40,30 +40,30 @@ onMounted(async () => {
   userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
 });
 
-useHead({
-  meta: [
-    {
-      name: "og:title",
-      content: userFile.value?.title,
-    },
-    {
-      name: "og:image",
-      content: userFile.value?.url,
-    },
-    {
-      name: "twitter:title",
-      content: userFile.value?.title,
-    },
-    {
-      name: "twitter:card",
-      content: "summary_large_image",
-    },
-    {
-      name: "twitter:image",
-      content: userFile.value?.url,
-    },
-  ],
-});
+// useHead({
+//   meta: [
+//     {
+//       name: "og:title",
+//       content: userFile.value?.title,
+//     },
+//     {
+//       name: "og:image",
+//       content: userFile.value?.url,
+//     },
+//     {
+//       name: "twitter:title",
+//       content: userFile.value?.title,
+//     },
+//     {
+//       name: "twitter:card",
+//       content: "summary_large_image",
+//     },
+//     {
+//       name: "twitter:image",
+//       content: userFile.value?.url,
+//     },
+//   ],
+// });
 
 async function deleteFileAsync() {
   try {
