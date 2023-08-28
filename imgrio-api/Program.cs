@@ -31,7 +31,7 @@ namespace imgrio_api
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["SupabaseJwt:Key"]!)),
 
                         ValidateAudience = true,
-                        ValidAudience = builder.Configuration["SupabaseJwt:Key"]!,
+                        ValidAudience = builder.Configuration["SupabaseJwt:Audience"]!,
 
                         ValidateLifetime = true
                     };
