@@ -35,7 +35,7 @@
         <Knob
           text="Gib mir einen Link!"
           :primary="!!selectedFile"
-          @click="postFileAsync"
+          @click.prevent="postFileAsync"
         />
       </form>
     </div>
