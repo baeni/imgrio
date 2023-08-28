@@ -31,19 +31,6 @@ import { apiClient } from "@/axios.conf";
 import type { UserFile } from "@/models";
 import { useToast } from "vue-toastification";
 
-useHead({
-  meta: [
-    {
-      name: "og:image",
-      content: "https://images.unsplash.com/photo-1691893310317-c2c0769f7b3f",
-    },
-    {
-      name: "twitter:image",
-      content: "https://images.unsplash.com/photo-1691893310317-c2c0769f7b3f",
-    },
-  ],
-});
-
 const router = useRouter();
 const toast = useToast();
 
@@ -51,6 +38,31 @@ const userFile = ref<UserFile>();
 
 onMounted(async () => {
   userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
+});
+
+useHead({
+  meta: [
+    {
+      name: "og:title",
+      content: userFile.value?.title,
+    },
+    {
+      name: "og:image",
+      content: userFile.value?.url,
+    },
+    {
+      name: "twitter:title",
+      content: userFile.value?.title,
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:image",
+      content: userFile.value?.url,
+    },
+  ],
 });
 
 async function deleteFileAsync() {
