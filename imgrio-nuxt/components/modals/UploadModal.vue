@@ -51,7 +51,7 @@ import { useToast } from "vue-toastification";
 import Knob from "../inputs/Knob.vue";
 
 const toast = useToast();
-
+const user = useSupabaseUser();
 const selectedFile = ref<File | null>();
 const userFilesStore = useUserFilesStore();
 
@@ -69,12 +69,10 @@ async function postFileAsync() {
       return;
     }
 
-    const currentUser = useSupabaseUser();
-
     const formData = new FormData();
     formData.append("file", selectedFile.value);
     const response = (
-      await apiClient.post(`files/users/${currentUser.value.uid}`, formData)
+      await apiClient.post(`files/users/${user.value.id}`, formData)
     ).data;
 
     closeModal();
