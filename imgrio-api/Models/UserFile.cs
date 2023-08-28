@@ -6,7 +6,7 @@ namespace imgrio_api.Models
     {
         public UserFile(
             Guid id,
-            string author,
+            Guid author,
             string title,
             string type,
             long size,
@@ -25,7 +25,7 @@ namespace imgrio_api.Models
         }
 
         public Guid Id { get; private set; }
-        public string Author { get; private set; }
+        public Guid Author { get; private set; }
         public string Title { get; private set; }
         public string Type { get; private set; }
         public long Size { get; private set; }

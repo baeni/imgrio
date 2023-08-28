@@ -60,7 +60,7 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("users/{userId}")]
-        public async Task<IActionResult> GetFilesByUserIdAsync(string userId)
+        public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
         {
             //var sub = User.FindFirstValue("sub");
             //if (sub == null || !sub.Equals(userId))
@@ -75,7 +75,7 @@ namespace imgrio_api.Controllers
         }
 
         [HttpPost("users/{userId}")]
-        public async Task<IActionResult> PostFileByUserIdAsync(string userId, [FromForm] IFormFile file)
+        public async Task<IActionResult> PostFileByUserIdAsync(Guid userId, [FromForm] IFormFile file)
         {
             //var sub = User.FindFirstValue("sub");
             //if (sub == null || !sub.Equals(userId))
@@ -169,7 +169,7 @@ namespace imgrio_api.Controllers
         }
 
         [HttpDelete("users/{userId}")]
-        public async Task<IActionResult> DeleteFilesByUserIdAsync(string userId)
+        public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
         {
             //var sub = User.FindFirstValue("sub");
             //if (sub == null || !sub.Equals(userId))

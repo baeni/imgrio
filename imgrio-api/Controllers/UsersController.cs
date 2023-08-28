@@ -49,23 +49,22 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("{userId}")]
-        public IActionResult GetPermanentJwt(string userId)
+        public IActionResult GetPermanentJwt(Guid userId)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["PermanentJwt:Key"]!));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>()
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, userId),
-                new("oid", userId.ToString()),
+                new(JwtRegisteredClaimNames.Sub, userId.ToString()),
             };
 
             var dateNow = DateTime.UtcNow;
 
             var token = new JwtSecurityToken(
-                audience: _configuration["Jwt:Audience"],
-                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["PermanentJwt:Audience"],
+                issuer: _configuration["PermanentJwt:Issuer"],
                 notBefore: dateNow,
                 expires: dateNow.AddYears(1),
                 claims: claims,
