@@ -41,11 +41,11 @@ onMounted(async () => {
 });
 
 useSeoMeta({
-  ogTitle: userFile.value?.title,
-  twitterTitle: userFile.value?.title,
+  ogTitle: "imgrio",
+  twitterTitle: "imgrio",
 
-  ogImage: userFile.value?.url,
-  twitterImage: userFile.value?.url,
+  ogImage: "https://images.unsplash.com/photo-1692607431186-e8d7837ad65b",
+  twitterImage: "https://images.unsplash.com/photo-1692607431186-e8d7837ad65b",
 
   twitterCard: "summary_large_image",
 });
