@@ -6,7 +6,11 @@
       @mouseenter="playAnimation()"
     >
       <div class="card__container">
-        <img class="card__container-image" :src="userFile.url" loading="lazy" />
+        <NuxtImg
+          class="card__container-image"
+          :src="userFile.url"
+          loading="lazy"
+        />
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
