@@ -61,18 +61,17 @@
         <Knob
           text="Neu generieren"
           small
-          @click="() => getPermanentJwtAsync()"
+          @click.prevent="() => getPermanentJwtAsync()"
         />
       </div>
 
       <div class="section__container-form-button">
-        <!-- <Knob
+        <Knob
           text="Änderungen speichern"
           small
           transparent
-          @click="() => toast.success('Änderungen gespeichert.')"
-        /> -->
-        <Knob text="Änderungen speichern" small transparent />
+          @click.prevent="() => toast.success('Änderungen gespeichert.')"
+        />
       </div>
     </form>
     <div class="section__container-loading grid place-items-center" v-else>
@@ -83,7 +82,7 @@
 
 <script setup lang="ts">
 import { apiClient } from "@/axios.conf";
-// import { useToast } from 'vue-toastification'
+import { useToast } from "vue-toastification";
 
 import Textfield from "@/components/inputs/Textfield.vue";
 import Dropdown from "@/components/inputs/Dropdown.vue";
@@ -95,7 +94,7 @@ definePageMeta({
 
 const user = useSupabaseUser();
 const locale = useI18n();
-// const toast = useToast()
+const toast = useToast();
 
 async function getPermanentJwtAsync() {
   if (!user) {
@@ -103,12 +102,12 @@ async function getPermanentJwtAsync() {
   }
 
   try {
-    const response = (await apiClient.get(`users/${user.uid}`)).data;
+    const response = (await apiClient.get(`users/${user.value.id}`)).data;
 
     copyToClipboard(response);
-    // toast.success('Neuer Token in Zwischenablage kopiert')
+    toast.success("Neuer Token in Zwischenablage kopiert");
   } catch {
-    // toast.error('Ein Fehler ist aufgetreten, versuche es erneut.')
+    toast.error("Ein Fehler ist aufgetreten, versuche es erneut.");
     return;
   }
 }
