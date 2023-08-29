@@ -1,26 +1,22 @@
 <template>
   <select :disabled="disabled">
-    <!-- <option value="false" default>Inaktiv</option>
-    <option value="true">Aktiv</option> -->
-    <option v-for="option in options" :value="option.value">
-      {{ option.key }}
+    <option v-for="option in options" :value="option">
+      {{ option }}
     </option>
   </select>
 </template>
 
 <script setup lang="ts">
-import type { DropdownOption } from '@/models'
-
 const props = defineProps({
   options: {
-    type: Array<DropdownOption>,
-    required: true,
+    type: Array,
+    required: true
   },
   disabled: {
     type: Boolean,
-    default: false,
-  },
-})
+    default: false
+  }
+});
 </script>
 
 <style scoped>
