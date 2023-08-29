@@ -26,13 +26,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { apiClient } from "@/axios.conf";
 import { useToast } from "vue-toastification";
+import { UserFile } from 'models';
 
 const router = useRouter();
 const toast = useToast();
 
-const userFile = (await apiClient.get(`files/${useRoute().params.id}`)).data;
+const userFile = ref<UserFile>((await apiClient.get(`files/${useRoute().params.id}`)).data);
 
 useServerSeoMeta({
   ogTitle: userFile.value?.title,
