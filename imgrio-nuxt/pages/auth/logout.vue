@@ -2,27 +2,23 @@
   <div class="section--center">
     <div class="section__container">
       <div class="section__container-title">
-        <p>
-          Tschau!
-        </p>
+        <p>{{ $t('pages.auth.logout.title') }}</p>
       </div>
       <div class="section__container-description">
-        <p>
-          Du wirst in wenigen Sekunden weitergeleitet
-        </p>
+        <p>{{ $t('pages.auth.logout.description') }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { signOutUser } from "~/composables/useSupabase";
+import { onMounted } from 'vue';
+import { signOutUser } from '~/composables/useSupabase';
 
 onMounted(async () => {
   await signOutUser();
   setTimeout(() => {
-    navigateTo("/");
+    navigateTo('/');
   }, 3000);
 });
 </script>
