@@ -38,6 +38,13 @@
     "view": {
       "unknown": "Unbekannt",
       "delete": "Löschen"
+    },
+    "auth": {
+      "login": {},
+      "logout": {
+        "title": "Tschau!",
+        "description": "Du wirst in wenigen Sekunden weitergeleitet"
+      }
     }
   },
 
