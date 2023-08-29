@@ -9,17 +9,19 @@
         <p>{{ userFile.title }}</p>
       </div>
       <div class="section__container-subtitle">
-        <p class="section__container-subtitle-author">{{ $t('pages.view.unknown') }}</p>
+        <p class="section__container-subtitle-author">
+          {{ $t('pages.view.unknown') }}
+        </p>
         <p class="section__container-subtitle-date">
           {{
-            new Date(userFile.dateOfCreation).toLocaleDateString("de-de", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
+            new Date(userFile.dateOfCreation).toLocaleDateString('de-de', {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric'
             })
           }}
         </p>
-        <a href="javascript:;" @click="deleteFileAsync">{{ $t('pages.view.delete')}}</a>
+        <a href="javascript:;" @click="deleteFileAsync">{{ $t('pages.view.delete') }}</a>
       </div>
     </div>
   </div>
@@ -27,8 +29,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { apiClient } from "@/axios.conf";
-import { useToast } from "vue-toastification";
+import { apiClient } from '@/axios.conf';
+import { useToast } from 'vue-toastification';
 import { UserFile } from 'models';
 
 const router = useRouter();
@@ -37,8 +39,8 @@ const toast = useToast();
 const userFile = ref<UserFile>((await apiClient.get(`files/${useRoute().params.id}`)).data);
 
 useServerSeoMeta({
-  ogSiteName: "imgrio",
-  twitterSite: "imgrio",
+  ogSiteName: 'imgrio',
+  twitterSite: 'imgrio',
 
   ogTitle: userFile.value?.title,
   twitterTitle: userFile.value?.title,
@@ -46,16 +48,16 @@ useServerSeoMeta({
   ogImage: userFile.value?.url,
   twitterImage: userFile.value?.url,
 
-  twitterCard: "summary_large_image",
+  twitterCard: 'summary_large_image'
 });
 
 async function deleteFileAsync() {
   try {
     const response = (await apiClient.delete(`files/${userFile.value?.id}`)).data;
 
-    router.push("/dashboard/files");
+    await router.push('/dashboard/files');
   } catch {
-    toast.error("Ein Fehler ist aufgetreten, versuche es erneut.");
+    toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
     return;
   }
 }
