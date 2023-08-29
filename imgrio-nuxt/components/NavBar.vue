@@ -5,10 +5,8 @@
         <img src="/logo.svg" alt="imgrio" />
       </NuxtLink>
       <div class="navbar__container-links">
-        <NuxtLink to="/sharex">{{ $t("pages.sharex.title") }}</NuxtLink>
-        <NuxtLink to="/dashboard/files">{{
-          $t("pages.dashboard.title")
-        }}</NuxtLink>
+        <NuxtLink to="/sharex">{{ $t('pages.sharex.title') }}</NuxtLink>
+        <NuxtLink to="/dashboard/files">{{ $t('pages.dashboard.title') }}</NuxtLink>
       </div>
       <div class="navbar__container-sign">
         <div v-if="user">
@@ -23,10 +21,8 @@
       </div>
     </div>
     <div class="navbar__menu" v-if="isMenuActive">
-      <NuxtLink to="/sharex">{{ $t("pages.sharex.title") }}</NuxtLink>
-      <NuxtLink to="/dashboard/files">{{
-        $t("pages.dashboard.title")
-      }}</NuxtLink>
+      <NuxtLink to="/sharex">{{ $t('pages.sharex.title') }}</NuxtLink>
+      <NuxtLink to="/dashboard/files">{{ $t('pages.dashboard.title') }}</NuxtLink>
 
       <LogoutButton small transparent v-if="user" />
       <LoginButton small transparent v-else />
@@ -35,11 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
-import LoginButton from "./LoginButton.vue";
-import LogoutButton from "./LogoutButton.vue";
-import Avatar from "./Avatar.vue";
+import LoginButton from './LoginButton.vue';
+import LogoutButton from './LogoutButton.vue';
+import Avatar from './Avatar.vue';
 
 const user = useSupabaseUser();
 
