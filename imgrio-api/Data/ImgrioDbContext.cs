@@ -6,6 +6,7 @@ namespace imgrio_api.Data
     public class ImgrioDbContext : DbContext
     {
         public DbSet<UserFile> UserFiles { get; set; }
+        public DbSet<UserSettings> UserSettings { get; set; }
 
         public ImgrioDbContext(DbContextOptions options) : base(options) { }
     }
