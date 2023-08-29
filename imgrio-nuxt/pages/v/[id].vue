@@ -51,10 +51,9 @@ useServerSeoMeta({
 
 async function deleteFileAsync() {
   try {
-    const response = (await apiClient.delete(`files/${userFile.value?.id}`))
-      .data;
+    const response = (await apiClient.delete(`files/${userFile.value?.id}`)).data;
 
-    router.back();
+    router.push("/dashboard/files");
   } catch {
     toast.error("Ein Fehler ist aufgetreten, versuche es erneut.");
     return;
