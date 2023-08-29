@@ -56,7 +56,7 @@ const userFiles = computed(() => userFilesData.userFiles);
 
 .section__container-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
 }
 
@@ -66,11 +66,11 @@ const userFiles = computed(() => userFilesData.userFiles);
   line-height: 25px;
 }
 
-/* @media screen and (max-width: 1600px) {
+@media screen and (max-width: 1920px) {
   .section__container-list {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
-} */
+}
 
 @media screen and (max-width: 962px) {
   .section__container-list {
