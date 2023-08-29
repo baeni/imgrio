@@ -26,26 +26,20 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
 import { apiClient } from "@/axios.conf";
-import type { UserFile } from "@/models";
 import { useToast } from "vue-toastification";
 
 const router = useRouter();
 const toast = useToast();
 
-const userFile = ref<UserFile>();
+const userFile = (await apiClient.get(`files/${useRoute().params.id}`)).data;
 
-onMounted(async () => {
-  userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
-});
+useServerSeoMeta({
+  ogTitle: userFile.value?.title,
+  twitterTitle: userFile.value?.title,
 
-useSeoMeta({
-  ogTitle: "imgrio",
-  twitterTitle: "imgrio",
-
-  ogImage: "https://images.unsplash.com/photo-1692607431186-e8d7837ad65b",
-  twitterImage: "https://images.unsplash.com/photo-1692607431186-e8d7837ad65b",
+  ogImage: userFile.value?.url,
+  twitterImage: userFile.value?.url,
 
   twitterCard: "summary_large_image",
 });
