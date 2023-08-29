@@ -24,11 +24,11 @@
       },
       "settings": {
         "title": "Settings",
-        "userName": "Username",
+        "username": "Username",
         "email": "Email",
         "userId": "UserID",
         "imageAnimation": "Image Animation",
-        "fileServer": "File-Server",
+        "externalHost": "File-Server",
         "language": "Language",
         "accessToken": "Access Token",
         "regenerate": "Regenerate",
