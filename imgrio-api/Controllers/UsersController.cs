@@ -28,7 +28,7 @@ namespace imgrio_api.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("settings/{userId}")]
         public async Task<IActionResult> GetSettingsByUserIdAsync(Guid userId)
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -47,7 +47,7 @@ namespace imgrio_api.Controllers
             return Ok(userSettings);
         }
 
-        [HttpPut("{userId}")]
+        [HttpPut("settings/{userId}")]
         public async Task<IActionResult> PutSettingsByUserIdAsync(Guid userId, UserSettings userSettings)
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
