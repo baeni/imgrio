@@ -2,10 +2,6 @@
   <div class="section__container section--margin">
     <div class="section__title">
       <h1>Meine Dateien</h1>
-      <div>
-        <Knob text="Verlauf" href="./history" small />
-        <Knob text="Favoriten" href="./favorites" small />
-      </div>
     </div>
 
     <div
@@ -58,14 +54,9 @@ const userFiles = computed(() => userFilesData.userFiles);
   color: #fff;
 }
 
-.section__title {
-  display: flex;
-  justify-content: space-between;
-}
-
 .section__container-list {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
@@ -75,25 +66,19 @@ const userFiles = computed(() => userFilesData.userFiles);
   line-height: 25px;
 }
 
-@media screen and (max-width: 1600px) {
+/* @media screen and (max-width: 1600px) {
   .section__container-list {
     grid-template-columns: repeat(4, 1fr);
   }
-}
+} */
 
 @media screen and (max-width: 962px) {
-  .section__container-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media screen and (max-width: 768px) {
   .section__container-list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 768px) {
   .section__container-list {
     grid-template-columns: repeat(1, 1fr);
   }
