@@ -1,5 +1,7 @@
 <template>
-  <NuxtLayout name="dashboard" v-if="$route.path.startsWith('/dashboard/')">
+  <NuxtPage v-if="$route.path.startsWith('/auth')" />
+  
+  <NuxtLayout name="dashboard" v-else-if="$route.path.startsWith('/dashboard')">
     <NuxtPage />
   </NuxtLayout>
 
