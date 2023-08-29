@@ -1,4 +1,5 @@
 ﻿using imgrio_api.Data;
+using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +26,40 @@ namespace imgrio_api.Controllers
         {
             _dbContext = dbContext;
             _configuration = configuration;
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetSettingsByUserIdAsync(Guid userId)
+        {
+            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (sub == null || !sub.Equals(userId.ToString()))
+            {
+                return Unauthorized("Cannot access other users ressources.");
+            }
+
+            var userSettings = await _dbContext.FindAsync<UserSettings>(userId);
+
+            if (userSettings == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userSettings);
+        }
+
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> PutSettingsByUserIdAsync(Guid userId, UserSettings userSettings)
+        {
+            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (sub == null || !sub.Equals(userId.ToString()))
+            {
+                return Unauthorized("Cannot access other users ressources.");
+            }
+
+            await _dbContext.AddAsync(userSettings);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(userSettings);
         }
 
         [HttpGet("{userId}")]
