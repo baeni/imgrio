@@ -3,7 +3,7 @@
     <div class="section__title">
       <h1>{{ $t('pages.dashboard.settings.title') }}</h1>
     </div>
-    <form class="section__container-form" v-if="user">
+    <form class="section__container-form" v-if="user && userSettings">
       <div class="section__container-form-input-group">
         <label for="username">{{ $t('pages.dashboard.settings.username') }}</label>
         <Textfield id="username" :value="user.user_metadata.full_name" disabled />
@@ -21,12 +21,20 @@
 
       <div class="section__container-form-input-group">
         <label for="imageAnimation">{{ $t('pages.dashboard.settings.imageAnimation') }}</label>
-        <Dropdown id="imageAnimation" :options="['false', 'true']" />
+        <Dropdown
+          id="imageAnimation"
+          :options="['false', 'true']"
+          :selected="userSettings.imageAnimation"
+        />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="language">{{ $t('pages.dashboard.settings.language') }}</label>
-        <Dropdown id="language" :options="useI18n().availableLocales" />
+        <Dropdown
+          id="language"
+          :options="useI18n().availableLocales"
+          :selected="userSettings.language"
+        />
       </div>
 
       <div class="section__container-form-input-group">
@@ -44,7 +52,7 @@
           :text="$t('pages.dashboard.settings.save')"
           small
           transparent
-          @click.prevent="() => toast.success($t('toasts.successSaved'))"
+          @click.prevent="PutSettingsAsync()"
         />
       </div>
     </form>
@@ -55,8 +63,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted, reactive } from 'vue';
 import { apiClient } from '@/axios.conf';
 import { useToast } from 'vue-toastification';
+
+import { UserSettings } from '~/models';
+import { useUserSettingsStore } from '~/stores/userSettings';
 
 import Textfield from '@/components/inputs/Textfield.vue';
 import Dropdown from '@/components/inputs/Dropdown.vue';
@@ -70,6 +82,18 @@ const user = useSupabaseUser();
 const i18n = useI18n();
 const toast = useToast();
 
+const userSettingsStore = useUserSettingsStore();
+const userSettingsData = reactive<{ userSettings: UserSettings | null }>({
+  userSettings: null
+});
+
+onMounted(async () => {
+  await userSettingsStore.fetchUserSettings();
+  userSettingsData.userSettings = userSettingsStore.userSettings as UserSettings;
+});
+
+const userSettings = computed(() => userSettingsData.userSettings);
+
 async function getPermanentJwtAsync() {
   if (!user) {
     return new Error('Not authenticated');
@@ -80,6 +104,27 @@ async function getPermanentJwtAsync() {
 
     copyToClipboard(response);
     toast.success(i18n.t('toasts.successTokenCopied'));
+  } catch {
+    toast.error(i18n.t('toasts.errorRetry'));
+    return;
+  }
+}
+
+async function PutSettingsAsync() {
+  if (!user) {
+    return new Error('Not authenticated');
+  }
+
+  const newUserSettings: UserSettings = {
+    userId: user.value.id,
+    imageAnimation: false,
+    language: 'de'
+  };
+
+  try {
+    const response = (await apiClient.put(`users/settings/${user.value.id}`, newUserSettings)).data;
+
+    toast.success(i18n.t('toasts.successSaved'));
   } catch {
     toast.error(i18n.t('toasts.errorRetry'));
     return;
