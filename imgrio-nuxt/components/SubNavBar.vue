@@ -2,9 +2,11 @@
   <div class="subnavbar section--padding">
     <div class="subnavbar__links">
       <div class="subnavbar__links-container">
-        <NuxtLink to="/dashboard/files">Meine Dateien</NuxtLink>
-        <a href="javascript:;" @click="showModal = true">Datei Hochladen</a>
-        <NuxtLink to="/dashboard/settings">Einstellungen</NuxtLink>
+        <NuxtLink to="/dashboard/files">{{ $t('pages.dashboard.files.title') }}</NuxtLink>
+        <a href="javascript:;" @click="showModal = true">{{
+          $t('components.modals.uploadModal.title')
+        }}</a>
+        <NuxtLink to="/dashboard/settings">{{ $t('pages.dashboard.settings.title') }}</NuxtLink>
       </div>
     </div>
   </div>
@@ -13,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
-import UploadPopup from "../components/modals/UploadModal.vue";
+import UploadPopup from '../components/modals/UploadModal.vue';
 
 let showModal = ref(false);
 </script>
