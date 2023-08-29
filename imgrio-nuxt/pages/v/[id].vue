@@ -37,6 +37,9 @@ const toast = useToast();
 const userFile = ref<UserFile>((await apiClient.get(`files/${useRoute().params.id}`)).data);
 
 useServerSeoMeta({
+  ogSiteName: "imgrio",
+  twitterSite: "imgrio",
+
   ogTitle: userFile.value?.title,
   twitterTitle: userFile.value?.title,
 
