@@ -1,3 +1,9 @@
+export interface UserSettings {
+  userId: string;
+  imageAnimation: boolean;
+  language: string;
+}
+
 export interface UserFile {
   id: string;
   author: string;
@@ -7,9 +13,4 @@ export interface UserFile {
   url: string;
   isSelfHosted: boolean;
   dateOfCreation: string;
-}
-
-export interface DropdownOption {
-  key: string;
-  value: string | boolean | number;
 }
