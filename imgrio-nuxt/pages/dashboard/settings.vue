@@ -5,8 +5,8 @@
     </div>
     <form class="section__container-form" v-if="user">
       <div class="section__container-form-input-group">
-        <label for="userName">{{ $t('pages.dashboard.settings.userName') }}</label>
-        <Textfield id="userName" :value="user.user_metadata.full_name" disabled />
+        <label for="username">{{ $t('pages.dashboard.settings.username') }}</label>
+        <Textfield id="username" :value="user.user_metadata.full_name" disabled />
       </div>
 
       <div class="section__container-form-input-group">
@@ -21,40 +21,18 @@
 
       <div class="section__container-form-input-group">
         <label for="imageAnimation">{{ $t('pages.dashboard.settings.imageAnimation') }}</label>
-        <Dropdown
-          id="imageAnimation"
-          :options="[
-            { key: 'Inaktiv', value: false },
-            { key: 'Aktiv', value: true }
-          ]"
-        />
-      </div>
-
-      <div class="section__container-form-input-group">
-        <label for="fileServer">{{ $t('pages.dashboard.settings.fileServer') }}</label>
-        <Dropdown
-          id="fileServer"
-          :options="[
-            { key: 'imgrio', value: false },
-            { key: 'Eigener', value: true }
-          ]"
-        />
+        <Dropdown id="imageAnimation" :options="['false', 'true']" />
       </div>
 
       <div class="section__container-form-input-group">
         <label for="language">{{ $t('pages.dashboard.settings.language') }}</label>
-        <Dropdown
-          id="language"
-          :options="[
-            { key: 'Deutsch', value: 'de' },
-            { key: 'English', value: 'en' }
-          ]"
-        />
+        <Dropdown id="language" :options="useI18n().availableLocales" />
       </div>
 
       <div class="section__container-form-input-group">
-        <label>{{ $t('pages.dashboard.settings.accessToken') }}</label>
+        <label for="accessToken">{{ $t('pages.dashboard.settings.accessToken') }}</label>
         <Knob
+          id="accessToken"
           :text="$t('pages.dashboard.settings.regenerate')"
           small
           @click.prevent="() => getPermanentJwtAsync()"
