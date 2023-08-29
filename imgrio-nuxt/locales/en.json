@@ -1,9 +1,72 @@
 {
+  "toasts": {
+    "successLinkCopied": "Link copied to clipboard.",
+    "successTokenCopied": "New token copied to clipboard",
+    "successSaved": "Saved changes.",
+    "errorRetry": "An error occurred, try again..",
+    "errorSelect": "Select a file!"
+  },
+
   "pages": {
     "index": {
       "slogan": "Take. Give. Share",
-      "description": "imgrio is a platform for sharing files. Currently the fill access is limited to choosen users.",
-      "statistics": "files are currently being shared thanks to imgrio!"
+      "description": "imgrio is a file sharing platform. Currently, full access is only available to selected people.",
+      "statistics": "files are currently circulating thanks to imgrio!"
+    },
+    "sharex": {
+      "title": "ShareX"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "files": {
+        "title": "My Files",
+        "notSharing": "You are currently not sharing any files with imgrio. :["
+      },
+      "settings": {
+        "title": "Settings",
+        "userName": "Username",
+        "email": "Email",
+        "userId": "UserID",
+        "imageAnimation": "Image Animation",
+        "fileServer": "File-Server",
+        "language": "Language",
+        "accessToken": "Access Token",
+        "regenerate": "Regenerate",
+        "save": "Save changes"
+      }
+    },
+    "view": {
+      "unknown": "Unknown",
+      "delete": "Delete"
+    },
+    "auth": {
+      "login": {},
+      "logout": {
+        "title": "Bye Bye!",
+        "description": "You will be redirected in a few seconds"
+      }
     }
+  },
+
+  "components": {
+    "inputs": {
+      "dropdown": {},
+      "knob": {
+        "signIn": "Log In",
+        "signOut": "Log Out",
+        "sharex": "ShareX",
+        "dashboard": "Dashboard",
+        "go": "Lets Go"
+      },
+      "textfield": {}
+    },
+    "modals": {
+      "uploadModal": {
+        "title": "Upload File",
+        "description": "Drag'n'Drop file here\ror browse",
+        "getLink": "Give me a link!"
+      }
+    },
+    "loading": {}
   }
 }
