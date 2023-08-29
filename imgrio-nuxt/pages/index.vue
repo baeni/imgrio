@@ -3,14 +3,14 @@
     <div class="section__container">
       <div class="section__container-slogan">
         <p>
-          {{ $t("pages.index.slogan") }}
+          {{ $t('pages.index.slogan') }}
           <!-- Take. Give.
           <span class="section__container-slogan--accent">Share.</span> -->
         </p>
       </div>
       <div class="section__container-description">
         <p>
-          {{ $t("pages.index.description") }}
+          {{ $t('pages.index.description') }}
         </p>
       </div>
       <div class="section__container-buttons">
@@ -25,10 +25,8 @@
       </div>
       <div class="section__container-statistics">
         <p>
-          <span class="section__container-statistics--bold">{{
-            data.count
-          }}</span>
-          {{ $t("pages.index.statistics") }}
+          <span class="section__container-statistics--bold">{{ data.count }}</span>
+          {{ $t('pages.index.statistics') }}
         </p>
       </div>
     </div>
@@ -36,26 +34,26 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
-import { apiClient } from "@/axios.conf";
+import { reactive } from 'vue';
+import { apiClient } from '@/axios.conf';
 
-import Knob from "@/components/inputs/Knob.vue";
-import LoginButton from "@/components/LoginButton.vue";
+import Knob from '@/components/inputs/Knob.vue';
+import LoginButton from '@/components/LoginButton.vue';
 
 const user = useSupabaseUser();
 
 let data = reactive({
   count: 0,
-  countToday: 0,
+  countToday: 0
 });
 
 const fetchData = async () => {
   try {
-    const response = (await apiClient.get("files")).data;
+    const response = (await apiClient.get('files')).data;
     data.count = response.count;
     data.countToday = response.countToday;
   } catch (error) {
-    console.error("An error occurred while attempting to fetch data:", error);
+    console.error('An error occurred while attempting to fetch data:', error);
   }
 };
 
