@@ -30,36 +30,36 @@ namespace imgrio_api.Controllers
         {
             _dbContext = dbContext;
         }
-
+        
         [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetAllFilesInfoAsync()
         {
             var set = _dbContext.Set<UserFile>();
-
+    
             var count = await set.CountAsync();
             var countToday = await set
-                .Select(x => x.DateOfCreation.Day == DateTime.UtcNow.Day)
+                .Select(x => x.DateOfCreation == DateTime.UtcNow)
                 .CountAsync();
-
+    
             return Ok(new {
                 count,
                 countToday
             });
         }
-
-        [HttpGet("{id}"), AllowAnonymous]
-        public async Task<IActionResult> GetFileByIdAsync(Guid id)
+        
+        [HttpGet("{fileId}"), AllowAnonymous]
+        public async Task<IActionResult> GetFileByIdAsync(Guid fileId)
         {
-            var uploadedFile = await _dbContext.FindAsync<UserFile>(id);
-
+            var uploadedFile = await _dbContext.FindAsync<UserFile>(fileId);
+    
             if (uploadedFile == null)
             {
                 return NotFound();
             }
-
+    
             return Ok(uploadedFile);
         }
-
+        
         [HttpGet("users/{userId}")]
         public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
         {
@@ -68,10 +68,10 @@ namespace imgrio_api.Controllers
             {
                 return Unauthorized("Cannot access other users ressources.");
             }
-
+    
             var uploadedFiles = await _dbContext.Set<UserFile>()
                 .Where(x => x.Author == userId).ToArrayAsync();
-
+    
             return Ok(uploadedFiles);
         }
 
@@ -126,10 +126,10 @@ namespace imgrio_api.Controllers
             return Ok(new { userFile = uploadedFile , url = $"https://imgrio.com/v/{uploadedFile.Id}"});
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFileByIdAsync(Guid id)
+        [HttpDelete("{fileId}")]
+        public async Task<IActionResult> DeleteFileByIdAsync(Guid fileId)
         {
-            var uploadedFile = await _dbContext.FindAsync<UserFile>(id);
+            var uploadedFile = await _dbContext.FindAsync<UserFile>(fileId);
 
             if (uploadedFile == null)
             {
@@ -160,13 +160,13 @@ namespace imgrio_api.Controllers
                 var path = $"./data/{uploadedFile.Author}/{uploadedFile}";
                 if (!System.IO.File.Exists(path))
                 {
-                    return NotFound($"Could not find file with id: {id}");
+                    return NotFound($"Could not find file with id: {fileId}");
                 }
                 System.IO.File.Delete(path);
                 #endregion
             }
 
-            return Ok($"Deleted file with id: {id}");
+            return Ok($"Deleted file with id: {fileId}");
         }
 
         [HttpDelete("users/{userId}")]
