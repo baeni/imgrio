@@ -1,8 +1,6 @@
 ﻿using imgrio_api.Data;
-using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,7 +9,7 @@ using System.Text;
 namespace imgrio_api.Controllers
 {
     /*
-     * Endpoint to managa files:
+     * Endpoint to manage files:
      * - Get information about all users
      */
 
@@ -29,28 +27,15 @@ namespace imgrio_api.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet, AllowAnonymous]
-        public async Task<IActionResult> GetAllUsersInfo()
-        {
-            var set = _dbContext.Set<UserFile>();
-
-            var count = await set.Select(x => x.Author).Distinct().CountAsync();
-            var countToday = await set
-                .Where(x => x.DateOfCreation.Day == DateTime.UtcNow.Day)
-                .Select(x => x.Author)
-                .Distinct()
-                .CountAsync();
-
-            return Ok(new
-            {
-                count,
-                countToday
-            });
-        }
-
         [HttpGet("{userId}")]
         public IActionResult GetPermanentJwt(Guid userId)
         {
+            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (sub == null || !sub.Equals(userId.ToString()))
+            {
+                return Unauthorized("Cannot access other users ressources.");
+            }
+            
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["PermanentJwt:Key"]!));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
