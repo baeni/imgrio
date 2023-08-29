@@ -1,9 +1,12 @@
 <template>
   <a :href="`/v/${userFile.id}`">
-    <div
+    <!-- <div
       class="card"
       :class="{ jump: animationPlaying }"
       @mouseenter="playAnimation()"
+    > -->
+    <div
+      class="card"
     >
       <div class="card__container">
         <!-- <NuxtImg
@@ -38,12 +41,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+// import { ref } from "vue";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
-const animationPlaying = ref(false);
+// const animationPlaying = ref(false);
 
 const props = defineProps({
   userFile: {
@@ -52,12 +55,12 @@ const props = defineProps({
   },
 });
 
-function playAnimation() {
-  animationPlaying.value = true;
-  setTimeout(() => {
-    animationPlaying.value = false;
-  }, 300);
-}
+// function playAnimation() {
+//   animationPlaying.value = true;
+//   setTimeout(() => {
+//     animationPlaying.value = false;
+//   }, 300);
+// }
 
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
@@ -78,6 +81,10 @@ function copyToClipboard(text: string) {
   cursor: pointer;
 }
 
+.card:hover .card__container-image {
+  transform: scale(1);
+}
+
 .card__container {
   position: relative;
   height: 100%;
@@ -87,6 +94,8 @@ function copyToClipboard(text: string) {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  transform: scale(1.05);
+  transition: 0.1s all ease-in-out;
 }
 
 .card__container-info {
@@ -127,7 +136,7 @@ function copyToClipboard(text: string) {
   height: 15px;
 }
 
-.jump {
+/* .jump {
   animation: jump 0.3s;
 }
 
@@ -135,5 +144,5 @@ function copyToClipboard(text: string) {
   50% {
     transform: translateY(-2%);
   }
-}
+} */
 </style>
