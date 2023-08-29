@@ -1,19 +1,19 @@
 <template>
   <div class="section--center gradient__bg">
-    <div class="secion__container">
-      <div class="secion__container-slogan">
+    <div class="section__container">
+      <div class="section__container-slogan">
         <p>
           {{ $t("pages.index.slogan") }}
           <!-- Take. Give.
-          <span class="secion__container-slogan--accent">Share.</span> -->
+          <span class="section__container-slogan--accent">Share.</span> -->
         </p>
       </div>
-      <div class="secion__container-description">
+      <div class="section__container-description">
         <p>
           {{ $t("pages.index.description") }}
         </p>
       </div>
-      <div class="secion__container-buttons">
+      <div class="section__container-buttons">
         <Knob :text="$t('components.inputs.knob.go')" href="/sharex" />
         <Knob
           :text="$t('components.inputs.knob.dashboard')"
@@ -23,9 +23,9 @@
         />
         <LoginButton primary v-else />
       </div>
-      <div class="secion__container-statistics">
+      <div class="section__container-statistics">
         <p>
-          <span class="secion__container-statistics--bold">{{
+          <span class="section__container-statistics--bold">{{
             data.count
           }}</span>
           {{ $t("pages.index.statistics") }}
@@ -63,44 +63,44 @@ fetchData();
 </script>
 
 <style scoped>
-.secion__container {
+.section__container {
   color: #fff;
   text-align: center;
   max-width: 700px;
 }
 
-.secion__container-slogan p {
+.section__container-slogan p {
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 4rem;
   line-height: 115px;
 }
 
-.secion__container-slogan--accent {
+.section__container-slogan--accent {
   font-family: var(--font-family-brand);
   font-size: 4.5rem;
   color: var(--color-primary);
 }
 
-.secion__container-description {
-  color: var(--color-text);
+.section__container-description {
+  color: var(--color-lighter);
   font-family: var(--font-family);
   font-size: 1rem;
   line-height: 20px;
 }
 
-.secion__container-buttons {
+.section__container-buttons {
   margin-block: 2rem 0.75rem;
 }
 
-.secion__container-statistics {
+.section__container-statistics {
   font-family: var(--font-family);
   font-size: 0.75rem;
   color: var(--color-light);
   opacity: 0.5;
 }
 
-.secion__container-statistics--bold {
+.section__container-statistics--bold {
   font-weight: 800;
 }
 </style>
