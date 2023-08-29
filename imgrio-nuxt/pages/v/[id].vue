@@ -14,14 +14,14 @@
         </p>
         <p class="section__container-subtitle-date">
           {{
-            new Date(userFile.dateOfCreation).toLocaleDateString('de-de', {
+            new Date(userFile.dateOfCreation).toLocaleDateString(i18n.locale.value, {
               day: '2-digit',
               month: 'long',
               year: 'numeric'
             })
           }}
         </p>
-        <a href="javascript:;" @click="deleteFileAsync">{{ $t('pages.view.delete') }}</a>
+        <a @click.prevent="deleteFileAsync">{{ $t('pages.view.delete') }}</a>
       </div>
     </div>
   </div>
@@ -33,6 +33,7 @@ import { apiClient } from '@/axios.conf';
 import { useToast } from 'vue-toastification';
 import { UserFile } from 'models';
 
+const i18n = useI18n();
 const router = useRouter();
 const toast = useToast();
 
