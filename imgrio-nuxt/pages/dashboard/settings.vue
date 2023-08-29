@@ -1,63 +1,59 @@
 <template>
   <div class="section__container section--margin">
     <div class="section__title">
-      <h1>{{ $t('pages.dashboard.settings.title')}}</h1>
+      <h1>{{ $t('pages.dashboard.settings.title') }}</h1>
     </div>
     <form class="section__container-form" v-if="user">
       <div class="section__container-form-input-group">
-        <label for="userName">{{ $t('pages.dashboard.settings.userName')}}</label>
-        <Textfield
-          id="userName"
-          :value="user.user_metadata.full_name"
-          disabled
-        />
+        <label for="userName">{{ $t('pages.dashboard.settings.userName') }}</label>
+        <Textfield id="userName" :value="user.user_metadata.full_name" disabled />
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="email">{{ $t('pages.dashboard.settings.email')}}</label>
+        <label for="email">{{ $t('pages.dashboard.settings.email') }}</label>
         <Textfield id="email" :value="user.email" type="email" disabled />
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="userId">{{ $t('pages.dashboard.settings.userId')}}</label>
+        <label for="userId">{{ $t('pages.dashboard.settings.userId') }}</label>
         <Textfield id="userId" :value="user.id" disabled />
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="imageAnimation">{{ $t('pages.dashboard.settings.imageAnimation')}}</label>
+        <label for="imageAnimation">{{ $t('pages.dashboard.settings.imageAnimation') }}</label>
         <Dropdown
           id="imageAnimation"
           :options="[
             { key: 'Inaktiv', value: false },
-            { key: 'Aktiv', value: true },
+            { key: 'Aktiv', value: true }
           ]"
         />
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="fileServer">{{ $t('pages.dashboard.settings.fileServer')}}</label>
+        <label for="fileServer">{{ $t('pages.dashboard.settings.fileServer') }}</label>
         <Dropdown
           id="fileServer"
           :options="[
             { key: 'imgrio', value: false },
-            { key: 'Eigener', value: true },
+            { key: 'Eigener', value: true }
           ]"
         />
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="language">{{ $t('pages.dashboard.settings.language')}}</label>
+        <label for="language">{{ $t('pages.dashboard.settings.language') }}</label>
         <Dropdown
           id="language"
           :options="[
             { key: 'Deutsch', value: 'de' },
-            { key: 'English', value: 'en' },
+            { key: 'English', value: 'en' }
           ]"
         />
       </div>
 
       <div class="section__container-form-input-group">
-        <label>{{ $t('pages.dashboard.settings.accessToken')}}</label>
+        <label>{{ $t('pages.dashboard.settings.accessToken') }}</label>
         <Knob
           :text="$t('pages.dashboard.settings.regenerate')"
           small
@@ -81,15 +77,15 @@
 </template>
 
 <script setup lang="ts">
-import { apiClient } from "@/axios.conf";
-import { useToast } from "vue-toastification";
+import { apiClient } from '@/axios.conf';
+import { useToast } from 'vue-toastification';
 
-import Textfield from "@/components/inputs/Textfield.vue";
-import Dropdown from "@/components/inputs/Dropdown.vue";
-import Knob from "@/components/inputs/Knob.vue";
+import Textfield from '@/components/inputs/Textfield.vue';
+import Dropdown from '@/components/inputs/Dropdown.vue';
+import Knob from '@/components/inputs/Knob.vue';
 
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ['auth']
 });
 
 const user = useSupabaseUser();
@@ -98,7 +94,7 @@ const toast = useToast();
 
 async function getPermanentJwtAsync() {
   if (!user) {
-    return new Error("Not authenticated");
+    return new Error('Not authenticated');
   }
 
   try {
