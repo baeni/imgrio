@@ -43,6 +43,7 @@
 <script setup lang="ts">
 // import { ref } from "vue";
 import { useToast } from "vue-toastification";
+import {UserFile} from "~/models";
 
 const i18n = useI18n();
 const toast = useToast();
@@ -51,7 +52,7 @@ const toast = useToast();
 
 const props = defineProps({
   userFile: {
-    type: Object,
+    type: Object as () => UserFile,
     required: true,
   },
 });
@@ -65,7 +66,7 @@ const props = defineProps({
 
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
-  toast.success(i18n.t('linkCopied'));
+  toast.success(i18n.t('toasts.successLinkCopied'));
 }
 </script>
 
@@ -77,7 +78,6 @@ function copyToClipboard(text: string) {
   border-radius: 1rem;
   color: var(--color-lightest);
   background-color: var(--color-light);
-  box-shadow: inset 0 0 0 2px var(--color-secondary2);
   overflow: hidden;
   cursor: pointer;
 }
