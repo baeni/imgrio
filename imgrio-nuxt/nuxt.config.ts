@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   i18n: {
     // https://i18n.nuxtjs.org/options-reference/
     vueI18n: './i18n.conf.ts',
-    detectBrowserLanguage: false, // temporarily disabled
+    // detectBrowserLanguage: false, // default is true
     locales: [
       { code: 'de', iso: 'de', file: 'de.json' },
       { code: 'en', iso: 'en', file: 'en.json' }
