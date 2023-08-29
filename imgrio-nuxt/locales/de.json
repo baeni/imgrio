@@ -1,4 +1,12 @@
 {
+  "toasts": {
+    "successLinkCopied": "Link in Zwischenablage kopiert.",
+    "successTokenCopied": "Neuer Token in Zwischenablage kopiert.",
+    "successSaved": "Änderungen gespeichert.",
+    "errorRetry": "Ein Fehler ist aufgetreten, versuche es erneut.",
+    "errorSelect": "Du musst eine Datei auswählen!"
+  },
+
   "pages": {
     "index": {
       "slogan": "Take. Give. Share",
@@ -10,10 +18,26 @@
     },
     "dashboard": {
       "title": "Dashboard",
-      "files": {},
-      "favorites": {},
-      "history": {},
-      "settings": {}
+      "files": {
+        "title": "Meine Dateien",
+        "notSharing": "Du teilst aktuell keine Dateien mit imgrio. :["
+      },
+      "settings": {
+        "title": "Einstellungen",
+        "userName": "Nutzername",
+        "email": "Email",
+        "userId": "UserID",
+        "imageAnimation": "Bild-Animation",
+        "fileServer": "Datei-Server",
+        "language": "Sprache",
+        "accessToken": "Zugriffstoken",
+        "regenerate": "Neu generieren",
+        "save": "Änderungen speichern"
+      }
+    },
+    "view": {
+      "unknown": "Unbekannt",
+      "delete": "Löschen"
     }
   },
 
@@ -32,7 +56,8 @@
     "modals": {
       "uploadModal": {
         "title": "Datei Hochladen",
-        "description": "Datei hierher ziehen\roder auswählen"
+        "description": "Datei hierher ziehen\roder auswählen",
+        "getLink": "Gib mir einen Link!"
       }
     },
     "loading": {}

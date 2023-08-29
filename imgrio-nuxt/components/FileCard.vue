@@ -44,6 +44,7 @@
 // import { ref } from "vue";
 import { useToast } from "vue-toastification";
 
+const i18n = useI18n();
 const toast = useToast();
 
 // const animationPlaying = ref(false);
@@ -64,7 +65,7 @@ const props = defineProps({
 
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
-  toast.success("Link in Zwischenablage kopiert.");
+  toast.success(i18n.t('linkCopied'));
 }
 </script>
 
@@ -81,10 +82,6 @@ function copyToClipboard(text: string) {
   cursor: pointer;
 }
 
-.card:hover .card__container-image {
-  transform: scale(1);
-}
-
 .card__container {
   position: relative;
   height: 100%;
@@ -94,7 +91,6 @@ function copyToClipboard(text: string) {
   height: 100%;
   width: 100%;
   object-fit: cover;
-  transform: scale(1.05);
   transition: 0.1s all ease-in-out;
 }
 

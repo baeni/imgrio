@@ -1,7 +1,7 @@
 <template>
   <div class="section__container section--margin">
     <div class="section__title">
-      <h1>Meine Dateien</h1>
+      <h1>{{ $t('pages.dashboard.files.title')}}</h1>
     </div>
 
     <div
@@ -12,7 +12,7 @@
     </div>
 
     <div class="section__container-status" v-else-if="userFiles.length == 0">
-      <p>Du teilst aktuell keine Dateien mit imgrio. :[</p>
+      <p>{{ $t('pages.dashboard.files.notSharing') }}</p>
     </div>
 
     <div v-else>
@@ -24,10 +24,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, reactive, onMounted } from "vue";
+import { computed, reactive, onMounted } from "vue";
 import { useUserFilesStore } from "@/stores/userFiles";
 
-import Knob from "@/components/inputs/Knob.vue";
 import Loading from "../../components/Loading.vue";
 import FileCard from "../../components/FileCard.vue";
 import type { UserFile } from "@/models";

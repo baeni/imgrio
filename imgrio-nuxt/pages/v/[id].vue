@@ -9,7 +9,7 @@
         <p>{{ userFile.title }}</p>
       </div>
       <div class="section__container-subtitle">
-        <p class="section__container-subtitle-author">Unbekannt</p>
+        <p class="section__container-subtitle-author">{{ $t('pages.view.unknown') }}</p>
         <p class="section__container-subtitle-date">
           {{
             new Date(userFile.dateOfCreation).toLocaleDateString("de-de", {
@@ -19,7 +19,7 @@
             })
           }}
         </p>
-        <a href="javascript:;" @click="deleteFileAsync">Löschen</a>
+        <a href="javascript:;" @click="deleteFileAsync">{{ $t('pages.view.delete')}}</a>
       </div>
     </div>
   </div>

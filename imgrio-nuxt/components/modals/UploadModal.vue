@@ -33,7 +33,7 @@
           />
         </label>
         <Knob
-          text="Gib mir einen Link!"
+          :text="$t('components.modals.uploadModal.getLink')"
           :primary="!!selectedFile"
           @click.prevent="postFileAsync"
         />
@@ -50,8 +50,10 @@ import { useToast } from "vue-toastification";
 
 import Knob from "../inputs/Knob.vue";
 
+const i18n = useI18n();
 const toast = useToast();
 const user = useSupabaseUser();
+
 const selectedFile = ref<File | null>();
 const userFilesStore = useUserFilesStore();
 
@@ -65,7 +67,7 @@ const handleFileChange = (event: Event) => {
 async function postFileAsync() {
   try {
     if (!selectedFile.value) {
-      toast.error("Du musst eine Datei auswählen!");
+      toast.error(i18n.t('toasts.errorSelect'));
       return;
     }
 
@@ -77,12 +79,12 @@ async function postFileAsync() {
 
     closeModal();
     copyToClipboard(response.url);
-    toast.success("Link in Zwischenablage kopiert.");
+    toast.success(i18n.t('toasts.successLinkCopied'));
 
     userFilesStore.userFiles?.unshift(response.userFile);
     selectedFile.value = null;
   } catch {
-    toast.error("Ein Fehler ist aufgetreten, versuche es erneut.");
+    toast.error(i18n.t('toasts.errorRetry'));
     return;
   }
 }

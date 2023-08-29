@@ -1,11 +1,11 @@
 <template>
   <div class="section__container section--margin">
     <div class="section__title">
-      <h1>Einstellungen</h1>
+      <h1>{{ $t('pages.dashboard.settings.title')}}</h1>
     </div>
     <form class="section__container-form" v-if="user">
       <div class="section__container-form-input-group">
-        <label for="userName">Nutzername</label>
+        <label for="userName">{{ $t('pages.dashboard.settings.userName')}}</label>
         <Textfield
           id="userName"
           :value="user.user_metadata.full_name"
@@ -14,17 +14,17 @@
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="email">Email</label>
+        <label for="email">{{ $t('pages.dashboard.settings.email')}}</label>
         <Textfield id="email" :value="user.email" type="email" disabled />
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="userId">UserID</label>
+        <label for="userId">{{ $t('pages.dashboard.settings.userId')}}</label>
         <Textfield id="userId" :value="user.id" disabled />
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="imageAnimation">Bild-Animation</label>
+        <label for="imageAnimation">{{ $t('pages.dashboard.settings.imageAnimation')}}</label>
         <Dropdown
           id="imageAnimation"
           :options="[
@@ -35,9 +35,9 @@
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="externalHost">Datei-Server</label>
+        <label for="fileServer">{{ $t('pages.dashboard.settings.fileServer')}}</label>
         <Dropdown
-          id="externalHost"
+          id="fileServer"
           :options="[
             { key: 'imgrio', value: false },
             { key: 'Eigener', value: true },
@@ -46,7 +46,7 @@
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="externalHost">Sprache</label>
+        <label for="language">{{ $t('pages.dashboard.settings.language')}}</label>
         <Dropdown
           id="language"
           :options="[
@@ -57,9 +57,9 @@
       </div>
 
       <div class="section__container-form-input-group">
-        <label>Access Token</label>
+        <label>{{ $t('pages.dashboard.settings.accessToken')}}</label>
         <Knob
-          text="Neu generieren"
+          :text="$t('pages.dashboard.settings.regenerate')"
           small
           @click.prevent="() => getPermanentJwtAsync()"
         />
@@ -67,10 +67,10 @@
 
       <div class="section__container-form-button">
         <Knob
-          text="Änderungen speichern"
+          :text="$t('pages.dashboard.settings.save')"
           small
           transparent
-          @click.prevent="() => toast.success('Änderungen gespeichert.')"
+          @click.prevent="() => toast.success($t('toasts.successSaved'))"
         />
       </div>
     </form>
@@ -93,7 +93,7 @@ definePageMeta({
 });
 
 const user = useSupabaseUser();
-const locale = useI18n();
+const i18n = useI18n();
 const toast = useToast();
 
 async function getPermanentJwtAsync() {
@@ -105,9 +105,9 @@ async function getPermanentJwtAsync() {
     const response = (await apiClient.get(`users/${user.value.id}`)).data;
 
     copyToClipboard(response);
-    toast.success("Neuer Token in Zwischenablage kopiert");
+    toast.success(i18n.t('toasts.successTokenCopied'));
   } catch {
-    toast.error("Ein Fehler ist aufgetreten, versuche es erneut.");
+    toast.error(i18n.t('toasts.errorRetry'));
     return;
   }
 }
