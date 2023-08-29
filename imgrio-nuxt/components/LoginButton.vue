@@ -1,7 +1,7 @@
 <template>
   <Knob
     :text="$t('components.inputs.knob.signIn')"
-    @click="navigateTo('/login')"
+    @click="navigateTo('/auth/login')"
     :small="small"
     :primary="primary"
     :transparent="transparent"
