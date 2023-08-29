@@ -1,6 +1,6 @@
 <template>
   <select :disabled="disabled">
-    <option v-for="option in options" :value="option">
+    <option v-for="option in options" :value="option" :selected="selected == option">
       {{ option }}
     </option>
   </select>
@@ -10,6 +10,10 @@
 const props = defineProps({
   options: {
     type: Array,
+    required: true
+  },
+  selected: {
+    type: Object,
     required: true
   },
   disabled: {
