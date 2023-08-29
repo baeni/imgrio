@@ -1,4 +1,5 @@
-﻿using HeyRed.Mime;
+﻿using System.ComponentModel.DataAnnotations;
+using HeyRed.Mime;
 
 namespace imgrio_api.Models
 {
@@ -24,6 +25,7 @@ namespace imgrio_api.Models
             DateOfCreation = dateOfCreation;
         }
 
+        [Key]
         public Guid Id { get; private set; }
         public Guid Author { get; private set; }
         public string Title { get; private set; }
