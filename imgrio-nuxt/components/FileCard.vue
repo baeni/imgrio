@@ -5,32 +5,29 @@
       :class="{ jump: animationPlaying }"
       @mouseenter="playAnimation()"
     > -->
-    <div
-      class="card"
-    >
+    <div class="card">
       <div class="card__container">
         <!-- <NuxtImg
           class="card__container-image"
           :src="userFile.url"
           loading="lazy"
         /> -->
-        <div class="card__container-image" :style="`background-image: url(${userFile.url}); background-size: cover; background-position: center;`"></div>
+        <div
+          class="card__container-image"
+          :style="`background-image: url(${userFile.url}); background-size: cover; background-position: center;`"
+        ></div>
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
               {{
                 userFile.title.length > 17
-                  ? userFile.title.substring(0, 15).concat("...")
+                  ? userFile.title.substring(0, 15).concat('...')
                   : userFile.title
               }}
             </p>
           </div>
           <div class="card__container-info-icon">
-            <button
-              @click.prevent="
-                copyToClipboard(`https://imgrio.com/v/${userFile.id}`)
-              "
-            >
+            <button @click.prevent="copyToClipboard(`https://imgrio.com/v/${userFile.id}`)">
               <FaIcon :icon="['fas', 'paperclip']" />
             </button>
           </div>
@@ -42,8 +39,8 @@
 
 <script setup lang="ts">
 // import { ref } from "vue";
-import { useToast } from "vue-toastification";
-import {UserFile} from "~/models";
+import { useToast } from 'vue-toastification';
+import { UserFile } from '~/models';
 
 const i18n = useI18n();
 const toast = useToast();
@@ -53,8 +50,8 @@ const toast = useToast();
 const props = defineProps({
   userFile: {
     type: Object as () => UserFile,
-    required: true,
-  },
+    required: true
+  }
 });
 
 // function playAnimation() {
@@ -102,11 +99,7 @@ function copyToClipboard(text: string) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.6) 30%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0) 100%);
 }
 
 .card__container-info-title {
