@@ -29,15 +29,6 @@
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="language">{{ $t('pages.dashboard.settings.language') }}</label>
-        <Dropdown
-          id="language"
-          :options="useI18n().availableLocales"
-          :selected="userSettings.language"
-        />
-      </div>
-
-      <div class="section__container-form-input-group">
         <label for="accessToken">{{ $t('pages.dashboard.settings.accessToken') }}</label>
         <Knob
           id="accessToken"
@@ -66,6 +57,7 @@ import { useUserSettingsStore } from '~/stores/userSettings';
 import Textfield from '~/components/inputs/Textfield.vue';
 import Dropdown from '~/components/inputs/Dropdown.vue';
 import Knob from '~/components/inputs/Knob.vue';
+import { UserSetting } from '~/models';
 
 const user = useSupabaseUser();
 const i18n = useI18n();
@@ -77,7 +69,7 @@ onMounted(async () => {
   await userSettingsStore.fetchDataAsync();
 });
 
-const userSettings = computed(() => userSettingsStore.userSettings);
+const userSettings = computed(() => userSettingsStore.userSettings as UserSetting[]);
 
 async function getPermanentJwtAsync() {
   if (!user) {
