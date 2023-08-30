@@ -12,8 +12,8 @@ using imgrio_api.Data;
 namespace imgrio_api.Migrations
 {
     [DbContext(typeof(ImgrioDbContext))]
-    [Migration("20230829181047_AddUserSettings")]
-    partial class AddUserSettings
+    [Migration("20230830181139_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,9 +37,6 @@ namespace imgrio_api.Migrations
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsSelfHosted")
-                        .HasColumnType("boolean");
-
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
 
@@ -60,20 +57,24 @@ namespace imgrio_api.Migrations
                     b.ToTable("UserFiles");
                 });
 
-            modelBuilder.Entity("imgrio_api.Models.UserSettings", b =>
+            modelBuilder.Entity("imgrio_api.Models.UserSetting", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("ImageAnimation")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Language")
+                    b.Property<string>("Key")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
 
                     b.ToTable("UserSettings");
                 });

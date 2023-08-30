@@ -21,12 +21,25 @@ namespace imgrio_api.Migrations
                     Type = table.Column<string>(type: "text", nullable: false),
                     Size = table.Column<long>(type: "bigint", nullable: false),
                     Url = table.Column<string>(type: "text", nullable: false),
-                    IsSelfHosted = table.Column<bool>(type: "boolean", nullable: false),
                     DateOfCreation = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserFiles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserSettings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Key = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSettings", x => x.Id);
                 });
         }
 
@@ -35,6 +48,9 @@ namespace imgrio_api.Migrations
         {
             migrationBuilder.DropTable(
                 name: "UserFiles");
+
+            migrationBuilder.DropTable(
+                name: "UserSettings");
         }
     }
 }
