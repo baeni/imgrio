@@ -12,7 +12,6 @@ namespace imgrio_api.Models
             string type,
             long size,
             string url,
-            bool isSelfHosted,
             DateTime dateOfCreation)
         {
             Id = id;
@@ -21,7 +20,6 @@ namespace imgrio_api.Models
             Type = type;
             Size = size;
             Url = url;
-            IsSelfHosted = isSelfHosted;
             DateOfCreation = dateOfCreation;
         }
 
@@ -32,7 +30,6 @@ namespace imgrio_api.Models
         public string Type { get; private set; }
         public long Size { get; private set; }
         public string Url { get; private set; }
-        public bool IsSelfHosted { get; private set; }
         public DateTime DateOfCreation { get; private set; }
 
         public override string ToString()
