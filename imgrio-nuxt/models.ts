@@ -1,7 +1,8 @@
-export interface UserSettings {
+export interface UserSetting {
+  id: string;
   userId: string;
-  imageAnimation: boolean;
-  language: string;
+  key: string;
+  value: string;
 }
 
 export interface UserFile {
@@ -13,4 +14,9 @@ export interface UserFile {
   url: string;
   isSelfHosted: boolean;
   dateOfCreation: string;
+}
+
+export interface UserFilesInfo {
+  count: number;
+  countToday: number;
 }
