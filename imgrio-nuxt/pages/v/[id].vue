@@ -70,12 +70,13 @@ async function deleteFileAsync() {
 .section {
   min-height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .section-background {
   position: absolute;
   object-fit: cover;
-  height: 100%;
+  min-width: 100%;
   filter: blur(200px);
   z-index: -1;
 }
@@ -97,6 +98,7 @@ async function deleteFileAsync() {
 .section__container-image img {
   max-width: 100%;
   max-height: 65vh;
+  margin: 0 auto 2rem auto;
   background-color: var(--color-light);
   background-repeat: no-repeat;
   background-size: cover;
