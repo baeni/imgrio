@@ -43,17 +43,12 @@
           id="accessToken"
           :text="$t('pages.dashboard.settings.regenerate')"
           small
-          @click.prevent="() => getPermanentJwtAsync()"
+          @click.prevent="async () => await getPermanentJwtAsync()"
         />
       </div>
 
       <div class="section__container-form-button">
-        <Knob
-          :text="$t('pages.dashboard.settings.save')"
-          small
-          transparent
-          @click.prevent="PutSettingsAsync()"
-        />
+        <Knob :text="$t('pages.dashboard.settings.save')" small transparent />
       </div>
     </form>
     <div class="section__container-loading grid place-items-center" v-else>
@@ -63,36 +58,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue';
+import { onMounted, computed } from 'vue';
 import { apiClient } from '@/axios.conf';
 import { useToast } from 'vue-toastification';
-
-import { UserSettings } from '~/models';
 import { useUserSettingsStore } from '~/stores/userSettings';
 
-import Textfield from '@/components/inputs/Textfield.vue';
-import Dropdown from '@/components/inputs/Dropdown.vue';
-import Knob from '@/components/inputs/Knob.vue';
-
-definePageMeta({
-  middleware: ['auth']
-});
+import Textfield from '~/components/inputs/Textfield.vue';
+import Dropdown from '~/components/inputs/Dropdown.vue';
+import Knob from '~/components/inputs/Knob.vue';
 
 const user = useSupabaseUser();
 const i18n = useI18n();
 const toast = useToast();
 
 const userSettingsStore = useUserSettingsStore();
-const userSettingsData = reactive<{ userSettings: UserSettings | null }>({
-  userSettings: null
-});
 
 onMounted(async () => {
-  await userSettingsStore.fetchUserSettings();
-  userSettingsData.userSettings = userSettingsStore.userSettings as UserSettings;
+  await userSettingsStore.fetchDataAsync();
 });
 
-const userSettings = computed(() => userSettingsData.userSettings);
+const userSettings = computed(() => userSettingsStore.userSettings);
 
 async function getPermanentJwtAsync() {
   if (!user) {
@@ -100,31 +85,10 @@ async function getPermanentJwtAsync() {
   }
 
   try {
-    const response = (await apiClient.get(`users/${user.value.id}`)).data;
+    const response = (await apiClient.get('me/token')).data;
 
     copyToClipboard(response);
     toast.success(i18n.t('toasts.successTokenCopied'));
-  } catch {
-    toast.error(i18n.t('toasts.errorRetry'));
-    return;
-  }
-}
-
-async function PutSettingsAsync() {
-  if (!user) {
-    return new Error('Not authenticated');
-  }
-
-  const newUserSettings: UserSettings = {
-    userId: user.value.id,
-    imageAnimation: false,
-    language: 'de'
-  };
-
-  try {
-    const response = (await apiClient.put(`users/settings/${user.value.id}`, newUserSettings)).data;
-
-    toast.success(i18n.t('toasts.successSaved'));
   } catch {
     toast.error(i18n.t('toasts.errorRetry'));
     return;
