@@ -1,7 +1,7 @@
 <template>
   <NuxtLink to="/dashboard/settings" v-if="user">
     <img
-      :src="`https://ui-avatars.com/api/?name=${user.user_metadata.full_name}&background=random`"
+      :src="`https://ui-avatars.com/api/?name=${user.user_metadata.full_name}&background=c2c6cb&bold=true`"
     />
   </NuxtLink>
 </template>
@@ -10,8 +10,8 @@
 const props = defineProps({
   user: {
     type: Object,
-    required: true,
-  },
+    required: true
+  }
 });
 </script>
 
