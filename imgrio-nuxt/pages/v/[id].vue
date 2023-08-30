@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useToast } from 'vue-toastification';
-import { UserFile } from 'models';
+import { UserFile } from '~/models';
 import { useUserFilesStore } from '~/stores/userFiles';
 import { apiClient } from '~/axios.conf';
 
