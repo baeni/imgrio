@@ -28,16 +28,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { apiClient } from '@/axios.conf';
+import { onMounted, ref } from 'vue';
 import { useToast } from 'vue-toastification';
 import { UserFile } from 'models';
+import { useUserFilesStore } from '~/stores/userFiles';
+import { apiClient } from '~/axios.conf';
 
 const i18n = useI18n();
 const router = useRouter();
 const toast = useToast();
 
-const userFile = ref<UserFile>((await apiClient.get(`files/${useRoute().params.id}`)).data);
+const userFile = ref<UserFile | null>(null);
+const userFilesStore = useUserFilesStore();
 
 useServerSeoMeta({
   ogSiteName: 'imgrio',
@@ -52,13 +54,17 @@ useServerSeoMeta({
   twitterCard: 'summary_large_image'
 });
 
+onMounted(async () => {
+  userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
+});
+
 async function deleteFileAsync() {
   try {
-    const response = (await apiClient.delete(`files/${userFile.value?.id}`)).data;
+    await userFilesStore.deleteUserFileAsync(userFile.value!.id);
 
     await router.push('/dashboard/files');
   } catch {
-    toast.error('Ein Fehler ist aufgetreten, versuche es erneut.');
+    toast.error(i18n.t('toasts.errorRetry'));
     return;
   }
 }
