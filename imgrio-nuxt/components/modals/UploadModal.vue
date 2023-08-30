@@ -2,7 +2,7 @@
   <div class="overlay" id="overlay">
     <div class="section__container" @click.stop>
       <div class="section__title">
-        <h1>{{ $t("components.modals.uploadModal.title") }}</h1>
+        <h1>{{ $t('components.modals.uploadModal.title') }}</h1>
       </div>
 
       <form class="section__container-form">
@@ -12,13 +12,10 @@
           </div>
 
           <div class="section__container-form-drop-area-title">
-            <p>{{ $t("components.modals.uploadModal.description") }}</p>
+            <p>{{ $t('components.modals.uploadModal.description') }}</p>
           </div>
 
-          <div
-            class="section__container-form-drop-area-file"
-            v-if="selectedFile"
-          >
+          <div class="section__container-form-drop-area-file" v-if="selectedFile">
             <p>{{ selectedFile.name }}</p>
           </div>
 
@@ -43,16 +40,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { apiClient } from "@/axios.conf";
-import { useUserFilesStore } from "@/stores/userFiles";
-import { useToast } from "vue-toastification";
+import { ref } from 'vue';
+import { useUserFilesStore } from '@/stores/userFiles';
+import { useToast } from 'vue-toastification';
 
-import Knob from "../inputs/Knob.vue";
+import Knob from '../inputs/Knob.vue';
 
 const i18n = useI18n();
 const toast = useToast();
-const user = useSupabaseUser();
 
 const selectedFile = ref<File | null>();
 const userFilesStore = useUserFilesStore();
@@ -72,25 +67,18 @@ async function postFileAsync() {
     }
 
     const formData = new FormData();
-    formData.append("file", selectedFile.value);
-    const response = (
-      await apiClient.post(`files/users/${user.value.id}`, formData)
-    ).data;
+    formData.append('file', selectedFile.value);
+    const response = await userFilesStore.postUserFileAsync(formData);
 
-    closeModal();
     copyToClipboard(response.url);
     toast.success(i18n.t('toasts.successLinkCopied'));
 
-    userFilesStore.userFiles?.unshift(response.userFile);
+    document.getElementById('overlay')?.click();
     selectedFile.value = null;
   } catch {
     toast.error(i18n.t('toasts.errorRetry'));
     return;
   }
-}
-
-function closeModal() {
-  document.getElementById("overlay")?.click();
 }
 
 function copyToClipboard(url: string) {
