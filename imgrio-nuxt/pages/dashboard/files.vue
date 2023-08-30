@@ -1,13 +1,10 @@
 <template>
   <div class="section__container section--margin">
     <div class="section__title">
-      <h1>{{ $t('pages.dashboard.files.title')}}</h1>
+      <h1>{{ $t('pages.dashboard.files.title') }}</h1>
     </div>
 
-    <div
-      class="section__container-status grid place-items-center"
-      v-if="!userFiles"
-    >
+    <div class="section__container-status grid place-items-center" v-if="!userFiles">
       <Loading />
     </div>
 
@@ -24,28 +21,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, onMounted } from "vue";
-import { useUserFilesStore } from "@/stores/userFiles";
+import { onMounted, computed } from 'vue';
+import { useUserFilesStore } from '~/stores/userFiles';
 
-import Loading from "../../components/Loading.vue";
-import FileCard from "../../components/FileCard.vue";
-import type { UserFile } from "@/models";
-
-definePageMeta({
-  middleware: ["auth"],
-});
+import Loading from '~/components/Loading.vue';
+import FileCard from '~/components/FileCard.vue';
 
 const userFilesStore = useUserFilesStore();
-const userFilesData = reactive<{ userFiles: UserFile[] | null }>({
-  userFiles: null,
-});
 
 onMounted(async () => {
-  await userFilesStore.fetchUserFiles();
-  userFilesData.userFiles = userFilesStore.userFiles as UserFile[];
+  await userFilesStore.fetchDataAsync();
 });
 
-const userFiles = computed(() => userFilesData.userFiles);
+const userFiles = computed(() => userFilesStore.userFiles);
 </script>
 
 <style scoped>
