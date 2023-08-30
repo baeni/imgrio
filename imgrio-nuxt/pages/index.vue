@@ -25,7 +25,7 @@
       </div>
       <div class="section__container-statistics">
         <p>
-          <span class="section__container-statistics--bold">{{ data.count }}</span>
+          <span class="section__container-statistics--bold">{{ userFilesInfo.count }}</span>
           {{ $t('pages.index.statistics') }}
         </p>
       </div>
@@ -34,30 +34,22 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { onMounted, ref } from 'vue';
 import { apiClient } from '@/axios.conf';
 
 import Knob from '@/components/inputs/Knob.vue';
 import LoginButton from '@/components/LoginButton.vue';
+import { UserFilesInfo } from '~/models';
 
 const user = useSupabaseUser();
-
-let data = reactive({
+const userFilesInfo = ref<UserFilesInfo>({
   count: 0,
   countToday: 0
 });
 
-const fetchData = async () => {
-  try {
-    const response = (await apiClient.get('files')).data;
-    data.count = response.count;
-    data.countToday = response.countToday;
-  } catch (error) {
-    console.error('An error occurred while attempting to fetch data:', error);
-  }
-};
-
-fetchData();
+onMounted(async () => {
+  userFilesInfo.value = (await apiClient.get('files')).data;
+});
 </script>
 
 <style scoped>
