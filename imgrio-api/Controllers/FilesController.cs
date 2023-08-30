@@ -1,23 +1,11 @@
-﻿using HeyRed.Mime;
-using imgrio_api.Data;
+﻿using imgrio_api.Data;
 using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace imgrio_api.Controllers
 {
-    /*
-     * Endpoint to manage files:
-     * - Get information about all files
-     * - Get a single file by its ID
-     * - Get multiple files by a UserID
-     * - Post a file by a UserIdD
-     * - Delete a single file by its ID
-     * - Delete all files by a UserID
-     */
-
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
@@ -32,187 +20,28 @@ namespace imgrio_api.Controllers
         }
         
         [HttpGet, AllowAnonymous]
-        public async Task<IActionResult> GetAllFilesInfoAsync()
+        public async Task<IActionResult> GetUserFilesInfoAsync()
         {
             var set = _dbContext.Set<UserFile>();
+
+            var userFilesInfo = new UserFilesInfo(
+                await set.CountAsync(),
+                await set.Select(x => x.DateOfCreation == DateTime.UtcNow).CountAsync());
     
-            var count = await set.CountAsync();
-            var countToday = await set
-                .Select(x => x.DateOfCreation == DateTime.UtcNow)
-                .CountAsync();
-    
-            return Ok(new {
-                count,
-                countToday
-            });
+            return Ok(userFilesInfo);
         }
         
         [HttpGet("{fileId}"), AllowAnonymous]
-        public async Task<IActionResult> GetFileByIdAsync(Guid fileId)
+        public async Task<IActionResult> GetUserFileByIdAsync(Guid fileId)
         {
-            var uploadedFile = await _dbContext.FindAsync<UserFile>(fileId);
+            var userFile = await _dbContext.FindAsync<UserFile>(fileId);
     
-            if (uploadedFile == null)
+            if (userFile == null)
             {
-                return NotFound();
-            }
-    
-            return Ok(uploadedFile);
-        }
-        
-        [HttpGet("users/{userId}")]
-        public async Task<IActionResult> GetFilesByUserIdAsync(Guid userId)
-        {
-            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (sub == null || !sub.Equals(userId.ToString()))
-            {
-                return Unauthorized("Cannot access other users ressources.");
+                return NotFound("UserFile could not be found in database.");
             }
     
-            var uploadedFiles = await _dbContext.Set<UserFile>()
-                .Where(x => x.Author == userId).ToArrayAsync();
-    
-            return Ok(uploadedFiles);
-        }
-
-        [HttpPost("users/{userId}")]
-        public async Task<IActionResult> PostFileByUserIdAsync(Guid userId, [FromForm] IFormFile file)
-        {
-            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (sub == null || !sub.Equals(userId.ToString()))
-            {
-                return Unauthorized("Cannot access other users ressources.");
-            }
-
-            var fileType = file.ContentType;
-            var fileId = Guid.NewGuid();
-            var isUserSelfHosting = false;
-
-            var uploadedFile = new UserFile(
-                fileId,
-                userId,
-                Path.GetFileNameWithoutExtension(file.FileName),
-                fileType,
-                file.Length,
-                isUserSelfHosting ? "<notYetImplemented>" : $"https://data.imgrio.com/{userId}/{fileId}.{MimeTypesMap.GetExtension(fileType)}",
-                isUserSelfHosting,
-                DateTime.UtcNow);
-
-            if (uploadedFile.IsSelfHosted)
-            {
-                #region save to user server
-                // TODO
-                throw new NotImplementedException("Self hosting is not yet implemented.");
-                #endregion
-            }
-            else
-            {
-                #region save to imgrio server
-                var path = $"./data/{uploadedFile.Author}";
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                using var stream = new FileStream($"{path}/{uploadedFile}", FileMode.Create);
-                await file.CopyToAsync(stream);
-                #endregion
-            }
-
-            #region save to database
-            await _dbContext.AddAsync(uploadedFile);
-            await _dbContext.SaveChangesAsync();
-            #endregion
-
-            return Ok(new { userFile = uploadedFile , url = $"https://imgrio.com/v/{uploadedFile.Id}"});
-        }
-
-        [HttpDelete("{fileId}")]
-        public async Task<IActionResult> DeleteFileByIdAsync(Guid fileId)
-        {
-            var uploadedFile = await _dbContext.FindAsync<UserFile>(fileId);
-
-            if (uploadedFile == null)
-            {
-                return NotFound();
-            }
-
-            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (sub == null || !sub.Equals(uploadedFile.Author.ToString()))
-            {
-                return Unauthorized("Cannot access other users ressources.");
-            }
-
-            #region delete from database
-            _dbContext.Remove(uploadedFile);
-            await _dbContext.SaveChangesAsync();
-            #endregion
-
-            if (uploadedFile.IsSelfHosted)
-            {
-                #region delete from user server
-                // TODO
-                throw new NotImplementedException("Self hosting is not yet implemented.");
-                #endregion
-            }
-            else
-            {
-                #region delete from imgrio server
-                var path = $"./data/{uploadedFile.Author}/{uploadedFile}";
-                if (!System.IO.File.Exists(path))
-                {
-                    return NotFound($"Could not find file with id: {fileId}");
-                }
-                System.IO.File.Delete(path);
-                #endregion
-            }
-
-            return Ok($"Deleted file with id: {fileId}");
-        }
-
-        [HttpDelete("users/{userId}")]
-        public async Task<IActionResult> DeleteFilesByUserIdAsync(Guid userId)
-        {
-            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (sub == null || !sub.Equals(userId.ToString()))
-            {
-                return Unauthorized("Cannot access other users ressources.");
-            }
-
-            var uploadedFiles = await _dbContext.Set<UserFile>().Where(x => x.Author == userId).ToArrayAsync();
-
-            if (uploadedFiles == null || uploadedFiles.Length <= 0)
-            {
-                return NotFound();
-            }
-
-            #region delete from database
-            _dbContext.RemoveRange(uploadedFiles);
-            await _dbContext.SaveChangesAsync();
-            #endregion
-
-            foreach (var uploadedFile in uploadedFiles)
-            {
-                if (uploadedFile.IsSelfHosted)
-                {
-                    #region delete from user server
-                    // TODO
-                    throw new NotImplementedException("Self hosting is not yet implemented.");
-                    #endregion
-                }
-                else
-                {
-                    #region delete from imgrio server
-                    var path = $"./data/{uploadedFile.Author}/{uploadedFile}";
-                    if (!System.IO.File.Exists(path))
-                    {
-                        return NotFound($"Could not find file with id: {uploadedFile.Id}");
-                    }
-                    System.IO.File.Delete(path);
-                    #endregion
-                }
-            }
-
-            return Ok($"Successfully deleted files for user with id: {userId}");
+            return Ok(userFile);
         }
     }
 }
