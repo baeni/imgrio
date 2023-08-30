@@ -38,7 +38,7 @@ const i18n = useI18n();
 const router = useRouter();
 const toast = useToast();
 
-const userFile = ref<UserFile | null>(null);
+const userFile = ref<UserFile>((await apiClient.get(`files/${useRoute().params.id}`)).data);
 const userFilesStore = useUserFilesStore();
 
 useServerSeoMeta({
@@ -52,10 +52,6 @@ useServerSeoMeta({
   twitterImage: userFile.value?.url,
 
   twitterCard: 'summary_large_image'
-});
-
-onMounted(async () => {
-  userFile.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
 });
 
 async function deleteFileAsync() {
