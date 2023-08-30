@@ -97,9 +97,7 @@ async function deleteFileAsync() {
 .section__container-image img {
   max-width: 100%;
   max-height: 65vh;
-  margin-bottom: 2rem;
-  margin: 0 auto;
-  background-color: var(--color-secondary2);
+  background-color: var(--color-light);
   background-repeat: no-repeat;
   background-size: cover;
   transform-style: preserve-3d;
