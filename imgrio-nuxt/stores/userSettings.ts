@@ -1,21 +1,19 @@
 ﻿import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
-import type { UserSettings } from '@/models';
+import type { UserSetting } from '@/models';
 import { apiClient } from '@/axios.conf';
 
-export const useUserSettingsStore = defineStore('useUserSettings', () => {
-  const userSettings = ref<UserSettings>();
+export const useUserSettingsStore = defineStore('userSettings', () => {
+  const userSettings = ref<UserSetting[]>();
 
-  async function fetchUserSettings() {
-    const user = useSupabaseUser();
-
-    if (!user) {
-      return new Error('Not authenticated');
-    }
-
-    userSettings.value = (await apiClient.get(`users/settings/${user.value.id}`)).data;
+  async function fetchDataAsync() {
+    userSettings.value = (await apiClient.get('me/settings')).data;
   }
 
-  return { fetchUserSettings, userSettings };
+  async function putUserSettingAsync(key: string, value: string) {
+    await apiClient.put('me/settings', { key, value });
+  }
+
+  return { fetchDataAsync, putUserSettingAsync, userSettings };
 });
