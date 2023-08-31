@@ -29,7 +29,7 @@ import { useUserFilesStore } from '~/stores/userFiles';
 
 import Loading from '~/components/Loading.vue';
 import FileCard from '~/components/FileCard.vue';
-import ImageCard from "~/components/modals/ImageCard.vue";
+import ImageCard from '~/components/ImageCard.vue';
 
 const userFilesStore = useUserFilesStore();
 
