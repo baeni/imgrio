@@ -16,8 +16,8 @@
         <LoginButton small transparent v-else />
       </div>
       <div class="navbar__container-burger" @click="toggleMenu">
-        <img src="../assets/icons/burger-open.svg" v-if="!isMenuActive" />
-        <img src="../assets/icons/burger-close.svg" v-else />
+        <FaIcon :icon="['fas', 'grip-lines']" style="color: #ffffff" v-if="!isMenuActive" />
+        <FaIcon :icon="['fas', 'xmark']" style="color: #ffffff" v-else />
       </div>
     </div>
     <div class="navbar__menu" v-if="isMenuActive">
