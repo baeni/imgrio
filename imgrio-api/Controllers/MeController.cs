@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using nClam;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Sockets;
 using System.Security.Claims;
 using System.Text;
 
@@ -17,7 +15,6 @@ namespace imgrio_api.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
-    [Authorize(AuthenticationSchemes = "PermanentJwtPolicy")]
     public class MeController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
@@ -53,6 +50,7 @@ namespace imgrio_api.Controllers
         }
 
         [HttpPost("files")]
+        [Authorize(AuthenticationSchemes = "PermanentJwtPolicy")]
         public async Task<IActionResult> PostMyUserFileAsync([FromForm] IFormFile file)
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -141,7 +139,6 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("settings")]
-        [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
         public async Task<IActionResult> GetMyUserSettingsAsync()
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -159,7 +156,6 @@ namespace imgrio_api.Controllers
         }
 
         [HttpPut("settings")]
-        [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
         public async Task<IActionResult> PutMyUserSettingAsync(string key, string value)
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -188,7 +184,6 @@ namespace imgrio_api.Controllers
         }
 
         [HttpGet("token")]
-        [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
         public IActionResult GetMyPermanentJwt()
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
