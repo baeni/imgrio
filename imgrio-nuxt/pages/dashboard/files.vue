@@ -13,9 +13,12 @@
     </div>
 
     <div v-else>
-      <div class="section__container-list">
-        <FileCard :userFile="file" v-for="file in userFiles" :key="file.id" />
-      </div>
+      <ul class="section__container-list">
+        <li v-for="userFile in userFiles" :key="userFile.id">
+          <ImageCard :userFile="userFile" v-if="userFile.type.startsWith('image/')" />
+          <FileCard :userFile="userFile" v-else />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -26,6 +29,7 @@ import { useUserFilesStore } from '~/stores/userFiles';
 
 import Loading from '~/components/Loading.vue';
 import FileCard from '~/components/FileCard.vue';
+import ImageCard from "~/components/modals/ImageCard.vue";
 
 const userFilesStore = useUserFilesStore();
 
