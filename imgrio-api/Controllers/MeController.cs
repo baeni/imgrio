@@ -1,11 +1,14 @@
 ﻿using HeyRed.Mime;
 using imgrio_api.Data;
+using imgrio_api.Extensions;
 using imgrio_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using nClam;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Sockets;
 using System.Security.Claims;
 using System.Text;
 
@@ -58,16 +61,24 @@ namespace imgrio_api.Controllers
                 return Unauthorized("Sub is invalid.");
             }
 
+            if (!file.IsValidMimeType())
+            {
+                return Forbid("Unsupported file type.");
+            }
+
+            if (!await file.IsSafe())
+            {
+                return Forbid("The file appears to be unsafe.");
+            }
+
             var userId = Guid.Parse(sub);
 
-            var fileType = file.ContentType;
             var userFileId = Guid.NewGuid();
-
             var userFile = new UserFile(
                 userFileId,
                 userId,
                 Path.GetFileNameWithoutExtension(file.FileName),
-                fileType,
+                file.ContentType,
                 file.Length,
                 $"https://data.imgrio.com/{userId}/{userFileId}.{MimeTypesMap.GetExtension(fileType)}",
                 DateTime.UtcNow);
