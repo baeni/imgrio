@@ -15,11 +15,6 @@
       </div>
 
       <div class="section__container-form-input-group">
-        <label for="userId">{{ $t('pages.dashboard.settings.userId') }}</label>
-        <Textfield id="userId" :value="user.id" disabled />
-      </div>
-
-      <div class="section__container-form-input-group">
         <label for="imageAnimation">{{ $t('pages.dashboard.settings.imageAnimation') }}</label>
         <Dropdown
           id="imageAnimation"
