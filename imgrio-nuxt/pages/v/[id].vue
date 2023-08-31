@@ -1,17 +1,15 @@
 <template>
-  <div class="section" v-if="userFile">
-    <img class="section-background" :src="userFile.url" />
+  <div class="section--center" v-if="userFile">
+    <img class="section-background" :src="userFile.url" v-if="isImage" />
     <div class="section__container section--padding">
-      <div class="section__container-image">
+      <div class="section__container-image" v-if="isImage">
         <img :src="userFile.url" />
       </div>
       <div class="section__container-title">
         <p>{{ userFile.title }}</p>
       </div>
       <div class="section__container-subtitle">
-        <p class="section__container-subtitle-author">
-          {{ $t('pages.view.unknown') }}
-        </p>
+        <p class="section__container-subtitle-size">{{ sizeInMb }} MB</p>
         <p class="section__container-subtitle-date">
           {{
             new Date(userFile.dateOfCreation).toLocaleDateString(i18n.locale.value, {
@@ -21,7 +19,6 @@
             })
           }}
         </p>
-        <a @click.prevent="deleteFileAsync">{{ $t('pages.view.delete') }}</a>
       </div>
     </div>
   </div>
@@ -29,17 +26,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useToast } from 'vue-toastification';
 import { UserFile } from '~/models';
-import { useUserFilesStore } from '~/stores/userFiles';
 import { apiClient } from '~/axios.conf';
 
 const i18n = useI18n();
 const router = useRouter();
-const toast = useToast();
 
 const userFile = ref<UserFile>((await apiClient.get(`files/${useRoute().params.id}`)).data);
-const userFilesStore = useUserFilesStore();
+
+const isImage = computed(() => userFile.value.type.startsWith('image/'));
+const sizeInMb = computed(() => (userFile.value.size / (1024 * 1024)).toFixed(2));
 
 useServerSeoMeta({
   ogSiteName: 'imgrio',
@@ -53,21 +49,10 @@ useServerSeoMeta({
 
   twitterCard: 'summary_large_image'
 });
-
-async function deleteFileAsync() {
-  try {
-    await userFilesStore.deleteUserFileAsync(userFile.value!.id);
-
-    await router.push('/dashboard/files');
-  } catch {
-    toast.error(i18n.t('toasts.errorRetry'));
-    return;
-  }
-}
 </script>
 
 <style scoped>
-.section {
+.section--center {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -92,28 +77,24 @@ async function deleteFileAsync() {
 }
 
 .section__container-image {
-  margin-bottom: 2.5rem;
+  margin: 0 auto;
+  background-color: var(--color-light);
+  border-radius: 1rem;
+  overflow: hidden;
+  animation: pulse 5s infinite ease;
 }
 
 .section__container-image img {
   max-width: 100%;
   max-height: 65vh;
-  margin: 0 auto 2rem auto;
-  background-color: var(--color-light);
-  background-repeat: no-repeat;
-  background-size: cover;
-  transform-style: preserve-3d;
-  animation: pulse 5s infinite ease;
-  border-radius: 1rem;
 }
 
 .section__container-title {
+  margin-top: 2.5rem;
   font-family: var(--font-family);
   font-size: 2.5rem;
   font-weight: 700;
-  line-height: 40px;
   white-space: nowrap;
-  margin-bottom: 0.5rem;
 }
 
 .section__container-subtitle {
@@ -122,16 +103,13 @@ async function deleteFileAsync() {
   gap: 50px;
   padding: 1rem 2rem;
   border-radius: 1rem;
-  background: rgba(36, 37, 41, 0.5);
+  background: rgba(36, 37, 41, 0.3);
   border: 1px solid rgba(194, 198, 203, 0.175);
   backdrop-filter: blur(20px);
+  align-items: center;
 }
 
-.section__container-subtitle-author {
-  font-family: var(--font-family);
-  font-size: 1rem;
-}
-
+.section__container-subtitle-size,
 .section__container-subtitle-date {
   font-family: var(--font-family);
   font-size: 1rem;
