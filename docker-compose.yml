@@ -1,19 +1,20 @@
 version: "3"
 
 services:
-  clam:
+  clam-av:
     image: clamav/clamav:1.2
     container_name: clam-av
     ports:
       - 3310:3310
     restart: always
-  api:
+  imgrio-api:
     image: bennysaa/imgrio:api-0.1.0
     container_name: imgrio-api
     ports:
       - 443:443
     restart: always
     volumes:
-    - data:/app/data
+    - imgrio-data:/app/data
 volumes:
-  data:
+  imgrio-data:
+    external: true
