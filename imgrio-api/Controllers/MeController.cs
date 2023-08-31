@@ -74,13 +74,14 @@ namespace imgrio_api.Controllers
             var userId = Guid.Parse(sub);
 
             var userFileId = Guid.NewGuid();
+            var fileMimeType = file.ContentType;
             var userFile = new UserFile(
                 userFileId,
                 userId,
                 Path.GetFileNameWithoutExtension(file.FileName),
-                file.ContentType,
+                fileMimeType,
                 file.Length,
-                $"https://data.imgrio.com/{userId}/{userFileId}.{MimeTypesMap.GetExtension(fileType)}",
+                $"https://data.imgrio.com/{userId}/{userFileId}.{MimeTypesMap.GetExtension(fileMimeType)}",
                 DateTime.UtcNow);
 
             #region save to imgrio server
