@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using nClam;
+﻿using nClam;
 using System.Net.Sockets;
 
 namespace imgrio_api.Extensions
