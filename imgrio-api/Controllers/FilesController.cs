@@ -9,7 +9,6 @@ namespace imgrio_api.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
-    [Authorize(AuthenticationSchemes = "PermanentJwtPolicy")]
     public class FilesController : ControllerBase
     {
         private readonly ImgrioDbContext _dbContext;
