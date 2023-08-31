@@ -61,13 +61,13 @@ namespace imgrio_api.Controllers
 
             if (!file.IsValidMimeType())
             {
-                return Forbid("Unsupported file type.");
+                return StatusCode(403, "Unsupported file type.");
             }
 
-            if (!await file.IsSafe())
-            {
-                return Forbid("The file appears to be unsafe.");
-            }
+            //if (!(await file.IsSafe()))
+            //{
+            //    return StatusCode(403, "The file appears to be unsafe.");
+            //}
 
             var userId = Guid.Parse(sub);
 
