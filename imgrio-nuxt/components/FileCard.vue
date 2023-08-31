@@ -1,5 +1,5 @@
 <template>
-  <a :href="`/f/${userFile.id}`">
+  <a :href="`/v/${userFile.id}`">
     <div class="card">
       <div class="card__container">
         <div class="card__container-type">
@@ -12,8 +12,8 @@
             <p>
               {{
                 userFile.title.length > 25
-                    ? userFile.title.substring(0, 23).concat('...')
-                    : userFile.title
+                  ? userFile.title.substring(0, 23).concat('...')
+                  : userFile.title
               }}
             </p>
           </div>
