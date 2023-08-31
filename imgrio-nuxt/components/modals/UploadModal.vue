@@ -21,7 +21,7 @@
 
           <input
             type="file"
-            accept="image/*"
+            accept="image/*, text/plain, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.*"
             id="input"
             name="file"
             @change="handleFileChange"
