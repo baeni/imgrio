@@ -1,28 +1,19 @@
 <template>
-  <a :href="`/v/${userFile.id}`">
-    <!-- <div
-      class="card"
-      :class="{ jump: animationPlaying }"
-      @mouseenter="playAnimation()"
-    > -->
+  <a :href="`/f/${userFile.id}`">
     <div class="card">
       <div class="card__container">
-        <!-- <NuxtImg
-          class="card__container-image"
-          :src="userFile.url"
-          loading="lazy"
-        /> -->
-        <div
-          class="card__container-image"
-          :style="`background-image: url(${userFile.url}); background-size: cover; background-position: center;`"
-        ></div>
+        <div class="card__container-type">
+          <p>
+            {{ userFile.type.split('/')[1].toUpperCase() }}
+          </p>
+        </div>
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
               {{
-                userFile.title.length > 17
-                  ? userFile.title.substring(0, 15).concat('...')
-                  : userFile.title
+                userFile.title.length > 25
+                    ? userFile.title.substring(0, 23).concat('...')
+                    : userFile.title
               }}
             </p>
           </div>
@@ -39,6 +30,7 @@
 
 <script setup lang="ts">
 // import { ref } from "vue";
+import { computed } from 'vue';
 import { useToast } from 'vue-toastification';
 import { UserFile } from '~/models';
 
@@ -74,7 +66,7 @@ function copyToClipboard(text: string) {
   position: relative;
   border-radius: 1rem;
   color: var(--color-lightest);
-  background-color: var(--color-light);
+  background-color: var(--color-dark);
   overflow: hidden;
   cursor: pointer;
 }
@@ -84,11 +76,14 @@ function copyToClipboard(text: string) {
   height: 100%;
 }
 
-.card__container-image {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  transition: 0.1s all ease-in-out;
+.card__container-type {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-darkest);
 }
 
 .card__container-info {
@@ -99,7 +94,6 @@ function copyToClipboard(text: string) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0) 100%);
 }
 
 .card__container-info-title {
