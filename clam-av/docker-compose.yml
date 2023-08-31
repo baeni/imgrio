@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  api:
+    image: clamav/clamav:1.2
+    container_name: clam-av
+    ports:
+      - 3310:3310
+    restart: always
