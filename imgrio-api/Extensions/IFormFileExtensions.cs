@@ -28,7 +28,7 @@ namespace imgrio_api.Extensions
         {
             try
             {
-                var clam = new ClamClient("localhost", 3310);
+                var clam = new ClamClient("49.12.218.142", 3310);
                 var response = await clam.SendAndScanFileAsync(file.OpenReadStream());
 
                 switch (response.Result)
