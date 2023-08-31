@@ -1,18 +1,18 @@
 ﻿<template>
-  <a :href="`/i/${userFile.id}`">
+  <a :href="`/v/${userFile.id}`">
     <div class="card">
       <div class="card__container">
         <div
-            class="card__container-image"
-            :style="`background-image: url(${userFile.url}); background-size: cover; background-position: center;`"
+          class="card__container-image"
+          :style="`background-image: url(${userFile.url}); background-size: cover; background-position: center;`"
         ></div>
         <div class="card__container-info">
           <div class="card__container-info-title">
             <p>
               {{
                 userFile.title.length > 25
-                    ? userFile.title.substring(0, 23).concat('...')
-                    : userFile.title
+                  ? userFile.title.substring(0, 23).concat('...')
+                  : userFile.title
               }}
             </p>
           </div>
