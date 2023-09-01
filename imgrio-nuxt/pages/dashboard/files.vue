@@ -6,7 +6,7 @@
       <div class="section__title-menu">
         <p
           class="text-red-500 font-bold"
-          @click="deleteSelected"
+          @click="async () => await deleteSelectedAsync()"
           v-if="selectedUserFiles.length > 0"
         >
           {{ $t('pages.dashboard.files.delete') }}
@@ -101,10 +101,11 @@ function handleClick(event: Event, userFile: UserFile) {
   }
 }
 
-async function deleteSelected() {
-  selectedUserFiles.value.forEach((selectedUserFile) => {
-    userFilesStore.deleteUserFileAsync(selectedUserFile.id);
+async function deleteSelectedAsync() {
+  const deletePromises = selectedUserFiles.value.map((selectedUserFile) => {
+    return userFilesStore.deleteUserFileAsync(selectedUserFile.id);
   });
+  await Promise.all(deletePromises);
 
   toast.success(`${selectedUserFiles.value.length} ${i18n.t('toasts.successDeleted')}`);
 
