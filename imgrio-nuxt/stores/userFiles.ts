@@ -21,7 +21,12 @@ export const useUserFilesStore = defineStore('userFiles', () => {
   }
 
   async function deleteUserFileAsync(userFileId: string) {
-    return (await apiClient.delete(`me/files/${userFileId}`)).data;
+    const response = (await apiClient.delete(`me/files/${userFileId}`)).data;
+    const index = userFiles.value?.findIndex(
+      (selectedUserFile) => selectedUserFile.id == userFileId
+    );
+    userFiles.value?.splice(index!, 1);
+    return response;
   }
 
   return { fetchDataAsync, postUserFileAsync, deleteUserFileAsync, userFiles };
