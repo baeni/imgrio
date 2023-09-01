@@ -3,6 +3,7 @@
     "successLinkCopied": "Link in Zwischenablage kopiert.",
     "successTokenCopied": "Neuer Token in Zwischenablage kopiert.",
     "successSaved": "Änderungen gespeichert.",
+    "successDeleted": "Dateien wurden gelöscht.",
     "errorRetry": "Ein Fehler ist aufgetreten, versuche es erneut.",
     "errorSelect": "Du musst eine Datei auswählen!"
   },
@@ -20,7 +21,10 @@
       "title": "Dashboard",
       "files": {
         "title": "Meine Dateien",
-        "notSharing": "Du teilst aktuell keine Dateien mit imgrio. :["
+        "notSharing": "Du teilst aktuell keine Dateien mit imgrio. :[",
+        "select": "Auswählen",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
       },
       "settings": {
         "title": "Einstellungen",
@@ -35,10 +39,7 @@
         "save": "Änderungen speichern"
       }
     },
-    "view": {
-      "unknown": "Unbekannt",
-      "delete": "Löschen"
-    },
+    "view": {},
     "auth": {
       "login": {},
       "logout": {

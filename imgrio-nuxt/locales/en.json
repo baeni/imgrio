@@ -3,7 +3,8 @@
     "successLinkCopied": "Link copied to clipboard.",
     "successTokenCopied": "New token copied to clipboard",
     "successSaved": "Saved changes.",
-    "errorRetry": "An error occurred, try again..",
+    "successDeleted": "files have been deleted.",
+    "errorRetry": "An error occurred, try again.",
     "errorSelect": "Select a file!"
   },
 
@@ -20,7 +21,10 @@
       "title": "Dashboard",
       "files": {
         "title": "My Files",
-        "notSharing": "You are currently not sharing any files with imgrio. :["
+        "notSharing": "You are currently not sharing any files with imgrio. :[",
+        "select": "Select",
+        "cancel": "Cancel",
+        "delete": "Delete"
       },
       "settings": {
         "title": "Settings",
@@ -35,10 +39,7 @@
         "save": "Save changes"
       }
     },
-    "view": {
-      "unknown": "Unknown",
-      "delete": "Delete"
-    },
+    "view": {},
     "auth": {
       "login": {},
       "logout": {
