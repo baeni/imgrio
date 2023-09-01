@@ -65,11 +65,11 @@
 import { onMounted, computed, ref } from 'vue';
 import { useToast } from 'vue-toastification';
 import { useUserFilesStore } from '~/stores/userFiles';
+import { UserFile } from '~/models';
 
 import Loading from '~/components/Loading.vue';
 import FileCard from '~/components/FileCard.vue';
 import ImageCard from '~/components/ImageCard.vue';
-import { UserFile } from '~/models';
 
 const i18n = useI18n();
 const toast = useToast();
