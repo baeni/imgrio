@@ -41,7 +41,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/auth/login',
       callback: '/',
-      exclude: ['/', '/sharex', '/i/*', '/f/*']
+      exclude: ['/', '/sharex', '/v/*']
     }
   }
 });
