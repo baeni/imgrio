@@ -32,7 +32,7 @@
         <Knob
           :text="$t('components.modals.uploadModal.getLink')"
           :primary="!!selectedFile"
-          @click.prevent="postFileAsync"
+          @click.prevent="async () => await postFileAsync()"
         />
       </form>
     </div>
@@ -104,19 +104,11 @@ function copyToClipboard(url: string) {
 .section__container {
   margin: 0 auto;
   padding: 1.5rem;
-  padding-top: 3rem;
   width: 400px;
   background: var(--color-darker);
   border-radius: 10px;
   color: #fff;
   text-align: center;
-}
-
-.section__container-subtitle {
-  color: var(--color-title);
-  font-family: var(--font-family);
-  font-size: 0.9rem;
-  line-height: 25px;
 }
 
 .section__container-form-drop-area {
