@@ -14,12 +14,12 @@ const user = useSupabaseUser();
         imgrio is a file sharing platform. Currently, full access is only available to selected people. If you still wish to use imgrio, feel free to request your personal access now!
       </p>
 
-      <div class="grid grid-cols-3 gap-2 w-fit mx-auto" v-if="!user">
+      <div class="grid grid-cols-3 gap-2 w-fit" v-if="!user">
         <Input class="col-span-2" placeholder="someone@imgrio.com" />
         <Button class="col-span-1">Request Access</Button>
       </div>
       
-      <p class="my-6 opacity-40 italic" v-if="!user">Already have access?</p>
+      <NuxtLink class="text-sm mt-2 opacity-30" href="/auth/login" v-if="!user"><Button variant="link">I already have access!</Button></NuxtLink>
 
       <div class="grid grid-cols-2 gap-2 w-fit" v-if="user">
         <NuxtLink to="/sharex">
@@ -29,14 +29,7 @@ const user = useSupabaseUser();
           <Button class="w-full" variant="secondary">Dashboard</Button>
         </NuxtLink>
       </div>
-      <div class="grid grid-cols-2 gap-2 w-fit" v-else>
-        <NuxtLink to="/sharex">
-          <Button class="w-full" variant="outline">Get started</Button>
-        </NuxtLink>
-        <NuxtLink to="/auth/login">
-          <Button class="w-full" variant="secondary">Log In</Button>
-        </NuxtLink>
-      </div>
+      
     </div>
   </section>
 </template>
