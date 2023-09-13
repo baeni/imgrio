@@ -7,11 +7,11 @@ const user = useSupabaseUser();
 
 <template>
   <section class="flex h-screen max-w-3xl mx-auto">
-    <div class="m-auto text-center">
+<!--    <img class="col-span-1 my-auto scale-150 -translate-x-16" src="/illustrations/index&#45;&#45;restricted-access.png" alt="illustration" />-->
+    <div class="my-auto">
       <p class="text-6xl font-bold">Take. Give. <span class="text-blue-400">Share.</span></p>
       <p class="text-lg my-9">
-        imgrio is a file sharing platform. Currently, full access is only available to selected people.<br/>
-        If you still wish to use imgrio, feel free to request your personal access now!
+        imgrio is a file sharing platform. Currently, full access is only available to selected people. If you still wish to use imgrio, feel free to request your personal access now!
       </p>
 
       <div class="grid grid-cols-3 gap-2 w-fit mx-auto" v-if="!user">
@@ -21,7 +21,7 @@ const user = useSupabaseUser();
       
       <p class="my-6 opacity-40 italic" v-if="!user">Already have access?</p>
 
-      <div class="grid grid-cols-2 gap-2 w-fit mx-auto" v-if="user">
+      <div class="grid grid-cols-2 gap-2 w-fit" v-if="user">
         <NuxtLink to="/sharex">
           <Button class="w-full" variant="outline">Get started</Button>
         </NuxtLink>
@@ -29,7 +29,7 @@ const user = useSupabaseUser();
           <Button class="w-full" variant="secondary">Dashboard</Button>
         </NuxtLink>
       </div>
-      <div class="grid grid-cols-2 gap-2 w-fit mx-auto" v-else>
+      <div class="grid grid-cols-2 gap-2 w-fit" v-else>
         <NuxtLink to="/sharex">
           <Button class="w-full" variant="outline">Get started</Button>
         </NuxtLink>
