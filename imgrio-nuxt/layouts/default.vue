@@ -1,11 +1,17 @@
-<template>
-  <div>
-    <NavBar />
+﻿<script setup lang="ts">
+import Navbar from '@/components/Navbar.vue'
 
-    <slot />
-  </div>
-</template>
-
-<script setup lang="ts">
-import NavBar from "../components/NavBar.vue";
+const props = defineProps({
+  extended: {
+    type: Boolean,
+    default: false
+  }
+});
 </script>
+
+<template>
+  <Navbar />
+  <main>
+    <slot />
+  </main>
+</template>

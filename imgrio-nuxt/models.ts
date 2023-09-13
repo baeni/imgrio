@@ -1,15 +1,21 @@
-export interface UserFile {
-  id: string;
-  author: string;
-  title: string;
-  type: string;
-  size: number;
-  url: string;
-  isSelfHosted: boolean;
-  dateOfCreation: string;
+﻿export interface UserSetting {
+    id: string;
+    userId: string;
+    key: string;
+    value: string;
 }
 
-export interface DropdownOption {
-  key: string;
-  value: string | boolean | number;
+export interface UserContent {
+    id: string;
+    author: string;
+    title: string;
+    type: string;
+    size: number;
+    url: string;
+    dateOfCreation: string;
+}
+
+export interface UserContentsInfo {
+    count: number;
+    countToday: number;
 }

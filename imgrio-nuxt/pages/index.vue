@@ -1,106 +1,32 @@
-<template>
-  <div class="section--center gradient__bg">
-    <div class="secion__container">
-      <div class="secion__container-slogan">
-        <p>
-          {{ $t("pages.index.slogan") }}
-          <!-- Take. Give.
-          <span class="secion__container-slogan--accent">Share.</span> -->
-        </p>
-      </div>
-      <div class="secion__container-description">
-        <p>
-          {{ $t("pages.index.description") }}
-        </p>
-      </div>
-      <div class="secion__container-buttons">
-        <Knob :text="$t('components.inputs.knob.go')" href="/sharex" />
-        <Knob
-          :text="$t('components.inputs.knob.dashboard')"
-          href="/dashboard/files"
-          primary
-          v-if="user"
-        />
-        <LoginButton primary v-else />
-      </div>
-      <div class="secion__container-statistics">
-        <p>
-          <span class="secion__container-statistics--bold">{{
-            data.count
-          }}</span>
-          {{ $t("pages.index.statistics") }}
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { reactive } from "vue";
-import { apiClient } from "@/axios.conf";
-
-import Knob from "@/components/inputs/Knob.vue";
-import LoginButton from "@/components/LoginButton.vue";
-
-const user = useSupabaseUser();
-
-let data = reactive({
-  count: 0,
-  countToday: 0,
-});
-
-const fetchData = async () => {
-  try {
-    const response = (await apiClient.get("files")).data;
-    data.count = response.count;
-    data.countToday = response.countToday;
-  } catch (error) {
-    console.error("An error occurred while attempting to fetch data:", error);
-  }
-};
-
-fetchData();
+﻿<script setup lang="ts">
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 </script>
 
-<style scoped>
-.secion__container {
-  color: #fff;
-  text-align: center;
-  max-width: 700px;
-}
+<template>
+  <section class="flex h-screen max-w-3xl mx-auto">
+    <div class="m-auto text-center">
+      <p class="text-6xl font-bold">Take. Give. <span class="text-blue-400">Share.</span></p>
+      <p class="text-lg my-9">
+        imgrio is a file sharing platform. Currently, full access is only available to selected people.<br/>
+        If you still wish to use imgrio, feel free to request your personal access now!
+      </p>
 
-.secion__container-slogan p {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 4rem;
-  line-height: 115px;
-}
-
-.secion__container-slogan--accent {
-  font-family: var(--font-family-brand);
-  font-size: 4.5rem;
-  color: var(--color-primary);
-}
-
-.secion__container-description {
-  color: var(--color-text);
-  font-family: var(--font-family);
-  font-size: 1rem;
-  line-height: 20px;
-}
-
-.secion__container-buttons {
-  margin-block: 2rem 0.75rem;
-}
-
-.secion__container-statistics {
-  font-family: var(--font-family);
-  font-size: 0.75rem;
-  color: var(--color-light);
-  opacity: 0.5;
-}
-
-.secion__container-statistics--bold {
-  font-weight: 800;
-}
-</style>
+      <div class="grid grid-cols-3 gap-2 w-fit mx-auto">
+        <Input class="col-span-2" placeholder="someone@imgrio.com" />
+        <Button class="col-span-1">Request Access</Button>
+      </div>
+      
+      <p class="my-6 opacity-40 italic">Already have access?</p>
+      
+      <div class="grid grid-cols-2 gap-2 w-fit mx-auto">
+        <NuxtLink to="/sharex">
+          <Button class="w-full" variant="outline">Get started</Button>
+        </NuxtLink>
+        <NuxtLink to="/auth/login">
+          <Button class="w-full" variant="secondary">Log In</Button>
+        </NuxtLink>
+      </div>
+    </div>
+  </section>
+</template>
