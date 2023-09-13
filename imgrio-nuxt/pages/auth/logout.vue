@@ -9,3 +9,12 @@ onMounted(async () => {
   }, 2000)
 });
 </script>
+
+<template>
+  <section class="flex h-screen max-w-3xl mx-auto">
+    <div class="m-auto text-center">
+      <p class="text-7xl font-bold mb-5">Bye Bye!</p>
+      <p class="text-xl">You will be redirected in a moment</p>
+    </div>
+  </section>
+</template>

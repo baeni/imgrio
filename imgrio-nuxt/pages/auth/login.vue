@@ -4,6 +4,5 @@ import { signInUser } from "@/composables/useSupabase";
 
 onMounted(async () => {
   await signInUser();
-  navigateTo("/dashboard/files");
 });
 </script>
