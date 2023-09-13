@@ -7,7 +7,7 @@ const user = useSupabaseUser();
 <template>
   <nav class="flex fixed justify-center w-full h-20 z-10 bg-zinc-950 bg-opacity-50 backdrop-blur-2xl">
     <div class="flex container justify-between items-center">
-      <img class="w-14" src="/logo192.png" />
+      <img class="w-14" src="/logo192.png" alt="imgrio" />
 
       <div class="grid grid-cols-3">
         <NuxtLink to="/">

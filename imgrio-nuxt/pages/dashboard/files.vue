@@ -1,6 +1,5 @@
 ﻿<script setup lang="ts">
-import { onMounted, computed, ref } from 'vue';
-import {UserContent} from "~/models";
+import { onMounted, computed } from 'vue';
 import { useUserContentsStore } from '~/stores/userContents';
 
 import UserContentCard from "@/components/UserContentCard.vue";
