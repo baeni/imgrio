@@ -13,10 +13,9 @@ const user = useSupabaseUser();
       <p class="text-6xl font-bold">Take. Give. <span class="text-blue-400">Share.</span></p>
       <p class="text-lg my-9">imgrio is a file sharing platform. Currently, full access is only available to selected people. If you still wish to use imgrio, feel free to request your personal access now!</p>
 
-      <div class="grid grid-cols-3 gap-2 w-fit" v-if="!user">
+      <div class="grid grid-cols-5 gap-4 w-fit" v-if="!user">
         <Input class="col-span-2" placeholder="someone@imgrio.com" />
-        <Button class="col-span-1">Request Access</Button>
-        <p class="col-span-3 text-sm mt-2 opacity-30" v-if="!user">Already have access? Login!</p>
+        <Button class="col-span-1" size="sm">Request Access</Button>
       </div>
 
       <div class="flex gap-2" v-if="user">
