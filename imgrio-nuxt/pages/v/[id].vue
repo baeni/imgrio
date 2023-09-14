@@ -23,7 +23,7 @@ const userContent = ref<UserContent|null>(null);
 </script>
 
 <template>
-  <section class="container flex h-screen items-center justify-center">
+  <section class="flex h-screen container items-center justify-center">
     <span class="absolute w-full h-full -z-10 bg-no-repeat bg-cover" :style="`background-image: url(${userContent.url}); filter: blur(200px);`" v-if="userContent" />
 
     <div class="w-fit">

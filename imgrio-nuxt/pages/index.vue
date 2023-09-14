@@ -7,27 +7,24 @@ const user = useSupabaseUser();
 </script>
 
 <template>
+  <span class="absolute top-0 left-0 w-screen h-screen -z-10 bg-gradient-to-br from-zinc-950 to-blue-950"></span>
   <section class="flex h-screen max-w-3xl mx-auto">
-<!--    <img class="col-span-1 my-auto scale-150 -translate-x-16" src="/illustrations/index&#45;&#45;restricted-access.png" alt="illustration" />-->
     <div class="my-auto">
       <p class="text-6xl font-bold">Take. Give. <span class="text-blue-400">Share.</span></p>
-      <p class="text-lg my-9">
-        imgrio is a file sharing platform. Currently, full access is only available to selected people. If you still wish to use imgrio, feel free to request your personal access now!
-      </p>
+      <p class="text-lg my-9">imgrio is a file sharing platform. Currently, full access is only available to selected people. If you still wish to use imgrio, feel free to request your personal access now!</p>
 
       <div class="grid grid-cols-3 gap-2 w-fit" v-if="!user">
         <Input class="col-span-2" placeholder="someone@imgrio.com" />
         <Button class="col-span-1">Request Access</Button>
+        <p class="col-span-3 text-sm mt-2 opacity-30" v-if="!user">Already have access? Login!</p>
       </div>
-      
-      <NuxtLink class="text-sm mt-2 opacity-30" :href="config.public.LoginPath!" v-if="!user"><Button variant="link">I already have access!</Button></NuxtLink>
 
-      <div class="grid grid-cols-2 gap-2 w-fit" v-if="user">
+      <div class="flex gap-2" v-if="user">
         <NuxtLink to="/sharex">
-          <Button class="w-full" variant="outline">Get started</Button>
+          <Button variant="outline" size="lg">Get started</Button>
         </NuxtLink>
         <NuxtLink to="/dashboard/files">
-          <Button class="w-full" variant="secondary">Dashboard</Button>
+          <Button variant="secondary" size="lg">Dashboard</Button>
         </NuxtLink>
       </div>
       

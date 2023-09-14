@@ -2,9 +2,9 @@
 import { onMounted } from "vue";
 import { signOutUser } from "@/composables/useSupabase";
 
-onMounted(async () => {
-  await signOutUser();
-  setTimeout(() => {
+onMounted(() => {
+  setTimeout(async () => {
+    await signOutUser();
     navigateTo("/");
   }, 2000)
 });

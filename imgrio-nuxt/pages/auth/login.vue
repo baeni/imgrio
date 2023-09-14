@@ -2,7 +2,9 @@
 import { onMounted } from "vue";
 import { signInUser } from "@/composables/useSupabase";
 
-onMounted(async () => {
-  await signInUser();
+onMounted(() => {
+  setTimeout(async () => {
+    await signInUser();
+  })
 });
 </script>
