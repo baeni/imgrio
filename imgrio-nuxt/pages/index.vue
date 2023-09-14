@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
+const config = useRuntimeConfig();
 const user = useSupabaseUser();
 </script>
 
@@ -19,7 +20,7 @@ const user = useSupabaseUser();
         <Button class="col-span-1">Request Access</Button>
       </div>
       
-      <NuxtLink class="text-sm mt-2 opacity-30" href="/auth/login" v-if="!user"><Button variant="link">I already have access!</Button></NuxtLink>
+      <NuxtLink class="text-sm mt-2 opacity-30" :href="config.public.LoginPath!" v-if="!user"><Button variant="link">I already have access!</Button></NuxtLink>
 
       <div class="grid grid-cols-2 gap-2 w-fit" v-if="user">
         <NuxtLink to="/sharex">

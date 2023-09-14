@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <Navbar />
+  <Navbar :transparent="$route.path.startsWith('/v/') || $route.path == '/'" />
   <main>
     <slot />
   </main>

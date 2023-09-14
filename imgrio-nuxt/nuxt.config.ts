@@ -14,14 +14,17 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteUrl: process.env.SITE_URL
+      siteUrl: process.env.SUPABASE_SITE_URL,
+      loginPath: process.env.SUPABASE_LOGIN_PATH,
+      logoutPath: process.env.SUPABASE_LOGOUT_PATH,
+      redirectPath: process.env.SUPABASE_REDIRECT_PATH
     }
   },
 
   supabase: {
     redirectOptions: {
-      login: '/auth/login',
-      callback: '/',
+      login: process.env.SUPABASE_LOGIN_PATH!,
+      callback: process.env.SUPABASE_REDIRECT_PATH!,
       exclude: ['/', '/sharex', '/v/*']
     }
   }

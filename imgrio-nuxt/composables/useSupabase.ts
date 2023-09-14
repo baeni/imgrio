@@ -11,7 +11,7 @@ export const signInUser = async () => {
                     access_type: "offline",
                     prompt: "select_account",
                 },
-                redirectTo: config.public.siteUrl,
+                redirectTo: `${config.public.siteUrl}${config.public.redirectPath}`,
             },
         });
         if (error) throw error;
