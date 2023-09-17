@@ -1,5 +1,18 @@
 ﻿<script setup lang="ts">
 import {Button} from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback
+} from "@/components/ui/avatar";
 
 const props = defineProps({
   transparent: {
@@ -31,9 +44,25 @@ const user = useSupabaseUser();
         </NuxtLink>
       </div>
 
-      <NuxtLink :to="config.public.logoutPath!" v-if="user">
-        <Button class="w-full" variant="outline">Log Out</Button>
-      </NuxtLink>
+      <div v-if="user">
+        <DropdownMenu>
+          <DropdownMenuTrigger class="flex gap-4 items-center">
+            <p class="font-bold">Hi, {{ user.user_metadata.name }}</p>
+                        
+            <Avatar class="rounded-lg">
+              <AvatarImage :src="user.user_metadata.picture" />
+              <AvatarFallback>{{ user.user_metadata.name.slice(0, 2).toUpperCase() }}</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem><NuxtLink to="/dashboard/files">My Files</NuxtLink></DropdownMenuItem>
+            <DropdownMenuItem><NuxtLink to="/dashboard/files">Upload File</NuxtLink></DropdownMenuItem>
+            <DropdownMenuItem><NuxtLink to="/dashboard/settings">Settings</NuxtLink></DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem><NuxtLink :to="config.public.logoutPath!">Log Out</NuxtLink></DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <NuxtLink :to="config.public.loginPath!" v-else>
         <Button class="w-full" variant="outline">Log In</Button>
       </NuxtLink>

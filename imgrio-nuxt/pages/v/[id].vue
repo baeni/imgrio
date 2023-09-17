@@ -26,17 +26,17 @@ const userContent = ref<UserContent|null>(null);
   <section class="flex h-screen container items-center justify-center">
     <span class="absolute w-full h-full -z-10 bg-no-repeat bg-cover" :style="`background-image: url(${userContent.url}); filter: blur(200px);`" v-if="userContent" />
 
-    <div class="w-fit">
-      <img class="max-w-full max-h-[75vh] rounded-3xl" :src="userContent.url" :alt="userContent.title" v-if="userContent" />
+    <div>
+      <img class="max-w-full max-h-[70vh] rounded-3xl" :src="userContent.url" :alt="userContent.title" v-if="userContent" />
       <Skeleton class="h-[50vh] aspect-video rounded-2xl" v-else />
       
-      <div class="mt-3">
-        <div class="flex justify-between" v-if="userContent">
-          <p class="text-2xl font-semibold px-6 py-4 truncate bg-zinc-950 bg-opacity-20 backdrop-blur-md border border-zinc-50 border-opacity-20 rounded-2xl">{{ userContent.title }}</p>
-          
-          <div class="opacity-50">
+      <div class="mt-4">
+        <div class="w-fit mx-auto">
+          <div v-if="userContent">
+            <p class="text-2xl font-semibold px-6 py-4 truncate bg-zinc-950 bg-opacity-20 backdrop-blur-md border border-zinc-50 border-opacity-20 rounded-2xl">{{ userContent.title }}</p>
+
             <AlertDialog>
-              <AlertDialogTrigger>
+              <AlertDialogTrigger class="float-right mr-2 opacity-40">
                 <p>Show details</p>
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -56,8 +56,8 @@ const userContent = ref<UserContent|null>(null);
               </AlertDialogContent>
             </AlertDialog>
           </div>
+          <Skeleton class="w-80 h-16 rounded-2xl" v-else />
         </div>
-        <Skeleton class="w-80 h-16 rounded-2xl" v-else />
       </div>
     </div>
   </section>
