@@ -24,11 +24,11 @@ const userContent = ref<UserContent|null>(null);
 
 <template>
   <section class="flex h-screen container items-center justify-center">
-    <span class="absolute w-full h-full -z-10 bg-no-repeat bg-cover" :style="`background-image: url(${userContent.url}); filter: blur(200px);`" v-if="userContent" />
+    <span class="absolute w-full h-full -z-10 bg-no-repeat bg-cover bg-center" :style="`background-image: url(${userContent.url}); filter: blur(150px);`" v-if="userContent" />
 
     <div>
-      <img class="max-w-full max-h-[70vh] rounded-3xl" :src="userContent.url" :alt="userContent.title" v-if="userContent" />
-      <Skeleton class="h-[50vh] aspect-video rounded-2xl" v-else />
+      <NuxtImg class="max-w-full max-h-[70vh] rounded-xl" :src="userContent.url" :alt="userContent.title" placeholder v-if="userContent" />
+      <Skeleton class="h-[50vh] aspect-video rounded-xl" v-else />
       
       <div class="mt-4">
         <div class="w-fit mx-auto">
@@ -37,7 +37,7 @@ const userContent = ref<UserContent|null>(null);
 
             <AlertDialog>
               <AlertDialogTrigger class="float-right mr-2 opacity-40">
-                <p>Show details</p>
+                <p class="shadow-md">Show details</p>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>

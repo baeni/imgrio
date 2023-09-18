@@ -5,7 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuSeparator, DropdownMenuShortcut,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {
@@ -28,11 +28,11 @@ const user = useSupabaseUser();
 <template>
   <nav class="flex fixed justify-center w-full h-20 z-10 bg-opacity-50" :class="`${transparent ? 'bg-transparent backdrop-blur-0' : 'bg-zinc-950 backdrop-blur-2xl'}`">
     <div class="flex container justify-between items-center">
-      <NuxtLink to="/">
+      <NuxtLink class="bg-opacity-0" to="/">
         <img class="w-14" src="/logo192.png" alt="imgrio" />
       </NuxtLink>
 
-      <div class="grid grid-cols-3">
+      <div class="grid grid-cols-3 gap-0.5">
         <NuxtLink to="/">
           <Button class="w-full" variant="ghost">Home</Button>
         </NuxtLink>
@@ -47,19 +47,40 @@ const user = useSupabaseUser();
       <div v-if="user">
         <DropdownMenu>
           <DropdownMenuTrigger class="flex gap-4 items-center">
-            <p class="font-bold">Hi, {{ user.user_metadata.name }}</p>
+            <p class="font-semibold">Hi, {{ user.user_metadata.name }}</p>
                         
             <Avatar class="rounded-lg">
               <AvatarImage :src="user.user_metadata.picture" />
               <AvatarFallback>{{ user.user_metadata.name.slice(0, 2).toUpperCase() }}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem><NuxtLink to="/dashboard/files">My Files</NuxtLink></DropdownMenuItem>
-            <DropdownMenuItem><NuxtLink to="/dashboard/files">Upload File</NuxtLink></DropdownMenuItem>
-            <DropdownMenuItem><NuxtLink to="/dashboard/settings">Settings</NuxtLink></DropdownMenuItem>
+          <DropdownMenuContent class="w-52 mt-0.5" avoid-collisions align="end">
+            <NuxtLink to="/dashboard/files">
+              <DropdownMenuItem>
+                <FaIcon class="mr-2 w-4 h-4" :icon="['far', 'file-lines']" />
+                <span>My Files</span>
+              </DropdownMenuItem>
+            </NuxtLink>
+            <NuxtLink to="/dashboard/files">
+              <DropdownMenuItem>
+                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'plus']" />
+                <span>Upload File</span>
+                <DropdownMenuShortcut>CTRL+A</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </NuxtLink>
+            <NuxtLink to="/dashboard/settings">
+              <DropdownMenuItem>
+                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'sliders']" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+            </NuxtLink>
             <DropdownMenuSeparator />
-            <DropdownMenuItem><NuxtLink :to="config.public.logoutPath!">Log Out</NuxtLink></DropdownMenuItem>
+            <NuxtLink :to="config.public.logoutPath!">
+              <DropdownMenuItem>
+                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'arrow-right-from-bracket']" />
+                <span>Log Out</span>
+              </DropdownMenuItem>
+            </NuxtLink>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

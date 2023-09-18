@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     }
   },
   
-  modules: ['@pinia/nuxt', '@nuxtjs/supabase'],
+  modules: ['@pinia/nuxt', '@nuxtjs/supabase', '@nuxt/image'],
 
   runtimeConfig: {
     public: {
@@ -19,6 +19,16 @@ export default defineNuxtConfig({
       logoutPath: process.env.SUPABASE_LOGOUT_PATH,
       redirectPath: process.env.SUPABASE_REDIRECT_PATH
     }
+  },
+  
+  router: {
+    options: {
+      linkActiveClass: 'bg-zinc-600 bg-opacity-20 rounded'
+    }
+  },
+  
+  image: {
+    //
   },
 
   supabase: {
