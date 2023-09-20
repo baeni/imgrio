@@ -28,7 +28,7 @@ const user = useSupabaseUser();
 <template>
   <nav class="flex fixed justify-center w-full h-20 z-10 bg-opacity-50" :class="`${transparent ? 'bg-transparent backdrop-blur-0' : 'bg-zinc-950 backdrop-blur-2xl'}`">
     <div class="flex container justify-between items-center">
-      <NuxtLink class="bg-opacity-0" to="/">
+      <NuxtLink class="!bg-transparent" to="/">
         <img class="w-14" src="/logo192.png" alt="imgrio" />
       </NuxtLink>
 
