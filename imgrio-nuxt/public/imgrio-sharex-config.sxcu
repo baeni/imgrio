@@ -1,0 +1,13 @@
+﻿{
+  "Version": "15.0.0",
+  "Name": "imgrio (UserId & AccessToken ersetzen)",
+  "DestinationType": "ImageUploader, TextUploader, FileUploader",
+  "RequestMethod": "POST",
+  "RequestURL": "https://api.imgrio.com/me/files",
+  "Headers": {
+    "Authorization": "Bearer <access_token>"
+  },
+  "Body": "MultipartFormData",
+  "FileFormName": "file",
+  "URL": "{json:url}"
+}
