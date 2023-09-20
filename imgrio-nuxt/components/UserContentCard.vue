@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <li class="rounded-lg overflow-hidden ease-in-out transition-colors lg:hover:bg-zinc-900">
+  <li class="rounded-lg overflow-hidden ease-in-out transition-colors border border-zinc-400 border-opacity-0 lg:hover:bg-zinc-900 lg:hover:border-opacity-20">
     <a :href="`/v/${userContent.id}`">
       <AspectRatio class="bg-zinc-300" :ratio="1/0.75">
         <NuxtImg class="object-cover w-full h-full" :src="userContent.url" :alt="userContent.title" loading="lazy" placeholder />
