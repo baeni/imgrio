@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/button";
 </script>
 
 <template>
-  <section class="container pt-24">
+  <section class="container pt-28">
     <div class="w-5/12">
       <p class="text-2xl font-bold mb-9">What is ShareX?</p>
       <p class="text-lg">ShareX is a free, open-source and ad-free software for capturing screenshots and much more. For the perfect experience, simply follow the steps on the left side and start uploading to imgrio using ShareX!</p>
