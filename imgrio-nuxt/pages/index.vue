@@ -26,7 +26,6 @@ const user = useSupabaseUser();
           <Button variant="secondary" size="lg">Dashboard</Button>
         </NuxtLink>
       </div>
-      
     </div>
   </section>
 </template>
