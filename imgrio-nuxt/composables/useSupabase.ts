@@ -1,6 +1,5 @@
-﻿const config = useRuntimeConfig();
-
-export const signInUser = async () => {
+﻿export const signInUser = async () => {
+    const config = useRuntimeConfig();
     const supabase = useSupabaseClient();
 
     try {
