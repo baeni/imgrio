@@ -4,7 +4,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator, DropdownMenuShortcut,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
@@ -26,7 +25,7 @@ const user = useSupabaseUser();
 </script>
 
 <template>
-  <nav class="flex fixed justify-center w-full h-20 z-10 bg-opacity-50" :class="`${transparent ? 'bg-transparent backdrop-blur-0' : 'bg-zinc-950 backdrop-blur-2xl'}`">
+  <nav class="flex fixed justify-center w-full h-20 z-10 bg-opacity-50 border-zinc-600 border-opacity-20" :class="`${transparent ? 'bg-transparent backdrop-blur-0 border-b-0' : 'bg-zinc-950 backdrop-blur-2xl border-b'}`">
     <div class="flex container justify-between items-center">
       <NuxtLink class="!bg-transparent" to="/">
         <img class="w-14" src="/logo192.png" alt="imgrio" />
@@ -54,20 +53,17 @@ const user = useSupabaseUser();
               <AvatarFallback>{{ user.user_metadata.name.slice(0, 2).toUpperCase() }}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent class="w-52 mt-0.5" avoid-collisions align="end">
+          <DropdownMenuContent class="w-40 mt-0.5" avoid-collisions align="end">
             <NuxtLink to="/dashboard/files">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['far', 'file-lines']" />
                 <span>My Files</span>
               </DropdownMenuItem>
             </NuxtLink>
-            <NuxtLink to="/dashboard/files">
-              <DropdownMenuItem>
-                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'plus']" />
-                <span>Upload File</span>
-                <DropdownMenuShortcut>CTRL+A</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </NuxtLink>
+            <DropdownMenuItem>
+              <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'plus']" />
+              <span>Upload File</span>
+            </DropdownMenuItem>
             <NuxtLink to="/dashboard/settings">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'sliders']" />
