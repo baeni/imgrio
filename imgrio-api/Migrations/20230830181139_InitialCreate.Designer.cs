@@ -12,8 +12,8 @@ using imgrio_api.Data;
 namespace imgrio_api.Migrations
 {
     [DbContext(typeof(ImgrioDbContext))]
-    [Migration("20230720152147_RedefineProperties")]
-    partial class RedefineProperties
+    [Migration("20230830181139_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,14 +25,17 @@ namespace imgrio_api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("imgrio_api.Models.UploadedFile", b =>
+            modelBuilder.Entity("imgrio_api.Models.UserFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("IsSelfHosted")
-                        .HasColumnType("boolean");
+                    b.Property<Guid>("Author")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
@@ -45,18 +48,35 @@ namespace imgrio_api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UploadedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UploadedBy")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Url")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UploadedFiles");
+                    b.ToTable("UserFiles");
+                });
+
+            modelBuilder.Entity("imgrio_api.Models.UserSetting", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserSettings");
                 });
 #pragma warning restore 612, 618
         }
