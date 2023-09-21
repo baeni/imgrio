@@ -20,6 +20,19 @@ onMounted(async () => {
 })
 
 const userContent = ref<UserContent|null>(null);
+
+useServerSeoMeta({
+  ogSiteName: 'imgrio',
+  twitterSite: 'imgrio',
+
+  ogTitle: userContent.value?.title,
+  twitterTitle: userContent.value?.title,
+
+  ogImage: userContent.value?.url,
+  twitterImage: userContent.value?.url,
+
+  twitterCard: 'summary_large_image'
+});
 </script>
 
 <template>
