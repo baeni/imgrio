@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { apiClient } from '@/axios.conf'
 import { UserContent } from "@/models";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,11 +15,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
-const userContent = ref<UserContent | null>(null);
-
-onMounted(async () => {
-  userContent.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
-})
+const userContent = ref<UserContent>((await apiClient.get(`files/${useRoute().params.id}`)).data);
 
 useServerSeoMeta({
   ogSiteName: 'imgrio',
