@@ -1,9 +1,10 @@
 ﻿<script setup lang="ts">
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
@@ -25,7 +26,7 @@ const user = useSupabaseUser();
 </script>
 
 <template>
-  <nav class="flex fixed justify-center w-full h-20 z-10 bg-opacity-50 border-zinc-600 border-opacity-20" :class="`${transparent ? 'bg-transparent backdrop-blur-0 border-b-0' : 'bg-zinc-950 backdrop-blur-2xl border-b'}`">
+  <nav class="flex fixed w-full h-20 z-10 bg-opacity-50 border-zinc-600 border-opacity-20" :class="`${transparent ? 'bg-transparent backdrop-blur-0 border-b-0' : 'bg-zinc-950 backdrop-blur-2xl border-b'}`">
     <div class="flex container justify-between items-center">
       <NuxtLink class="!bg-transparent" to="/">
         <img class="w-14" src="/logo192.png" alt="imgrio" />
@@ -54,23 +55,30 @@ const user = useSupabaseUser();
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent class="w-40 mt-0.5" avoid-collisions align="end">
+            <DropdownMenuLabel>Dashboard</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            
             <NuxtLink to="/dashboard/files">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['far', 'file-lines']" />
                 <span>My Files</span>
               </DropdownMenuItem>
             </NuxtLink>
+            
             <DropdownMenuItem>
               <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'plus']" />
               <span>Upload File</span>
             </DropdownMenuItem>
-            <NuxtLink to="/dashboard/settings">
+            
+            <NuxtLink to="/dashboard/account">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'sliders']" />
-                <span>Settings</span>
+                <span>Account</span>
               </DropdownMenuItem>
             </NuxtLink>
+            
             <DropdownMenuSeparator />
+            
             <NuxtLink :to="config.public.logoutPath!">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'arrow-right-from-bracket']" />
