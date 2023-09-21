@@ -42,7 +42,7 @@ useServerSeoMeta({
       <div class="mt-4">
         <div class="w-fit mx-auto">
           <div v-if="userContent">
-            <p class="text-2xl font-semibold px-6 py-4 truncate bg-zinc-950 bg-opacity-20 backdrop-blur-md border border-zinc-400 border-opacity-20 rounded-2xl">{{ userContent.title }}</p>
+            <p class="text-md font-semibold px-6 py-4 truncate bg-zinc-950 bg-opacity-20 backdrop-blur-md border border-zinc-400 border-opacity-20 rounded-2xl md:text-xl">{{ userContent.title }}</p>
 
             <AlertDialog>
               <AlertDialogTrigger class="float-right mr-2 opacity-40">
