@@ -5,10 +5,12 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use(async (config) => {
-    const supabase = useSupabaseClient();
-
+    const supabase = process.client ? useSupabaseClient() : null;
+    if (!supabase) {
+        return config;
+    }
+    
     const token = (await supabase.auth.getSession()).data.session?.access_token;
-
     if (!token) {
         return config;
     }
