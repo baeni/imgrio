@@ -34,9 +34,6 @@ namespace imgrio_api.Migrations
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsSelfHosted")
-                        .HasColumnType("boolean");
-
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
 
@@ -55,6 +52,28 @@ namespace imgrio_api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserFiles");
+                });
+
+            modelBuilder.Entity("imgrio_api.Models.UserSetting", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserSettings");
                 });
 #pragma warning restore 612, 618
         }

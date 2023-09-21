@@ -24,5 +24,4 @@ COPY ./imgrio.com.key /app/imgrio.com.key
 
 RUN mkdir ./data
 
-CMD ["nginx", "-g", "daemon off;"]
-ENTRYPOINT ["dotnet", "imgrio-api.dll", "--urls", "https://+:8443"]
+CMD service nginx start && dotnet imgrio-api.dll --urls "https://+:8443"

@@ -1,0 +1,73 @@
+{
+  "toasts": {
+    "successLinkCopied": "Link copied to clipboard.",
+    "successTokenCopied": "New token copied to clipboard",
+    "successSaved": "Saved changes.",
+    "successDeleted": "files have been deleted.",
+    "errorRetry": "An error occurred, try again.",
+    "errorSelect": "Select a file!"
+  },
+
+  "pages": {
+    "index": {
+      "slogan": "Take. Give. Share",
+      "description": "imgrio is a file sharing platform. Currently, full access is only available to selected people.",
+      "statistics": "files are currently circulating thanks to imgrio!"
+    },
+    "sharex": {
+      "title": "ShareX"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "files": {
+        "title": "My Files",
+        "notSharing": "You are currently not sharing any files with imgrio. :[",
+        "select": "Select",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "settings": {
+        "title": "Settings",
+        "username": "Username",
+        "email": "Email",
+        "userId": "UserID",
+        "imageAnimation": "Image Animation",
+        "externalHost": "File-Server",
+        "language": "Language",
+        "accessToken": "Access Token",
+        "regenerate": "Regenerate",
+        "save": "Save changes"
+      }
+    },
+    "view": {},
+    "auth": {
+      "login": {},
+      "logout": {
+        "title": "Bye Bye!",
+        "description": "You will be redirected in a few seconds"
+      }
+    }
+  },
+
+  "components": {
+    "inputs": {
+      "dropdown": {},
+      "knob": {
+        "signIn": "Log In",
+        "signOut": "Log Out",
+        "sharex": "ShareX",
+        "dashboard": "Dashboard",
+        "go": "Lets Go"
+      },
+      "textfield": {}
+    },
+    "modals": {
+      "uploadModal": {
+        "title": "Upload File",
+        "description": "Drag'n'Drop file here\ror browse",
+        "getLink": "Give me a link!"
+      }
+    },
+    "loading": {}
+  }
+}

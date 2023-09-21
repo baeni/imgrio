@@ -1,0 +1,73 @@
+{
+  "toasts": {
+    "successLinkCopied": "Link in Zwischenablage kopiert.",
+    "successTokenCopied": "Neuer Token in Zwischenablage kopiert.",
+    "successSaved": "Änderungen gespeichert.",
+    "successDeleted": "Dateien wurden gelöscht.",
+    "errorRetry": "Ein Fehler ist aufgetreten, versuche es erneut.",
+    "errorSelect": "Du musst eine Datei auswählen!"
+  },
+
+  "pages": {
+    "index": {
+      "slogan": "Take. Give. Share",
+      "description": "imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der vollumfängliche Zugriff nur für ausgewählte Personen möglich.",
+      "statistics": "Dateien sind aktuell dank imgrio im Umlauf!"
+    },
+    "sharex": {
+      "title": "ShareX"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "files": {
+        "title": "Meine Dateien",
+        "notSharing": "Du teilst aktuell keine Dateien mit imgrio. :[",
+        "select": "Auswählen",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
+      },
+      "settings": {
+        "title": "Einstellungen",
+        "username": "Nutzername",
+        "email": "Email",
+        "userId": "UserID",
+        "imageAnimation": "Bild-Animation",
+        "externalHost": "Datei-Server",
+        "language": "Sprache",
+        "accessToken": "Zugriffstoken",
+        "regenerate": "Neu generieren",
+        "save": "Änderungen speichern"
+      }
+    },
+    "view": {},
+    "auth": {
+      "login": {},
+      "logout": {
+        "title": "Tschau!",
+        "description": "Du wirst in wenigen Sekunden weitergeleitet"
+      }
+    }
+  },
+
+  "components": {
+    "inputs": {
+      "dropdown": {},
+      "knob": {
+        "signIn": "Login",
+        "signOut": "Logout",
+        "sharex": "ShareX",
+        "dashboard": "Dashboard",
+        "go": "Los gehts"
+      },
+      "textfield": {}
+    },
+    "modals": {
+      "uploadModal": {
+        "title": "Datei Hochladen",
+        "description": "Datei hierher ziehen\roder auswählen",
+        "getLink": "Gib mir einen Link!"
+      }
+    },
+    "loading": {}
+  }
+}
