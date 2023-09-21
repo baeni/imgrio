@@ -1,83 +1,33 @@
-<template>
-  <div class="section__container section--margin">
-    <div class="section__title">
-      <h1>ShareX</h1>
-    </div>
-
-    <div class="mb-7">
-      <p>
-        imgrio ist eine Plattform zum Teilen von Dateien. Aktuell ist der vollumfängliche Zugriff
-        nur für ausgewählte Personen möglich.
-      </p>
-    </div>
-
-    <div class="mb-7">
-      <h2 id="installation" class="text-lg font-bold">Installation</h2>
-      <p>
-        Zu Beginn solltest du erst einmal ShareX installieren. Klicke dafür
-        <a href="https://getsharex.com/" target="_blank">hier</a>
-        und anschließend auf "Download", um die aktuellste Version herunterzuladen.
-        <br />
-        Beim Setup kannst du einfach immer auf "Weiter" klicken, bis die Installation von ShareX
-        abgeschlossen ist.
-      </p>
-    </div>
-
-    <div class="mb-7">
-      <h2 id="configuration" class="text-lg font-bold">Konfiguration</h2>
-      <p>
-        Als nächstes konfigurieren wir alles so, dass ShareX mit imgrio funktioniert. Da wir das
-        meiste bereits für dich erledigt haben, musst du dafür nur unsere
-        <a href="" download>Konfiguration herunterladen</a>.
-        <br />
-        Nun importierst du diese Konfiguration mit einem Doppelklick auf die heruntergeladene Datei
-        in ShareX. Das einzige, was du jetzt noch selber erledigen musst, ist das einfügen deiner
-        Zugangsdaten. Navigiere dafür zur folgenden Einstellung:
-      </p>
-
-      <Textfield
-        class="my-7"
-        value="Ziele > Benutzerdefinierte Uploader-Einstellungen..."
-        disabled
-      />
-
-      <p>
-        In der Liste auf der linken Seite solltest du nun eine Konfiguration namens "imgrio" sehen.
-        Stelle sicher, dass diese ausgewählt ist. Anschließend findest du auf der rechten Seite eine
-        Tabelle mit dem Eintrag "AccessToken". In dem dazugehörigen Werte-feld solltest du nun
-        deinen zuvor generierten Acces-Token eintragen.
-      </p>
-    </div>
-  </div>
-</template>
-
-<script setup lang="ts">
-import Textfield from '@/components/inputs/Textfield.vue';
+﻿<script setup lang="ts">
+import {Button} from "@/components/ui/button";
 </script>
 
-<style scoped>
-.section__container {
-  color: #fff;
-  font-family: var(--font-family);
-}
+<template>
+  <section class="container pt-28">
+    <div class="w-5/12">
+      <p class="text-2xl font-bold mb-9">What is ShareX?</p>
+      <p class="text-lg">ShareX is a free, open-source and ad-free software for capturing screenshots and much more. For the perfect experience, simply follow the steps on the left side and start uploading to imgrio using ShareX!</p>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-8">
+      <div class="bg-zinc-900 shadow-lg h-fit p-12 border border-zinc-500 border-opacity-20 rounded-3xl translate-y-16">
+        <p class="text-lg font-semibold text-zinc-400 mb-2">1 – Installation.</p>
+        <p class="text-lg mb-9">First of all, you should install ShareX. Click the button below, then click on "Download" to get the lastest version. During setup, you can always click "Next" until the installation of ShareX is complete.</p>
+        <a href="https://getsharex.com/" target="_blank"><Button variant="secondary">Download ShareX</Button></a>
+      </div>
+      
+      <div class="bg-zinc-900 shadow-xl h-fit p-12 border border-zinc-500 border-opacity-20 rounded-3xl -translate-y-20">
+        <p class="text-lg font-semibold text-zinc-400 mb-2">2 – Configuration.</p>
+        <p class="text-lg mb-9">Next up, we configure everything so that ShareX works with imgrio. Since we have already done most of this for you, all you have to do is download out configuration file.</p>
+        <a href="/imgrio-sharex-config.sxcu" download><Button variant="secondary">Download config</Button></a>
+        <p class="text-lg mt-9">Perfect! Now, simply import the said configuration file into ShareX with a double click on it.</p>
+      </div>
 
-.section__container h2 {
-  font-weight: 500;
-  font-size: 1rem;
-  line-height: 30px;
-  color: var(--color-light);
-}
-
-a {
-  font-weight: 500;
-  color: var(--color-primary);
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-input {
-  width: 100%;
-}
-</style>
+      <div class="bg-zinc-800 shadow-2xl h-fit p-12 border border-zinc-400 border-opacity-20 rounded-3xl -translate-y-32 translate-x-96">
+        <p class="text-lg font-semibold text-zinc-400 mb-2">3 – Almost there...</p>
+        <p class="text-lg mb-9">With the configuration file imported, the only thing left is to insert your personal access token. Happy uploading!</p>
+        <NuxtLink to="/dashboard/files"><Button>View Dashboard</Button></NuxtLink>
+      </div>
+    </div>
+  </section>
+</template>

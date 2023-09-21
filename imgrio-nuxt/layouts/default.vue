@@ -1,11 +1,11 @@
-<template>
-  <div>
-    <NavBar />
-
-    <slot />
-  </div>
-</template>
-
-<script setup lang="ts">
-import NavBar from "../components/NavBar.vue";
+﻿<script setup lang="ts">
+import Navbar from '@/components/Navbar.vue'
 </script>
+
+<template>
+  <Navbar transparent />
+  
+  <main>
+    <slot />
+  </main>
+</template>

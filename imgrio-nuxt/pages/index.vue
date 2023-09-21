@@ -1,96 +1,31 @@
-<template>
-  <div class="section--center gradient__bg">
-    <div class="section__container">
-      <div class="section__container-slogan">
-        <p>
-          {{ $t('pages.index.slogan') }}
-          <!-- Take. Give.
-          <span class="section__container-slogan--accent">Share.</span> -->
-        </p>
-      </div>
-      <div class="section__container-description">
-        <p>
-          {{ $t('pages.index.description') }}
-        </p>
-      </div>
-      <div class="section__container-buttons">
-        <Knob :text="$t('components.inputs.knob.go')" href="/sharex" />
-        <Knob
-          :text="$t('components.inputs.knob.dashboard')"
-          href="/dashboard/files"
-          primary
-          v-if="user"
-        />
-        <LoginButton primary v-else />
-      </div>
-      <div class="section__container-statistics">
-        <p>
-          <span class="section__container-statistics--bold">{{ userFilesInfo.count }}</span>
-          {{ $t('pages.index.statistics') }}
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
+﻿<script setup lang="ts">
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
-<script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { apiClient } from '@/axios.conf';
-
-import Knob from '@/components/inputs/Knob.vue';
-import LoginButton from '@/components/LoginButton.vue';
-import { UserFilesInfo } from '~/models';
-
+const config = useRuntimeConfig();
 const user = useSupabaseUser();
-const userFilesInfo = ref<UserFilesInfo>({
-  count: 0,
-  countToday: 0
-});
-
-onMounted(async () => {
-  userFilesInfo.value = (await apiClient.get('files')).data;
-});
 </script>
 
-<style scoped>
-.section__container {
-  color: #fff;
-  text-align: center;
-  max-width: 700px;
-}
+<template>
+  <span class="absolute top-0 left-0 w-screen h-screen -z-10 bg-gradient-to-br from-zinc-950 to-blue-950"></span>
+  <section class="flex h-screen max-w-3xl mx-auto">
+    <div class="my-auto">
+      <p class="text-6xl font-bold">Take. Give. <span class="text-blue-400">Share.</span></p>
+      <p class="text-lg my-9">imgrio is a file sharing platform. Currently, full access is only available to selected people. If you still wish to use imgrio, feel free to request your personal access now!</p>
 
-.section__container-slogan p {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 4rem;
-  line-height: 115px;
-}
+      <div class="grid grid-cols-5 gap-4 w-fit" v-if="!user">
+        <Input class="col-span-2" placeholder="someone@imgrio.com" />
+        <Button class="col-span-1" size="sm">Request Access</Button>
+      </div>
 
-.section__container-slogan--accent {
-  font-family: var(--font-family-brand);
-  font-size: 4.5rem;
-  color: var(--color-primary);
-}
-
-.section__container-description {
-  color: var(--color-lighter);
-  font-family: var(--font-family);
-  font-size: 1rem;
-  line-height: 20px;
-}
-
-.section__container-buttons {
-  margin-block: 2rem 0.75rem;
-}
-
-.section__container-statistics {
-  font-family: var(--font-family);
-  font-size: 0.75rem;
-  color: var(--color-light);
-  opacity: 0.5;
-}
-
-.section__container-statistics--bold {
-  font-weight: 800;
-}
-</style>
+      <div class="flex gap-2" v-if="user">
+        <NuxtLink to="/sharex">
+          <Button variant="outline" size="lg">Get started</Button>
+        </NuxtLink>
+        <NuxtLink to="/dashboard/files">
+          <Button variant="secondary" size="lg">Dashboard</Button>
+        </NuxtLink>
+      </div>
+    </div>
+  </section>
+</template>

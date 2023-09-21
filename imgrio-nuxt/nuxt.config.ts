@@ -2,46 +2,40 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  css: ['@/assets/main.css', '@fortawesome/fontawesome-svg-core/styles.css'],
+  css: ['@/assets/css/main.css', '@fortawesome/fontawesome-svg-core/styles.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
-      autoprefixer: {}
+      autoprefixer: {},
     }
   },
-
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/supabase', '@nuxt/image'],
-  build: { transpile: ['vue-toastification'] },
+  
+  modules: ['@pinia/nuxt', '@nuxtjs/supabase', '@nuxt/image'],
 
   runtimeConfig: {
     public: {
-      siteUrl: process.env.SITE_URL
+      siteUrl: process.env.SUPABASE_SITE_URL,
+      loginPath: process.env.SUPABASE_LOGIN_PATH,
+      logoutPath: process.env.SUPABASE_LOGOUT_PATH,
+      redirectPath: process.env.SUPABASE_REDIRECT_PATH
     }
   },
-
-  app: {
-    head: {
-      title: 'imgrio'
+  
+  router: {
+    options: {
+      linkActiveClass: 'bg-zinc-600 bg-opacity-20 rounded'
     }
   },
-
-  i18n: {
-    // https://i18n.nuxtjs.org/options-reference/
-    vueI18n: './i18n.conf.ts',
-    // detectBrowserLanguage: false, // default is true
-    locales: [
-      { code: 'de', iso: 'de', file: 'de.json' },
-      { code: 'en', iso: 'en', file: 'en.json' }
-    ],
-    langDir: './locales',
-    strategy: 'no_prefix'
+  
+  image: {
+    //
   },
 
   supabase: {
     redirectOptions: {
-      login: '/auth/login',
-      callback: '/',
+      login: process.env.SUPABASE_LOGIN_PATH!,
+      callback: process.env.SUPABASE_REDIRECT_PATH!,
       exclude: ['/', '/sharex', '/v/*']
     }
   }
-});
+})

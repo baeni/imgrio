@@ -1,8 +1,10 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { onMounted } from "vue";
-import { signInUser } from "~/composables/useSupabase";
+import { signInUser } from "@/composables/useSupabase";
 
 onMounted(() => {
-  signInUser();
+  setTimeout(async () => {
+    await signInUser();
+  })
 });
 </script>
