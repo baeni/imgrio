@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { apiClient } from '@/axios.conf'
 import { UserContent } from "@/models";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,17 +15,21 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
-const userContent = ref<UserContent>((await apiClient.get(`files/${useRoute().params.id}`)).data);
+const userContent = ref<UserContent | null>(null);
+
+onMounted(async () => {
+  userContent.value = (await apiClient.get(`files/${useRoute().params.id}`)).data;
+})
 
 useServerSeoMeta({
   ogSiteName: 'imgrio',
   twitterSite: 'imgrio',
 
-  ogTitle: userContent.value.title,
-  twitterTitle: userContent.value.title,
+  ogTitle: userContent.value?.title,
+  twitterTitle: userContent.value?.title,
 
-  ogImage: userContent.value.url,
-  twitterImage: userContent.value.url,
+  ogImage: userContent.value?.url,
+  twitterImage: userContent.value?.url,
 
   twitterCard: 'summary_large_image'
 });
