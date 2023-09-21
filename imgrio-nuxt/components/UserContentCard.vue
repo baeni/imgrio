@@ -14,7 +14,7 @@ const props = defineProps({
   <div class="rounded-lg overflow-hidden ease-in-out transition-colors border border-zinc-400 border-opacity-0 lg:group-hover:bg-zinc-900 lg:group-hover:border-opacity-20">
     <a :href="`/v/${userContent.id}`">
       <AspectRatio class="bg-zinc-300" :ratio="1/0.75">
-        <NuxtImg class="object-cover w-full h-full" :src="userContent.url" :alt="userContent.title" loading="lazy" placeholder />
+        <NuxtImg class="object-cover w-full h-full" :src="userContent.url" :alt="userContent.title" loading="lazy" quality="1" placeholder />
       </AspectRatio>
       <div class="px-4 py-3">
         <p class="text-lg font-semibold truncate">{{ userContent.title }}</p>

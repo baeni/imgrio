@@ -36,13 +36,13 @@ useServerSeoMeta({
     <span class="absolute w-full h-full -z-10 bg-no-repeat bg-cover bg-center" :style="`background-image: url(${userContent.url}); filter: blur(150px);`" v-if="userContent" />
 
     <div>
-      <NuxtImg class="max-w-full max-h-[70vh] min-w-[25vw] min-h-[50vh] rounded-xl" :src="userContent.url" :alt="userContent.title" placeholder v-if="userContent" />
+      <NuxtImg class="max-w-full max-h-[70vh] min-w-[25vw] min-h-[50vh] rounded-xl" :src="userContent.url" :alt="userContent.title" quality="50" placeholder v-if="userContent" />
       <Skeleton class="h-[50vh] aspect-video rounded-xl" v-else />
       
       <div class="mt-4">
         <div class="w-fit mx-auto">
           <div v-if="userContent">
-            <p class="text-2xl font-semibold px-6 py-4 truncate bg-zinc-950 bg-opacity-20 backdrop-blur-md border border-zinc-400 border-opacity-20 rounded-2xl">{{ userContent.title }}</p>
+            <p class="text-md font-semibold px-6 py-4 truncate bg-zinc-950 bg-opacity-20 backdrop-blur-md border border-zinc-400 border-opacity-20 rounded-2xl md:text-xl">{{ userContent.title }}</p>
 
             <AlertDialog>
               <AlertDialogTrigger class="float-right mr-2 opacity-40">
