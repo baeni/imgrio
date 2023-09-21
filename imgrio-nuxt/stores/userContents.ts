@@ -5,7 +5,7 @@ import type { UserContent } from '@/models';
 import { apiClient } from '@/axios.conf';
 
 export const useUserContentsStore = defineStore('userContents', () => {
-  const userContents = ref<UserContent[]>();
+  const userContents = ref<UserContent[]>([]);
 
   async function fetchDataAsync() {
     userContents.value = (await apiClient.get('me/files')).data.sort(
