@@ -1,10 +1,15 @@
 <script setup lang="ts">
+
 </script>
 
 <template>
-  <NuxtPage v-if="$route.path.startsWith('/auth')" />
+  <NuxtPage v-if="$route.path.startsWith('/auth/')" />
 
-  <NuxtLayout name="default" extended v-else>
+  <NuxtLayout name="dashboard" v-else-if="$route.path.startsWith('/dashboard/')">
+    <NuxtPage />
+  </NuxtLayout>
+  
+  <NuxtLayout name="default" v-else>
     <NuxtPage />
   </NuxtLayout>
 </template>
