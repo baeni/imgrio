@@ -133,9 +133,9 @@ async function handleDeleteAsync() {
   <ul class="grid gap-x-4 gap-y-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
     <li class="group relative" v-for="userContent in userContents">
       <UserContentCard class="transition-all" :class="selectionMode && !selectedUserContents.includes(userContent) ? 'opacity-50' : ''" :key="userContent.id" :userContent="userContent" @click="handleContentCardClick($event, userContent)" />
-      <span class="absolute flex items-center top-2 right-2 w-6 h-6 cursor-pointer bg-zinc-600 bg-opacity-50 backdrop-blur rounded-full opacity-0 transition-opacity lg:group-hover:opacity-100 lg:group-hover:delay-500" :class="selectionMode ? 'opacity-100' : ''" @click="handleUserContentSelection($event, userContent)">
-        <FaIcon class="w-full" :icon="['fas', 'xmark']" />
-      </span>
+      <Button class="absolute top-2 right-2 transition-opacity lg:group-hover:opacity-30 lg:hover:!opacity-100" :class="selectionMode ? '!opacity-100' : 'opacity-30 lg:opacity-0'" variant="secondary" size="sm" @click="handleUserContentSelection($event, userContent)">
+        {{ !selectedUserContents.includes(userContent) ? 'Select' : 'Unselect' }}
+      </Button>
     </li>
   </ul>
 </template>
