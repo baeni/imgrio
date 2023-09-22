@@ -64,11 +64,13 @@ const user = useSupabaseUser();
                 <span>My Files</span>
               </DropdownMenuItem>
             </NuxtLink>
-            
-            <DropdownMenuItem>
-              <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'plus']" />
-              <span>Upload File</span>
-            </DropdownMenuItem>
+
+            <NuxtLink to="/dashboard/files">
+              <DropdownMenuItem>
+                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'plus']" />
+                <span>Upload File</span>
+              </DropdownMenuItem>
+            </NuxtLink>
             
             <NuxtLink to="/dashboard/account">
               <DropdownMenuItem>
