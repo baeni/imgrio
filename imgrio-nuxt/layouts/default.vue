@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar.vue'
 </script>
 
 <template>
-  <Navbar transparent />
+  <Navbar :transparent="!$route.path.startsWith('/dashboard/')" />
   
   <main>
     <slot />
