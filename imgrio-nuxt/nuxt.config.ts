@@ -6,10 +6,10 @@ export default defineNuxtConfig({
   postcss: {
     plugins: {
       tailwindcss: {},
-      autoprefixer: {},
+      autoprefixer: {}
     }
   },
-  
+
   modules: ['@pinia/nuxt', '@nuxtjs/supabase', '@nuxt/image'],
 
   runtimeConfig: {
@@ -20,13 +20,13 @@ export default defineNuxtConfig({
       redirectPath: process.env.SUPABASE_REDIRECT_PATH
     }
   },
-  
+
   router: {
     options: {
       linkActiveClass: 'bg-zinc-600 bg-opacity-20 rounded'
     }
   },
-  
+
   image: {
     //
   },
@@ -38,4 +38,4 @@ export default defineNuxtConfig({
       exclude: ['/', '/sharex', '/v/*']
     }
   }
-})
+});
