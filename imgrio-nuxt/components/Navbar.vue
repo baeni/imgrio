@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,12 +7,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback
-} from "@/components/ui/avatar";
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const props = defineProps({
   transparent: {
@@ -26,7 +22,14 @@ const user = useSupabaseUser();
 </script>
 
 <template>
-  <nav class="flex fixed w-full h-20 z-10 bg-opacity-50 border-zinc-600 border-opacity-20" :class="`${transparent ? 'bg-transparent backdrop-blur-0 border-b-0' : 'bg-zinc-950 backdrop-blur-2xl border-b'}`">
+  <nav
+    class="flex fixed w-full h-20 z-10 bg-opacity-50 border-zinc-600 border-opacity-20"
+    :class="`${
+      transparent
+        ? 'bg-transparent backdrop-blur-0 border-b-0'
+        : 'bg-zinc-950 backdrop-blur-2xl border-b'
+    }`"
+  >
     <div class="flex container justify-between items-center">
       <NuxtLink class="!bg-transparent" to="/">
         <img class="w-14" src="/logo192.png" alt="imgrio" />
@@ -48,16 +51,18 @@ const user = useSupabaseUser();
         <DropdownMenu>
           <DropdownMenuTrigger class="flex gap-4 items-center">
             <p class="font-semibold">Hi, {{ user.user_metadata.name }}</p>
-                        
+
             <Avatar class="rounded-lg">
               <AvatarImage :src="user.user_metadata.picture" />
-              <AvatarFallback>{{ user.user_metadata.name.slice(0, 2).toUpperCase() }}</AvatarFallback>
+              <AvatarFallback>{{
+                user.user_metadata.name.slice(0, 2).toUpperCase()
+              }}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent class="w-40 mt-0.5" avoid-collisions align="end">
             <DropdownMenuLabel>Dashboard</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            
+
             <NuxtLink to="/dashboard/files">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['far', 'file-lines']" />
@@ -71,16 +76,16 @@ const user = useSupabaseUser();
                 <span>Upload File</span>
               </DropdownMenuItem>
             </NuxtLink>
-            
+
             <NuxtLink to="/dashboard/account">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'sliders']" />
                 <span>Account</span>
               </DropdownMenuItem>
             </NuxtLink>
-            
+
             <DropdownMenuSeparator />
-            
+
             <NuxtLink :to="config.public.logoutPath!">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'arrow-right-from-bracket']" />

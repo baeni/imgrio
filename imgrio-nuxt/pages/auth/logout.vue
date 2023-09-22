@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { signOutUser } from "@/composables/useSupabase";
+import { onMounted } from 'vue';
+import { signOutUser } from '@/composables/useSupabase';
 
 onMounted(() => {
   setTimeout(async () => {
     await signOutUser();
-    navigateTo("/");
-  }, 2000)
+    navigateTo('/');
+  }, 2000);
 });
 </script>
 
