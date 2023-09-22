@@ -38,7 +38,7 @@ useServerSeoMeta({
   <section class="flex h-screen w-screen items-center justify-center">
     <div class="absolute">
       <NuxtImg
-          class="max-w-full max-h-[70vh] min-w-[25vw] min-h-[50vh] rounded-xl"
+          class="max-w-full max-h-[70vh] mx-auto rounded-xl"
           :src="userContent.url"
           :alt="userContent.title"
           quality="50"
