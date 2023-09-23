@@ -32,21 +32,18 @@ useServerSeoMeta({
 </script>
 
 <template>
-  <section class="flex h-screen container items-center justify-center">
-    <span
-      class="absolute w-full h-full -z-10 bg-no-repeat bg-cover bg-center"
-      :style="`background-image: url(${userContent.url}); filter: blur(150px);`"
-      v-if="userContent"
-    />
-
-    <div>
+  <span
+      class="absolute top-0 left-0 w-screen h-screen bg-no-repeat bg-cover bg-center -z-10" :style="`background-image: url(${userContent.url}); filter: blur(150px);`"
+  ></span>
+  <section class="flex h-screen w-screen items-center justify-center">
+    <div class="absolute">
       <NuxtImg
-        class="max-w-full max-h-[70vh] min-w-[25vw] min-h-[50vh] rounded-xl"
-        :src="userContent.url"
-        :alt="userContent.title"
-        quality="50"
-        placeholder
-        v-if="userContent"
+          class="max-w-full max-h-[70vh] mx-auto rounded-xl"
+          :src="userContent.url"
+          :alt="userContent.title"
+          quality="50"
+          placeholder
+          v-if="userContent"
       />
       <Skeleton class="h-[50vh] aspect-video rounded-xl" v-else />
 
@@ -54,14 +51,14 @@ useServerSeoMeta({
         <div class="w-fit mx-auto">
           <div v-if="userContent">
             <p
-              class="text-md font-semibold px-6 py-4 truncate bg-zinc-950 bg-opacity-20 backdrop-blur-md border border-zinc-400 border-opacity-20 rounded-2xl md:text-xl"
+                class="text-md font-semibold px-6 py-4 truncate bg-zinc-950 bg-opacity-20 backdrop-blur-md border border-zinc-400 border-opacity-20 rounded-2xl md:text-xl"
             >
               {{ userContent.title }}
             </p>
 
             <AlertDialog>
-              <AlertDialogTrigger class="float-right mr-2 opacity-40">
-                <p class="shadow-md">Show details</p>
+              <AlertDialogTrigger class="w-full opacity-40">
+                <p class="drop-shadow-md">Show details</p>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
