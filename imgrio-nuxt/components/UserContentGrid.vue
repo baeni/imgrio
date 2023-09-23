@@ -100,21 +100,21 @@ async function handleDeleteAsync() {
 </script>
 
 <template>
-  <span class="flex gap-0.5 justify-end mb-2">
+  <span class="flex gap-0.5 justify-end mb-4">
     <Button
       class="hover:bg-red-500"
-      variant="ghost"
+      variant="secondary"
       size="sm"
       @click="async () => await handleDeleteAsync()"
       v-if="selectedUserContents.length > 0"
       >Delete {{ selectedUserContents.length }}</Button
     >
-    <Button variant="ghost" size="sm" @click="toggleSelectionMode()" v-if="selectionMode"
+    <Button variant="outline" size="sm" @click="toggleSelectionMode()" v-if="selectionMode"
       >Cancel</Button
     >
     <Dialog v-else>
       <DialogTrigger>
-        <Button variant="ghost" size="sm">Upload File</Button>
+        <Button variant="outline" size="sm">Upload File</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
