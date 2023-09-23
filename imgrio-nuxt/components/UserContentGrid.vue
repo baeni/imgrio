@@ -14,6 +14,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 const props = defineProps({
   userContents: {
@@ -25,6 +26,7 @@ const props = defineProps({
 const userContentsStore = useUserContentsStore();
 
 const formFile = ref<File | null>(null);
+const formTitle = ref<string | number | undefined>(undefined);
 
 const selectionMode = ref<boolean>(false);
 const selectedUserContents = ref<UserContent[]>([]);
@@ -32,7 +34,10 @@ const selectedUserContents = ref<UserContent[]>([]);
 const handleFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
   if (input.files && input.files.length > 0) {
-    formFile.value = input.files[0];
+    const file = input.files[0];
+
+    formFile.value = file;
+    formTitle.value = file.name;
   }
 };
 
@@ -44,14 +49,14 @@ async function handlePostAsync() {
     }
 
     const formData = new FormData();
-    formData.append('file', formFile.value);
+    formData.append('file', formFile.value, formTitle.value?.toString());
     const response = await userContentsStore.postUserContentAsync(formData);
 
     // copyToClipboard(response.url);
     console.log('Link copied to clipboard.');
     formFile.value = null;
-  } catch {
-    console.log('An error has occured.');
+  } catch (error) {
+    console.log(`An error has occured: ${error}`);
     return;
   }
 }
@@ -100,7 +105,7 @@ async function handleDeleteAsync() {
 </script>
 
 <template>
-  <span class="flex gap-0.5 justify-end mb-4">
+  <div class="flex gap-0.5 justify-end mb-4">
     <Button
       class="hover:bg-red-500"
       variant="secondary"
@@ -119,22 +124,35 @@ async function handleDeleteAsync() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Upload File</DialogTitle>
-          <DialogDescription> Files with up to 10 MB allowed. </DialogDescription>
+          <DialogDescription> Files up to 10 MB allowed.</DialogDescription>
         </DialogHeader>
         <div
-          class="rounded-lg transition-colors border-2 border-dashed border-zinc-400 border-opacity-50 lg:hover:border-opacity-100"
+          class="rounded-lg transition-colors border-2 border-dashed border-zinc-800 lg:hover:border-zinc-700"
+          :class="formFile ? 'hidden' : ''"
         >
-          <input class="hidden" id="file" type="file" accept="" @change="handleFileChange" />
-          <Label class="p-10 text-center select-none cursor-pointer" for="file"
-            >Drag'n'Drop file here<br />or select</Label
+          <Label class="p-10 text-center select-none cursor-pointer" for="file">
+            <span class="block text-lg font-semibold">Drag & drop</span>
+            <span class="block text-zinc-600">or browse file</span>
+          </Label>
+          <input class="hidden" id="file" type="file" @change="handleFileChange" />
+        </div>
+        <div v-if="formFile">
+          <Input tabindex="-1" placeholder="File Name" v-model="formTitle" />
+          <Label class="mt-2 ml-0.5 w-fit text-zinc-400 font-normal cursor-pointer" for="file"
+            >browse</Label
           >
         </div>
         <DialogFooter>
-          <Button @click="async () => await handlePostAsync()"> Upload </Button>
+          <DialogTrigger>
+            <Button variant="outline">Cancel</Button>
+          </DialogTrigger>
+          <DialogTrigger>
+            <Button @click="async () => await handlePostAsync()">Upload</Button>
+          </DialogTrigger>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  </span>
+  </div>
 
   <ul class="grid gap-x-4 gap-y-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
     <li class="group relative" v-for="userContent in userContents">
