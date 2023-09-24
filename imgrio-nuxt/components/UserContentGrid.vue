@@ -22,8 +22,7 @@ import {
   AlertDialogFooter, AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from "~/components/ui/alert-dialog";
-import {User} from "lucide-vue-next";
+} from "@/components/ui/alert-dialog";
 
 const props = defineProps({
   userContents: {
@@ -62,8 +61,7 @@ async function handlePostAsync() {
     formData.append('file', formFile.value, formTitle.value?.toString());
     const response = await userContentsStore.postUserContentAsync(formData);
 
-    // copyToClipboard(response.url);
-    console.log('Link copied to clipboard.');
+    copyToClipboard(response.url);
     formFile.value = null;
   } catch (error) {
     console.log(`An error has occured: ${error}`);
@@ -111,6 +109,10 @@ async function handleDeleteAsync() {
     console.log('An error has occured.');
     return;
   }
+}
+
+function copyToClipboard(text: string) {
+  navigator.clipboard.writeText(text);
 }
 </script>
 
