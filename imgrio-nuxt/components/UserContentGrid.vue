@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { UserContent } from '@/models';
 import { useUserContentsStore } from '@/stores/userContents';
 import UserContentCard from '@/components/UserContentCard.vue';
@@ -15,6 +15,15 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import {
+  AlertDialog,
+  AlertDialogAction, AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription,
+  AlertDialogFooter, AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "~/components/ui/alert-dialog";
+import {User} from "lucide-vue-next";
 
 const props = defineProps({
   userContents: {
@@ -30,6 +39,7 @@ const formTitle = ref<string | number | undefined>(undefined);
 
 const selectionMode = ref<boolean>(false);
 const selectedUserContents = ref<UserContent[]>([]);
+const selectedUserContentsCount = computed(() => selectedUserContents.value.length);
 
 const handleFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -92,7 +102,7 @@ function handleUserContentSelection(event: Event, userContent: UserContent) {
 async function handleDeleteAsync() {
   try {
     const deletePromises = selectedUserContents.value.map((selectedUserContent) => {
-      return userContentsStore.deleteUserContentAsync(selectedUserContent.id);
+      return userContentsStore.deleteUserContentAsync(selectedUserContent);
     });
     const response = await Promise.all(deletePromises);
 
@@ -106,14 +116,23 @@ async function handleDeleteAsync() {
 
 <template>
   <div class="flex gap-0.5 justify-end mb-4">
-    <Button
-      class="hover:bg-red-500"
-      variant="secondary"
-      size="sm"
-      @click="async () => await handleDeleteAsync()"
-      v-if="selectedUserContents.length > 0"
-      >Delete {{ selectedUserContents.length }}</Button
-    >
+    <AlertDialog v-if="selectedUserContents.length > 0">
+      <AlertDialogTrigger>
+        <Button class="hover:bg-red-500" variant="secondary" size="sm">Delete {{ selectedUserContentsCount }}</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            <p>Deleting files cannot be undone. Perform with caution!</p>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction class="hover:bg-red-500 hover:text-foreground" @click="async () => await handleDeleteAsync()">Yes, delete {{ selectedUserContentsCount }} {{ selectedUserContentsCount == 1 ? 'file' : 'files' }}</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
     <Button variant="outline" size="sm" @click="toggleSelectionMode()" v-if="selectionMode"
       >Cancel</Button
     >
@@ -159,9 +178,9 @@ async function handleDeleteAsync() {
       <UserContentCard
         class="transition-all"
         :class="selectionMode && !selectedUserContents.includes(userContent) ? 'opacity-50' : ''"
-        :key="userContent.id"
         :userContent="userContent"
         @click="handleContentCardClick($event, userContent)"
+        v-if="userContent"
       />
       <Button
         class="absolute top-2 right-2 transition-opacity lg:group-hover:opacity-30 lg:hover:!opacity-100"
