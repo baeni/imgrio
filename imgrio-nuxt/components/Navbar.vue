@@ -70,13 +70,6 @@ const user = useSupabaseUser();
               </DropdownMenuItem>
             </NuxtLink>
 
-            <NuxtLink to="/dashboard/files">
-              <DropdownMenuItem>
-                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'plus']" />
-                <span>Upload File</span>
-              </DropdownMenuItem>
-            </NuxtLink>
-
             <NuxtLink to="/dashboard/account">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'sliders']" />
@@ -84,6 +77,15 @@ const user = useSupabaseUser();
               </DropdownMenuItem>
             </NuxtLink>
 
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem>
+              <a href="https://www.buymeacoffee.com/bennysaa" target="_blank">
+                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'mug-hot']" />
+                <span>Buy Me a Coffee</span>
+              </a>
+            </DropdownMenuItem>
+            
             <DropdownMenuSeparator />
 
             <NuxtLink :to="config.public.logoutPath!">
