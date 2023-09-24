@@ -70,19 +70,21 @@ const user = useSupabaseUser();
               </DropdownMenuItem>
             </NuxtLink>
 
-            <NuxtLink to="/dashboard/files">
-              <DropdownMenuItem>
-                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'plus']" />
-                <span>Upload File</span>
-              </DropdownMenuItem>
-            </NuxtLink>
-
             <NuxtLink to="/dashboard/account">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'sliders']" />
                 <span>Account</span>
               </DropdownMenuItem>
             </NuxtLink>
+
+            <DropdownMenuSeparator />
+
+            <a href="https://www.paypal.com/donate/?hosted_button_id=D7KN5JMJM6SE6" target="_blank">
+              <DropdownMenuItem>
+                <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'mug-hot']" />
+                <span>Donate</span>
+              </DropdownMenuItem>
+            </a>
 
             <DropdownMenuSeparator />
 
