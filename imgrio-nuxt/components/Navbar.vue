@@ -79,13 +79,13 @@ const user = useSupabaseUser();
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem>
-              <a href="https://www.buymeacoffee.com/bennysaa" target="_blank">
+            <a href="https://www.paypal.com/donate/?hosted_button_id=D7KN5JMJM6SE6" target="_blank">
+              <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'mug-hot']" />
-                <span>Buy Me a Coffee</span>
-              </a>
-            </DropdownMenuItem>
-            
+                <span>Donate</span>
+              </DropdownMenuItem>
+            </a>
+
             <DropdownMenuSeparator />
 
             <NuxtLink :to="config.public.logoutPath!">
