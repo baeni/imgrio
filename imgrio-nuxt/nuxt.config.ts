@@ -27,15 +27,15 @@ export default defineNuxtConfig({
     }
   },
 
-  image: {
-    //
-  },
-
   supabase: {
     redirectOptions: {
       login: process.env.SUPABASE_LOGIN_PATH!,
       callback: process.env.SUPABASE_REDIRECT_PATH!,
       exclude: ['/', '/sharex', '/v/*']
     }
+  },
+
+  image: {
+    //
   }
 });
