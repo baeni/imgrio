@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-const config = useRuntimeConfig();
 const user = useSupabaseUser();
 </script>
 
