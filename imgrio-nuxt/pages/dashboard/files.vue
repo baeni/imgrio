@@ -18,8 +18,8 @@ onMounted(async () => {
   <section class="container pt-28">
     <p class="text-2xl font-bold">My Files</p>
 
-    <UserContentGrid :userContents="userContents" v-if="userContents.length > 0" />
-    <Loading class="flex w-full justify-center mt-4" v-else-if="!fetched" />
+    <Loading class="flex w-full justify-center mt-4" v-if="!fetched" />
+    <UserContentGrid :userContents="userContents" v-else-if="userContents.length > 0" />
     <div class="mt-4" v-else>
       <p class="text-xl text-zinc-500 font-bold">It seems you did not upload any content — yet</p>
     </div>
