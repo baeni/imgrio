@@ -17,12 +17,15 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import {
   AlertDialog,
-  AlertDialogAction, AlertDialogCancel,
-  AlertDialogContent, AlertDialogDescription,
-  AlertDialogFooter, AlertDialogHeader,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 const props = defineProps({
   userContents: {
@@ -120,7 +123,9 @@ function copyToClipboard(text: string) {
   <div class="flex gap-0.5 justify-end mb-4">
     <AlertDialog v-if="selectedUserContents.length > 0">
       <AlertDialogTrigger>
-        <Button class="hover:bg-red-500" variant="secondary" size="sm">Delete {{ selectedUserContentsCount }}</Button>
+        <Button class="hover:bg-red-500" variant="secondary" size="sm"
+          >Delete {{ selectedUserContentsCount }}</Button
+        >
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -131,7 +136,12 @@ function copyToClipboard(text: string) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction class="hover:bg-red-500 hover:text-foreground" @click="async () => await handleDeleteAsync()">Yes, delete {{ selectedUserContentsCount }} {{ selectedUserContentsCount == 1 ? 'file' : 'files' }}</AlertDialogAction>
+          <AlertDialogAction
+            class="hover:bg-red-500 hover:text-foreground"
+            @click="async () => await handleDeleteAsync()"
+            >Yes, delete {{ selectedUserContentsCount }}
+            {{ selectedUserContentsCount == 1 ? 'file' : 'files' }}</AlertDialogAction
+          >
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
