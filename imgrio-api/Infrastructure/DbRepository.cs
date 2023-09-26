@@ -15,7 +15,7 @@ namespace imgrio_api.Infrastructure
 
         public async Task<TEntity?> GetSingle(Guid id)
         {
-            var entity = await _dbContext.FindAsync<TEntity>(id);
+            var entity = await _dbContext.Set<TEntity>().FindAsync(id);
 
             return entity;
         }
@@ -50,9 +50,8 @@ namespace imgrio_api.Infrastructure
             return entity;
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(TEntity entity)
         {
-            var entity = _dbContext.FindAsync<TEntity>(id);
              _dbContext.Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
