@@ -14,6 +14,6 @@ namespace imgrio_api.Infrastructure
 
         public Task<TEntity> Update(TEntity entity);
 
-        public Task Delete(Guid id);
+        public Task Delete(TEntity entity);
     }
 }
