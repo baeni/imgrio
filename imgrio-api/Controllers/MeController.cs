@@ -106,7 +106,7 @@ namespace imgrio_api.Controllers
                 return Unauthorized("Sub and Author do not match.");
             }
 
-            await _dbUserContentsRepository.Delete(id);
+            await _dbUserContentsRepository.Delete(userContent);
 
             #region delete from imgrio server
             var path = $"./data/{userContent.AuthorId}/{userContent}";
