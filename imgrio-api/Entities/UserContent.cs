@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using HeyRed.Mime;
 
-namespace imgrio_api.Models
+namespace imgrio_api.Entities
 {
-    public class UserFile
+    public class UserContent : IEntity
     {
-        public UserFile(
+        public UserContent(
             Guid id,
-            Guid author,
+            Guid authorId,
             string title,
             string type,
             long size,
@@ -15,7 +15,7 @@ namespace imgrio_api.Models
             DateTime dateOfCreation)
         {
             Id = id;
-            Author = author;
+            AuthorId = authorId;
             Title = title;
             Type = type;
             Size = size;
@@ -24,13 +24,14 @@ namespace imgrio_api.Models
         }
 
         [Key]
-        public Guid Id { get; private set; }
-        public Guid Author { get; private set; }
-        public string Title { get; private set; }
-        public string Type { get; private set; }
-        public long Size { get; private set; }
-        public string Url { get; private set; }
-        public DateTime DateOfCreation { get; private set; }
+        public Guid Id { get; init; }
+        public Guid AuthorId { get; init; }
+
+        public string Title { get; init; }
+        public string Type { get; init; }
+        public long Size { get; init; }
+        public string Url { get; init; }
+        public DateTime DateOfCreation { get; init; }
 
         public override string ToString()
         {

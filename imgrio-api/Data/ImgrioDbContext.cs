@@ -1,12 +1,11 @@
-﻿using imgrio_api.Models;
+﻿using imgrio_api.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace imgrio_api.Data
 {
     public class ImgrioDbContext : DbContext
     {
-        public DbSet<UserFile> UserFiles { get; set; }
-        public DbSet<UserSetting> UserSettings { get; set; }
+        public DbSet<UserContent> UserContents { get; set; }
 
         public ImgrioDbContext(DbContextOptions options) : base(options) { }
     }

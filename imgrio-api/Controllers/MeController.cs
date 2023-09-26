@@ -1,14 +1,13 @@
 ﻿using HeyRed.Mime;
-using imgrio_api.Data;
 using imgrio_api.Extensions;
-using imgrio_api.Models;
+using imgrio_api.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using imgrio_api.Infrastructure;
 
 namespace imgrio_api.Controllers
 {
@@ -17,23 +16,17 @@ namespace imgrio_api.Controllers
     [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
     public class MeController : ControllerBase
     {
-        private readonly ImgrioDbContext _dbContext;
+        private readonly IDbRepository<UserContent> _dbUserContentsRepository;
         private readonly IConfiguration _configuration;
 
-        public MeController(ImgrioDbContext dbContext, IConfiguration configuration)
+        public MeController(IDbRepository<UserContent> dbUserContentsRepository, IConfiguration configuration)
         {
-            _dbContext = dbContext;
+            _dbUserContentsRepository = dbUserContentsRepository;
             _configuration = configuration;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMyUserDetailsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
         [HttpGet("files")]
-        public async Task<IActionResult> GetMyFilesAsync()
+        public async Task<IActionResult> GetUserContentsAsync()
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(sub))
@@ -41,17 +34,16 @@ namespace imgrio_api.Controllers
                 return Unauthorized("Sub is invalid.");
             }
 
-            var userId = Guid.Parse(sub);
+            var authorId = Guid.Parse(sub);
 
-            var userFiles = await _dbContext.UserFiles
-                .Where(userFile => userFile.Author == userId).ToArrayAsync();
+            var userContents = await _dbUserContentsRepository.GetAll(authorId);
 
-            return Ok(userFiles);
+            return Ok(userContents);
         }
 
         [HttpPost("files")]
         [Authorize(AuthenticationSchemes = "PermanentJwtPolicy")]
-        public async Task<IActionResult> PostMyUserFileAsync([FromForm] IFormFile file)
+        public async Task<IActionResult> PostUserContentAsync([FromForm] IFormFile file)
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(sub))
@@ -64,44 +56,37 @@ namespace imgrio_api.Controllers
                 return StatusCode(403, "Unsupported file type.");
             }
 
-            //if (!(await file.IsSafe()))
-            //{
-            //    return StatusCode(403, "The file appears to be unsafe.");
-            //}
+            var authorId = Guid.Parse(sub);
 
-            var userId = Guid.Parse(sub);
-
-            var userFileId = Guid.NewGuid();
-            var fileMimeType = file.ContentType;
-            var userFile = new UserFile(
-                userFileId,
-                userId,
+            var id = Guid.NewGuid();
+            var mimeType = file.ContentType;
+            var userContent = new UserContent(
+                id,
+                authorId,
                 Path.GetFileNameWithoutExtension(file.FileName),
-                fileMimeType,
+                mimeType,
                 file.Length,
-                $"https://data.imgrio.com/{userId}/{userFileId}.{MimeTypesMap.GetExtension(fileMimeType)}",
-                DateTime.UtcNow);
+                $"https://data.imgrio.com/{authorId}/{id}.{MimeTypesMap.GetExtension(mimeType)}",
+                DateTime.UtcNow
+            );
 
             #region save to imgrio server
-            var path = $"./data/{userFile.Author}";
+            var path = $"./data/{userContent.AuthorId}";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            using var stream = new FileStream($"{path}/{userFile}", FileMode.Create);
+            using var stream = new FileStream($"{path}/{userContent}", FileMode.Create);
             await file.CopyToAsync(stream);
             #endregion
 
-            #region save to database
-            await _dbContext.AddAsync(userFile);
-            await _dbContext.SaveChangesAsync();
-            #endregion
+            await _dbUserContentsRepository.Create(userContent);
 
-            return Ok(new { userFile, url = $"https://imgrio.com/v/{userFileId}" });
+            return Ok(new { userFile = userContent, url = $"https://imgrio.com/v/{id}" });
         }
 
-        [HttpDelete("files/{userFileId}")]
-        public async Task<IActionResult> DeleteMyUserFileByIdAsync(Guid userFileId)
+        [HttpDelete("files/{id}")]
+        public async Task<IActionResult> DeleteUserContentAsync(Guid id)
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(sub))
@@ -109,82 +94,34 @@ namespace imgrio_api.Controllers
                 return Unauthorized("Sub is invalid.");
             }
 
-            var userId = Guid.Parse(sub);
+            var authorId = Guid.Parse(sub);
 
-            var userFile = await _dbContext.UserFiles.FindAsync(userFileId);
-            if (userFile == null)
+            var userContent = await _dbUserContentsRepository.GetSingle(id);
+            if (userContent == null)
             {
-                return NotFound("UserFile could not be found in database.");
+                return NotFound("UserContent could not be found in database.");
             }
-            if (userFile.Author != userId)
+            if (userContent.AuthorId != authorId)
             {
                 return Unauthorized("Sub and Author do not match.");
             }
 
-            #region delete from database
-            _dbContext.Remove(userFile);
-            await _dbContext.SaveChangesAsync();
-            #endregion
+            await _dbUserContentsRepository.Delete(id);
 
             #region delete from imgrio server
-            var path = $"./data/{userFile.Author}/{userFile}";
+            var path = $"./data/{userContent.AuthorId}/{userContent}";
             if (!System.IO.File.Exists(path))
             {
-                return NotFound("UserFile could not be found on imgrio server.");
+                return NotFound("UserContent could not be found on imgrio server.");
             }
             System.IO.File.Delete(path);
             #endregion
 
-            return Ok("Successfully deleted UserFile.");
-        }
-
-        [HttpGet("settings")]
-        public async Task<IActionResult> GetMyUserSettingsAsync()
-        {
-            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(sub))
-            {
-                return Unauthorized("Sub is invalid.");
-            }
-
-            var userId = Guid.Parse(sub);
-
-            var userSettings = await _dbContext.UserSettings
-                .Where(userSetting => userSetting.UserId == userId).ToArrayAsync();
-
-            return Ok(userSettings);
-        }
-
-        [HttpPut("settings")]
-        public async Task<IActionResult> PutMyUserSettingAsync(string key, string value)
-        {
-            var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(sub))
-            {
-                return Unauthorized("Sub is invalid.");
-            }
-
-            var userId = Guid.Parse(sub);
-
-            var userSetting = (await _dbContext.UserSettings
-                .Where(userSetting => userSetting.UserId == userId && userSetting.Key == key).ToArrayAsync())[0];
-
-            if (userSetting == null)
-            {
-                await _dbContext.AddAsync(new UserSetting(Guid.NewGuid(), userId, key, value));
-            }
-            else
-            {
-                _dbContext.Attach(userSetting);
-                userSetting.Value = value;
-            }
-            await _dbContext.SaveChangesAsync();
-
-            return Ok(userSetting);
+            return Ok("Successfully deleted UserContent.");
         }
 
         [HttpGet("token")]
-        public IActionResult GetMyPermanentJwt()
+        public IActionResult GetPermanentJwt()
         {
             var sub = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(sub))
@@ -192,7 +129,7 @@ namespace imgrio_api.Controllers
                 return Unauthorized("Sub is invalid.");
             }
 
-            var userId = Guid.Parse(sub);
+            var authorId = Guid.Parse(sub);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["PermanentJwt:Key"]!));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -200,7 +137,7 @@ namespace imgrio_api.Controllers
             var claims = new List<Claim>()
             {
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new(JwtRegisteredClaimNames.Sub, authorId.ToString()),
             };
 
             var dateNow = DateTime.UtcNow;

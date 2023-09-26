@@ -1,4 +1,4 @@
-﻿namespace imgrio_api.Models
+﻿namespace imgrio_api.Entities
 {
     public class UserFilesInfo
     {

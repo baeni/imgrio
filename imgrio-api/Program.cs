@@ -1,4 +1,5 @@
 using imgrio_api.Data;
+using imgrio_api.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -57,6 +58,7 @@ namespace imgrio_api
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
 
             var app = builder.Build();
 
