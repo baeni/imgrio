@@ -1,4 +1,5 @@
 ﻿<script setup lang="ts">
+import { ref } from 'vue';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -19,6 +20,23 @@ const props = defineProps({
 
 const config = useRuntimeConfig();
 const user = useSupabaseUser();
+
+const destinations = [
+  {
+    title: 'Home',
+    url: '/'
+  },
+  {
+    title: 'ShareX',
+    url: '/sharex'
+  },
+  {
+    title: 'Dashboard',
+    url: '/dashboard/files'
+  }
+];
+
+const showMobileMenu = ref<Boolean>(false);
 </script>
 
 <template>
@@ -35,19 +53,13 @@ const user = useSupabaseUser();
         <img class="w-14" src="/logo192.png" alt="imgrio" />
       </NuxtLink>
 
-      <div class="grid grid-cols-3 gap-0.5">
-        <NuxtLink to="/">
-          <Button class="w-full" variant="ghost">Home</Button>
-        </NuxtLink>
-        <NuxtLink to="/sharex">
-          <Button class="w-full" variant="ghost">ShareX</Button>
-        </NuxtLink>
-        <NuxtLink to="/dashboard/files">
-          <Button class="w-full" variant="ghost">Dashboard</Button>
+      <div class="hidden lg:grid grid-cols-3 gap-0.5">
+        <NuxtLink :to="destination.url" v-for="destination in destinations">
+          <Button class="w-full" variant="ghost">{{ destination.title }}</Button>
         </NuxtLink>
       </div>
 
-      <div v-if="user">
+      <div class="hidden lg:block" v-if="user">
         <DropdownMenu>
           <DropdownMenuTrigger class="flex gap-4 items-center">
             <p class="font-semibold">Hi, {{ user.user_metadata.name }}</p>
@@ -100,6 +112,47 @@ const user = useSupabaseUser();
       <NuxtLink :to="config.public.loginPath!" v-else>
         <Button class="w-full" variant="outline">Log In</Button>
       </NuxtLink>
+
+      <!-- Mobile Menu Trigger -->
+      <div class="cursor-pointer z-10 lg:hidden" @click="showMobileMenu = !showMobileMenu">
+        <svg
+          width="36px"
+          height="36px"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          v-if="!showMobileMenu"
+        >
+          <path d="M4 10H20M4 14H20" stroke="#ffffff" stroke-width="1" />
+        </svg>
+
+        <svg
+          width="36px"
+          height="36px"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          v-else
+        >
+          <path d="M19 5L4.99998 19M5.00001 5L19 19" stroke="#ffffff" stroke-width="1" />
+        </svg>
+      </div>
+      <!---->
     </div>
+
+    <!-- Mobile Menu-->
+    <div
+      class="absolute bg-zinc-900 w-screen transition-all ease-in-out"
+      :class="showMobileMenu ? 'h-screen opacity-100' : 'h-0 opacity-0 invisible'"
+    >
+      <div class="grid grid-cols-1 gap-4 px-20 py-36 text-2xl">
+        <NuxtLink
+          class="!bg-transparent"
+          :to="destination.url"
+          @click="showMobileMenu = false"
+          v-for="destination in destinations"
+          >{{ destination.title }}</NuxtLink
+        >
+      </div>
+    </div>
+    <!---->
   </nav>
 </template>
