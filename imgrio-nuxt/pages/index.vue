@@ -9,7 +9,7 @@ const user = useSupabaseUser();
   <span
     class="absolute top-0 left-0 w-screen h-screen -z-10 bg-gradient-to-br from-zinc-950 to-blue-950"
   ></span>
-  <section class="flex h-screen max-w-3xl mx-auto">
+  <section class="flex container h-screen max-w-3xl mx-auto">
     <div class="my-auto">
       <p class="text-6xl font-bold">Take. Give. <span class="text-blue-400">Share.</span></p>
       <p class="text-lg my-9">
