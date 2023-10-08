@@ -91,7 +91,7 @@ const showMobileMenu = ref<Boolean>(false);
 
             <DropdownMenuSeparator />
 
-            <a href="https://www.paypal.com/donate/?hosted_button_id=D7KN5JMJM6SE6" target="_blank">
+            <a href="https://paypal.me/baeniD7KN5JMJM6SE6" target="_blank">
               <DropdownMenuItem>
                 <FaIcon class="mr-2 w-4 h-4" :icon="['fas', 'mug-hot']" />
                 <span>Donate</span>
