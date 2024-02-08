@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using imgrio_api.Infrastructure;
+using imgrio_api.Dtos;
 
 namespace imgrio_api.Controllers
 {
@@ -25,6 +26,7 @@ namespace imgrio_api.Controllers
             _configuration = configuration;
         }
 
+        #region /me/files
         [HttpGet("files")]
         public async Task<IActionResult> GetUserContentsAsync()
         {
@@ -82,7 +84,11 @@ namespace imgrio_api.Controllers
 
             await _dbUserContentsRepository.Create(userContent);
 
-            return Ok(new { userFile = userContent, url = $"https://imgrio.com/v/{id}" });
+            var responseDto = new PostUserContentResponseDto(
+                userContent,
+                url: $"https://imgrio.com/v/{id}");
+
+            return Ok(responseDto);
         }
 
         [HttpDelete("files/{id}")]
@@ -119,6 +125,7 @@ namespace imgrio_api.Controllers
 
             return Ok("Successfully deleted UserContent.");
         }
+        #endregion
 
         [HttpGet("token")]
         public IActionResult GetPermanentJwt()
