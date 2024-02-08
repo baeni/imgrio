@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace imgrio_api.Controllers
 {
     [ApiController]
-    [Route("files")]
+    [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
     public class ContentsController : ControllerBase
     {
