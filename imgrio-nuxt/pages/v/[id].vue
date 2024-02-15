@@ -15,7 +15,7 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
 
-const userContent = ref<UserContent>((await apiClient.get(`files/${useRoute().params.id}`)).data);
+const userContent = ref<UserContent>((await apiClient.get(`contents/${useRoute().params.id}`)).data);
 
 useServerSeoMeta({
   ogSiteName: 'imgrio',

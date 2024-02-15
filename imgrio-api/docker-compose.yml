@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: bennysaa/imgrio:api-0.1.0
+    image: bennysaa/imgrio:api-0.2.0
     container_name: imgrio-api
     ports:
       - 443:443
