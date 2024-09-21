@@ -15,13 +15,6 @@ WORKDIR /app
 EXPOSE 443
 COPY --from=publish /app/publish .
 
-RUN apt-get update && apt-get install -y nginx
-COPY ./nginx/nginx.conf /etc/nginx/
-COPY ./nginx/sites.conf /etc/nginx/sites-available/default
-
-COPY ./imgrio.com.pem /app/imgrio.com.pem
-COPY ./imgrio.com.key /app/imgrio.com.key
-
 RUN mkdir ./data
 
-CMD service nginx start && dotnet imgrio-api.dll --urls "https://+:8443"
+CMD dotnet imgrio-api.dll --urls "https://+:8443"
