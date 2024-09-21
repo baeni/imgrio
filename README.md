@@ -58,7 +58,7 @@ docker compose up -d
 
 ```
 
-Congratulations! - The imgrio-api is now running and accessible from https://api.imgrio.com
+Congratulations! - The imgrio-api is now running and accessible from whatever address you've configured it to. For us it's https://api.imgrio.com
 
 ## imgrio-nuxt
 
