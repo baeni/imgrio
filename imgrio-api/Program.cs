@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace imgrio_api
-{
-    public class Program
+namespace imgrio_api;
+
+public class Program
     {
         public static void Main(string[] args)
         {
@@ -74,4 +74,3 @@ namespace imgrio_api
             app.Run();
         }
     }
-}

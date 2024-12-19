@@ -10,9 +10,9 @@ using System.Text;
 using imgrio_api.Infrastructure;
 using imgrio_api.Dtos;
 
-namespace imgrio_api.Controllers
-{
-    [ApiController]
+namespace imgrio_api.Controllers;
+
+[ApiController]
     [Route("[controller]")]
     [Authorize(AuthenticationSchemes = "SupabaseJwtPolicy")]
     public class MeController : ControllerBase
@@ -165,4 +165,3 @@ namespace imgrio_api.Controllers
             return Ok(jwt);
         }
     }
-}

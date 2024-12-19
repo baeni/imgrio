@@ -1,52 +1,51 @@
 ﻿using nClam;
 using System.Net.Sockets;
 
-namespace imgrio_api.Extensions
+namespace imgrio_api.Extensions;
+
+public static class IFormFileExtensions
 {
-    public static class IFormFileExtensions
+    public static bool IsValidMimeType(this IFormFile file)
     {
-        public static bool IsValidMimeType(this IFormFile file)
+        var validMimeTypes = new string[] {
+            "image/",
+            "text/plain",
+            "application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument."
+        };
+
+        var fileType = file.ContentType;
+        if (validMimeTypes.Where(fileType.StartsWith).ToArray().Length <= 0)
         {
-            var validMimeTypes = new string[] {
-                "image/",
-                "text/plain",
-                "application/pdf",
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument."
-            };
-
-            var fileType = file.ContentType;
-            if (validMimeTypes.Where(fileType.StartsWith).ToArray().Length <= 0)
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
-        public static async Task<bool> IsSafe(this IFormFile file)
-        {
-            try
-            {
-                var clam = new ClamClient("49.12.218.142", 3310);
-                var response = await clam.SendAndScanFileAsync(file.OpenReadStream());
+        return true;
+    }
 
-                switch (response.Result)
-                {
-                    case ClamScanResults.Clean:
-                        return true;
-                    case ClamScanResults.VirusDetected:
-                    case ClamScanResults.Unknown:
-                    case ClamScanResults.Error:
-                    default:
-                        return false;
-                }
-            }
-            catch (SocketException ex)
+    public static async Task<bool> IsSafe(this IFormFile file)
+    {
+        try
+        {
+            var clam = new ClamClient("49.12.218.142", 3310);
+            var response = await clam.SendAndScanFileAsync(file.OpenReadStream());
+
+            switch (response.Result)
             {
-                Console.WriteLine(ex.Message);
-                return false;
+                case ClamScanResults.Clean:
+                    return true;
+                case ClamScanResults.VirusDetected:
+                case ClamScanResults.Unknown:
+                case ClamScanResults.Error:
+                default:
+                    return false;
             }
+        }
+        catch (SocketException ex)
+        {
+            Console.WriteLine(ex.Message);
+            return false;
         }
     }
 }
